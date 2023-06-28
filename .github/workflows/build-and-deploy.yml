@@ -31,8 +31,8 @@ jobs:
       - name: "Build and push Docker"
         uses: "docker/build-push-action@v2"
         with:
-          context: .
-          file: frontend/Dockerfile
+          context: frontend
+          file: Dockerfile
           tags: "${{ env.IMAGE }}"
           push: "true"
   "deploy":

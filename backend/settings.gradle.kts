@@ -1,3 +1,1 @@
-
-rootProject.name = "sprik-backend"
-
+rootProject.name = "backend"

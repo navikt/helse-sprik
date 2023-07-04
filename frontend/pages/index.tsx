@@ -1,6 +1,7 @@
 import "@navikt/ds-css";
 import { Button, Heading } from "@navikt/ds-react";
 import axios , { Axios, AxiosError } from "axios";
+import { log } from "console";
 import useSWR from "swr";
 
 const fetcher = (url: any) => axios.get(url).then(res => res.data)
@@ -9,6 +10,23 @@ export default function Home() {
 
   const {data, error, isLoading} = useSWR('http://0.0.0.0:8080/', fetcher);
   console.log(data);
+
+  function post() {
+    axios.post("http://0.0.0.0:8080/test", { 
+      ord: "heisann hoppsann",
+      tall: 7
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then( (response) => {
+      console.log(response)
+    }).catch( (error) => {
+      console.log(error);
+    })
+  }
+
+  post()
 
   return (
     <main className="flex justify-center">

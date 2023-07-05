@@ -8,6 +8,7 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.request.*
+import no.nav.helse.sprik.Feil
 import no.nav.helse.sprik.Test
 
 fun Application.configureRouting() {
@@ -26,6 +27,10 @@ fun Application.configureRouting() {
         }
         post("/test") {
             val test = call.receive<Test>()
+            call.respond(status = HttpStatusCode.Created, message = test)
+        }
+        post("/nyFeil"){
+            val test = call.receive<Feil>()
             println(test)
             call.respond(status = HttpStatusCode.Created, message = test)
         }

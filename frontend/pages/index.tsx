@@ -11,23 +11,6 @@ export default function Home() {
   const {data, error, isLoading} = useSWR('http://0.0.0.0:8080/', fetcher);
   console.log(data);
 
-  function post() {
-    axios.post("http://0.0.0.0:8080/test", { 
-      ord: "heisann hoppsann",
-      tall: 7
-    }, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then( (response) => {
-      console.log(response)
-    }).catch( (error) => {
-      console.log(error);
-    })
-  }
-
-  post()
-
   return (
     <main className="flex justify-center">
       <div className="w-1/2 flex flex-col gap-4 justify-center text-center">

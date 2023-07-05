@@ -1,6 +1,9 @@
 package no.nav.helse.sprik
 
-class Test (
+import kotlinx.serialization.*
+
+@Serializable
+data class Test (
     var ord: String,
     var tall: Int
 ) {

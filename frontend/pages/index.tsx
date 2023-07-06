@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col h-screen">
-      <nav className="h-12 bg-gray-900"></nav>
+      <div className="h-12 bg-gray-900"></div>
 
       <div className="flex justify-center grow">
         <div className="bg-bg-subtle w-1/6 p-8 flex flex-col justify-end">
@@ -30,7 +30,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="p-8">
+        <div className="p-8 grow flex gap-8 flex-col">
           <Search
             label="Søk gjennom innmeldte feil (nøkkelord, tags, status)"
             variant="primary"
@@ -40,7 +40,7 @@ export default function Home() {
             level="1" 
             size="medium"
           >
-            Innmeldte feil (saker, feilmeldingerm poster, feil)
+            Innmeldte feil (saker, feilmeldinger poster, feil)
           </Heading>
           <div className="grid grid-cols-2 gap-4">
             <FeilCard />  

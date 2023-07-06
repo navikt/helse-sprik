@@ -2,10 +2,10 @@ import "@navikt/ds-css";
 
 import { ArrowLeftIcon, BugIcon, UploadIcon } from "@navikt/aksel-icons";
 import { Button, Heading, TextField, Textarea } from "@navikt/ds-react";
-import post from  "./api/http";
+import post from  "../api/http";
 import { useState } from "react";
 
-export default function Home() {
+export default function Feil() {
     const [tittel, setTittel] = useState("");
     const [beskrivelse, setBeskrivelse] = useState("");
 

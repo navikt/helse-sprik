@@ -10,32 +10,52 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col py-8 justify-center">
-      <Search
-        label="Søk gjennom innmeldte feil (nøkkelord, tags, status)"
-        variant="primary"
-        hideLabel={false}
-      />
-      <Heading 
-        level="1" 
-        size="medium"
-      >
-        Innmeldte feil (saker, feilmeldingerm poster, feil)
-      </Heading>
-      <div className="w-1/2 flex flex-col gap-4 justify-center text-center">
-        <Button 
-          variant="primary" 
-          onClick={handleFeil}
-        >
-          Meld inn feil
-        </Button>
-        <Button 
-          variant="secondary"
-        >
-          Meld inn funksjonalitetsønsker
-        </Button>
+    <main className="flex flex-col h-screen">
+      <nav className="h-12 bg-black"></nav>
+
+      <div className="flex justify-center grow">
+        <div className="bg-gray-50 w-1/6 p-8 flex flex-col justify-end">
+          <div className="flex flex-col gap-4 text-center bottom-0">
+            <Button 
+              variant="primary" 
+              onClick={handleFeil}
+            >
+              Meld inn feil
+            </Button>
+            <Button 
+              variant="secondary"
+            >
+              Meld inn funksjonalitetsønsker
+            </Button>
+          </div>
+        </div>
+
+        <div className="p-8">
+          <Search
+            label="Søk gjennom innmeldte feil (nøkkelord, tags, status)"
+            variant="primary"
+            hideLabel={false}
+          />
+          <Heading 
+            level="1" 
+            size="medium"
+          >
+            Innmeldte feil (saker, feilmeldingerm poster, feil)
+          </Heading>
+          <div className="grid grid-cols-2 gap-4">
+            <FeilCard />  
+            <FeilCard />  
+            <FeilCard />  
+            <FeilCard />  
+
+
+          </div>
+        </div>
+
+        <div className="bg-gray-50 w-1/6 p-8">
+          <h1>Filter to be</h1>
+        </div>
       </div>
-      <FeilCard />
     </main>
   )
 }

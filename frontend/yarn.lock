@@ -205,6 +205,11 @@
     react-day-picker "8.3.4"
     react-modal "3.15.1"
 
+"@navikt/ds-tokens@^4.6.1":
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/@navikt/ds-tokens/-/ds-tokens-4.6.1.tgz#d48f7c8bad197297dfb59b20685a6843f41f269e"
+  integrity sha512-pBX5MLUpFftvRGZcbS9wWoMmzeH/iLNvOdMPvMbYTBnU7LUjU3XHLByfc0ogb2eT3gRevpD4DbjzWVx65ZzULw==
+
 "@next/env@13.4.7":
   version "13.4.7"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-13.4.7.tgz#ca12d341edb128ca70384635bd2794125ffb1c01"

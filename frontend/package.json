@@ -12,6 +12,7 @@
     "@navikt/aksel-icons": "^4.4.2",
     "@navikt/ds-css": "^4.4.2",
     "@navikt/ds-react": "^4.4.2",
+    "@navikt/ds-tokens": "^4.6.1",
     "@types/node": "20.3.2",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",

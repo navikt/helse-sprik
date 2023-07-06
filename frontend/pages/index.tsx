@@ -1,4 +1,4 @@
-import FeilCard from "@/components/feilCard";
+import FeilCard from "../components/FeilCard";
 import "@navikt/ds-css";
 import { Button, Heading, Search } from "@navikt/ds-react";
 import axios , { Axios, AxiosError } from "axios";

@@ -11,10 +11,10 @@ export default function Home() {
 
   return (
     <main className="flex flex-col h-screen">
-      <nav className="h-12 bg-black"></nav>
+      <nav className="h-12 bg-gray-900"></nav>
 
       <div className="flex justify-center grow">
-        <div className="bg-gray-50 w-1/6 p-8 flex flex-col justify-end">
+        <div className="bg-bg-subtle w-1/6 p-8 flex flex-col justify-end">
           <div className="flex flex-col gap-4 text-center bottom-0">
             <Button 
               variant="primary" 
@@ -52,7 +52,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="bg-gray-50 w-1/6 p-8">
+        <div className="bg-bg-subtle w-1/6 p-8">
           <h1>Filter to be</h1>
         </div>
       </div>

@@ -32,6 +32,6 @@
   },
   "devDependencies": {
     "@navikt/aksel-stylelint": "^4.5.0",
-    "stylelint": "^15.9.0"
+    "stylelint": "^15.10.1"
   }
 }

@@ -8,7 +8,7 @@ Appplikasjon for saksbehandlere til å melde inn feil/mangler/ønsker, samt. en 
 
 #### Installere avhengigheter
 ```
-cd sprik-frontend
+cd frontend
 yarn
 ```
 

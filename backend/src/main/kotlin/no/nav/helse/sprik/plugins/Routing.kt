@@ -6,33 +6,40 @@ import io.ktor.server.response.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.server.cio.*
+import io.ktor.server.engine.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.request.*
 import no.nav.helse.sprik.Feil
 import no.nav.helse.sprik.Test
 
-fun Application.configureRouting() {
-    install(CORS) {
-        anyHost()
-        allowMethod(HttpMethod.Get)
-        allowMethod(HttpMethod.Post)
-        allowNonSimpleContentTypes = true
-    }
-    install(ContentNegotiation) {
-        json()
-    }
-    routing {
-        get("/") {
-            call.respondText("Hello World!")
+fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngineEnvironment {
+    module {
+        install(CORS) {
+            anyHost()
+            allowMethod(HttpMethod.Get)
+            allowMethod(HttpMethod.Post)
+            allowNonSimpleContentTypes = true
         }
-        post("/test") {
-            val test = call.receive<Test>()
-            call.respond(status = HttpStatusCode.Created, message = test)
+        install(ContentNegotiation) {
+            json()
         }
-        post("/nyFeil"){
-            val test = call.receive<Feil>()
-            println(test)
-            call.respond(status = HttpStatusCode.Created, message = test)
+        routing {
+            get("/") {
+                call.respondText("Hello World!")
+            }
+            post("/test") {
+                val test = call.receive<Test>()
+                call.respond(status = HttpStatusCode.Created, message = test)
+            }
+            post("/nyFeil") {
+                val test = call.receive<Feil>()
+                println(test)
+                call.respond(status = HttpStatusCode.Created, message = test)
+            }
+
         }
     }
-}
+})
+
+

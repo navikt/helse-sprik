@@ -6,6 +6,7 @@ val postgresql_version: String by project
 val hikariCP_version: String by project
 val exposed_version: String by project
 val testcontainers_postgresql_version: String by project
+val junit_jupiter_version: String by project
 
 
 plugins {
@@ -42,7 +43,18 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-java-time:$exposed_version")
+    implementation("io.ktor:ktor-server-cio:$ktor_version")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
     testImplementation("org.testcontainers:postgresql:$testcontainers_postgresql_version")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junit_jupiter_version")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:$junit_jupiter_version")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junit_jupiter_version")
+}
+
+tasks.named<Test>("test"){
+        useJUnitPlatform()
+        testLogging{
+            events("skipped", "failed")
+        }
 }

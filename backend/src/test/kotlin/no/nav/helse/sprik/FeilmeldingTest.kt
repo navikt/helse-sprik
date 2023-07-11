@@ -12,6 +12,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import java.time.LocalDateTime
 import kotlin.test.assertEquals
 import org.jetbrains.exposed.sql.Database as ExposedDatabase
 
@@ -31,24 +32,25 @@ class FeilmeldingTest {
             FeilmeldingTable.deleteAll()
         }
     }
-
-    @Test
-    fun `Lagrer feilmelding i databasen`() {
-        feilmeldingRepository.lagre("test", "testesen")
-        transaction {
-            val actual = FeilmeldingTable.selectAll().single()
-            assertEquals("test", actual[FeilmeldingTable.tittel])
-            assertEquals("testesen", actual[FeilmeldingTable.beskrivelse])
-        }
-    }
-
     @Test
     fun `Sett opp testdatabasen riktig`(){
-        feilmeldingRepository.lagre("Hællæ", "skjera bagera")
+        feilmeldingRepository.lagre("Hællæ", "skjera bagera", LocalDateTime.of(2000,1,1,8,0))
         transaction {
             assertEquals(1, FeilmeldingTable.selectAll().map {
                 it
             }.size)
         }
     }
+
+    @Test
+    fun `Lagrer feilmelding i databasen`() {
+        feilmeldingRepository.lagre("test", "testesen", LocalDateTime.of(2000,1,1,8,0))
+        transaction {
+            val actual = FeilmeldingTable.selectAll().single()
+            assertEquals("test", actual[FeilmeldingTable.tittel])
+            assertEquals("testesen", actual[FeilmeldingTable.beskrivelse])
+            assertEquals(LocalDateTime.of(2023, 1, 1, 8, 0), actual[FeilmeldingTable.dato])
+        }
+    }
+
 }

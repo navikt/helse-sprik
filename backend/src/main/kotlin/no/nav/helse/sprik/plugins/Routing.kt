@@ -10,8 +10,8 @@ import io.ktor.server.cio.*
 import io.ktor.server.engine.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.request.*
-import no.nav.helse.sprik.Feil
 import no.nav.helse.sprik.Test
+import no.nav.helse.sprik.modell.Feilmelding
 
 fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngineEnvironment {
     module {
@@ -33,7 +33,7 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
                 call.respond(status = HttpStatusCode.Created, message = test)
             }
             post("/nyFeil") {
-                val test = call.receive<Feil>()
+                val test = call.receive<Feilmelding>()
                 println(test)
                 call.respond(status = HttpStatusCode.Created, message = test)
             }

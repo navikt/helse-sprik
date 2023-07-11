@@ -1,10 +1,9 @@
-import FeilCard from "../components/FeilCard";
+import CardsContainer from "@/components/CardsContainer";
 import "@navikt/ds-css";
 import { Button, Heading, Search } from "@navikt/ds-react";
 import router from "next/router";
 
 export default function Home() {
-
   const handleFeil = () => {
     router.push('/feil')
   }
@@ -12,7 +11,6 @@ export default function Home() {
   return (
     <main className="flex flex-col h-screen">
       <div className="h-12 bg-gray-900"></div>
-
       <div className="flex justify-center grow">
         <div className="bg-bg-subtle w-1/6 p-8 flex flex-col justify-end">
           <div className="flex flex-col gap-4 text-center bottom-0">
@@ -42,14 +40,7 @@ export default function Home() {
           >
             Innmeldte feil (saker, feilmeldinger poster, feil)
           </Heading>
-          <div className="grid grid-cols-2 gap-4">
-            <FeilCard />  
-            <FeilCard />  
-            <FeilCard />  
-            <FeilCard />  
-
-
-          </div>
+          <CardsContainer/>
         </div>
 
         <div className="bg-bg-subtle w-1/6 p-8">

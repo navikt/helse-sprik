@@ -21,12 +21,11 @@ const FeilCard = () => {
                 <ExpansionCard.Description>
                     Dummy Dummy Java 
                 </ExpansionCard.Description>
-                    <TagBar />
+                <TagBar />
             </ExpansionCard.Header>
             <ExpansionCard.Content>
                 Hællæ
             </ExpansionCard.Content>
-
         </ExpansionCard>
     )
 }

@@ -18,6 +18,7 @@ import java.time.LocalDate
 class Feilmelding(
     val tittel: String,
     val beskrivelse: String,
+
     @Serializable(LocalDateSerializer::class)
     val dato: LocalDate? = null, //Krever en spesiallaget serialiserer i KotlinX
     val tags: ArrayList<String> = arrayListOf<String>()

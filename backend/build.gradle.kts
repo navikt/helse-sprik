@@ -1,32 +1,23 @@
-val ktor_version: String by project
-val kotlin_version: String by project
-val logback_version: String by project
-val flyway_core_version: String by project
-val postgresql_version: String by project
-val hikariCP_version: String by project
-val exposed_version: String by project
-val testcontainers_postgresql_version: String by project
-val junit_jupiter_version: String by project
+import java.nio.file.Paths
+private val mainClass = "no.nav.helse.sprik.ApplicationKt"
+
+
+private val ktor_version = "2.3.2"
+private val kotlin_version = "1.8.22"
+private val logback_version = "1.2.11"
+private val flyway_core_version = "9.20.0"
+private val postgresql_version = "42.6.0"
+private val hikariCP_version = "5.0.1"
+private val exposed_version = "0.41.1"
+private val testcontainers_postgresql_version = "1.18.3"
+private val junit_jupiter_version = "5.9.3"
 
 
 plugins {
-    kotlin("jvm") version "1.8.22"
-    id("io.ktor.plugin") version "2.3.2"
-    kotlin("plugin.serialization") version "1.8.21"
+    kotlin("jvm") apply true
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.20"
 }
 
-group = "no.nav.helse.sprik"
-version = "0.0.1"
-application {
-    mainClass.set("no.nav.helse.sprik.ApplicationKt")
-
-    val isDevelopment: Boolean = project.ext.has("development")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
-}
-
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
@@ -52,9 +43,37 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junit_jupiter_version")
 }
 
-tasks.named<Test>("test"){
+tasks {
+    test {
         useJUnitPlatform()
-        testLogging{
-            events("skipped", "failed")
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = "17"
+    }
+
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "17"
+    }
+    jar {
+        mustRunAfter(":frontend:yarn_build")
+        archiveBaseName.set("app")
+
+        manifest {
+            attributes["Main-Class"] = mainClass
+            attributes["Class-Path"] = configurations.runtimeClasspath.get().joinToString(separator = " ") {
+                it.name
+            }
         }
+        from({ Paths.get(project(":frontend").buildDir.path) }){
+            into("frontend/.next")
+        }
+        doLast {
+            configurations.runtimeClasspath.get().forEach {
+                val file = File("$buildDir/libs/${it.name}")
+                if (!file.exists())
+                    it.copyTo(file)
+            }
+        }
+    }
 }

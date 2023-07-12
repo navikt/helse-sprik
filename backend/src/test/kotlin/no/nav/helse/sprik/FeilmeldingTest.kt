@@ -34,7 +34,7 @@ class FeilmeldingTest {
     }
     @Test
     fun `Sett opp testdatabasen riktig`(){
-        feilmeldingRepository.lagre("Hællæ", "skjera bagera", LocalDateTime.of(2000,1,1,8,0))
+        feilmeldingRepository.lagre("Hællæ", "skjera bagera", LocalDateTime.of(2023,1,1,8,0))
         transaction {
             assertEquals(1, FeilmeldingTable.selectAll().map {
                 it
@@ -44,7 +44,7 @@ class FeilmeldingTest {
 
     @Test
     fun `Lagrer feilmelding i databasen`() {
-        feilmeldingRepository.lagre("test", "testesen", LocalDateTime.of(2000,1,1,8,0))
+        feilmeldingRepository.lagre("test", "testesen", LocalDateTime.of(2023,1,1,8,0))
         transaction {
             val actual = FeilmeldingTable.selectAll().single()
             assertEquals("test", actual[FeilmeldingTable.tittel])

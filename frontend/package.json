@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "../frontend/node_modules/.bin/next dev",
+    "build": "../frontend/node_modules/.bin/next build",
+    "start": "../frontend/node_modules/.bin/next start",
+    "lint": "../frontend/node_modules/.bin/next lint"
   },
   "dependencies": {
     "@navikt/aksel-icons": "^4.4.2",
@@ -22,7 +22,6 @@
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.7",
     "next": "13.4.7",
-    "postcss": "8.4.24",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "^6.14.0",

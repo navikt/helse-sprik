@@ -4,7 +4,7 @@ plugins {
 }
 
 tasks.assemble {
-    dependsOn("yarn_build")
+    dependsOn("yarn", "yarn_build")
 }
 
-project.buildDir = File("next")
+project.buildDir = File(".next")

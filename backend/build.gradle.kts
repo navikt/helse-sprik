@@ -56,7 +56,7 @@ tasks {
         kotlinOptions.jvmTarget = "17"
     }
     jar {
-        mustRunAfter(":frontend:yarn_build")
+        mustRunAfter(":frontend:yarn", ":frontend:yarn_build")
         archiveBaseName.set("app")
 
         manifest {

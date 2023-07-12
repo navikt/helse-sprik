@@ -7,6 +7,7 @@ import { useState } from "react";
 import router from "next/router";
 import BildeOpplastning from "@/components/BildeOpplastning";
 import Header from "@/components/Header";
+import BildeOpplastning from "@/components/BildeOpplastning";
 
 export default function Feil() {
     const [tittel, setTittel] = useState("");

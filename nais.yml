@@ -4,7 +4,7 @@ metadata:
   name: "helse-sprik"
   namespace: "helse-sprik"
   labels:
-    "team": "helse-sprik"
+    team: "helse-sprik"
 spec:
   image: {{ image }}
   port: 8080

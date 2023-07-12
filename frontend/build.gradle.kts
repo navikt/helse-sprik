@@ -7,4 +7,4 @@ tasks.assemble {
     dependsOn("yarn_build")
 }
 
-project.buildDir = File(".next/static")
+project.buildDir = File(".next/standalone")

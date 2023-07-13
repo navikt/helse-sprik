@@ -34,9 +34,6 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
                     it.endsWith(".txt")
                 }
             }
-            get("/") {
-                call.respondText("Hello World!")
-            }
             get("/isalive"){
                 call.respondText("ALIVE")
             }

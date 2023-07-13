@@ -7,4 +7,4 @@ tasks.assemble {
     dependsOn("yarn", "yarn_build")
 }
 
-project.buildDir = File(".next")
+project.buildDir = File("out")

@@ -8,18 +8,12 @@ import FeilCard from "./FeilCard";
 const CardsContainer = () => {
     return(
         <div>
-            <div className="bg-red-500 grid grid-cols-2 gap-4">
-                <FeilCard />  
-                <FeilCard />  
-                <FeilCard />  
-                <FeilCard />  
-            </div>
-            <div className="bg-blue-500 flex flex-row flex-wrap gap-4">
-                <FeilCard />  
-                <FeilCard />  
-                <FeilCard />  
-                <FeilCard />  
-            </div>        
+            <div className="grid grid-cols-2 gap-4">
+                <FeilCard tittel="Mangel på hensyn til tariffoppgjør" beskrivelse="Det har vært ett tariffoppgjør og speil sier sykepengene må tilbakekreves, noe som er feil. (sier vi.. har ikke domenekunnskap)"/>  
+                <FeilCard tittel="Speil sier NAV må tilbakekreve sykepenger på feil grunnlag" beskrivelse="baluba"/>  
+                <FeilCard tittel="Feil A" beskrivelse="Dette er Feil fordi x, y, z"/>  
+                <FeilCard tittel="Feil B" beskrivelse="Lorem Ipsum"/>  
+            </div>     
         </div>
 
     )

@@ -11,7 +11,7 @@ const BildeOpplastning = () => {
     return(
         <div className="flex gap-2 flex-col">
             <div className="
-                h-64 p-5 bg-bg-subtle hover:bg-surface-selected border-2 border-blue-500
+                h-48 p-5 bg-bg-subtle hover:bg-surface-selected border-2 border-blue-500
                 rounded-lg border-dashed flex flex-col items-center justify-center text-center gap-2 
             ">
             {/*

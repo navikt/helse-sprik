@@ -28,8 +28,8 @@ export default function Feil() {
             <Header/>
             <div className="flex grow">
                 <div className="w-1/4 bg-bg-subtle"></div>
-                <div className="flex flex-col justify-center gap-32 p-16 grow">
-                    <div className="w-1/2 flex flex-col gap-4 justify-center">
+                <div className="flex flex-col justify-center gap-16 p-8 px-16  grow">
+                    <div className=" flex flex-col gap-2 justify-center">
                         <BugIcon
                             title="Insekts ikon"
                             fontSize="3rem"

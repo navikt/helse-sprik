@@ -1,9 +1,14 @@
 import "@navikt/ds-css";
 import { ExpansionCard, Tag } from "@navikt/ds-react";
 
+interface feilmeldingInterface {
+    tittel: String,
+    beskrivelse: String
+}
+
 const TagBar = () => {
     return (
-        <div className="flex gap-8">
+        <div className="flex gap-8 mt-4">
             <Tag variant="info">Jobbes med</Tag>
             <div className="flex gap-2">
                 <Tag variant="neutral">Spleiselaget</Tag>
@@ -13,13 +18,13 @@ const TagBar = () => {
     )
 }
 
-const FeilCard = () => {
+const FeilCard = (props: feilmeldingInterface) => {
     return (
         <ExpansionCard aria-label="tekst">
             <ExpansionCard.Header>
-                <ExpansionCard.Title>Dummy</ExpansionCard.Title>
+                <ExpansionCard.Title>{props.tittel}</ExpansionCard.Title>
                 <ExpansionCard.Description>
-                    Dummy Dummy Java 
+                    {props.beskrivelse}
                 </ExpansionCard.Description>
                 <TagBar />
             </ExpansionCard.Header>

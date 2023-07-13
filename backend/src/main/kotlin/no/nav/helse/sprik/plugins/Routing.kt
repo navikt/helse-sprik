@@ -27,7 +27,9 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
         }
         routing {
             singlePageApplication{
-                react("frontend/out")
+                useResources = true
+                filesPath = "frontend/out"
+                defaultPage = "index.html"
                 ignoreFiles {
                     it.endsWith(".txt")
                 }

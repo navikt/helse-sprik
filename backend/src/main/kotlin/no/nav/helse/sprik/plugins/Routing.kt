@@ -8,6 +8,7 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
+import io.ktor.server.http.content.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.request.*
 import no.nav.helse.sprik.Test
@@ -25,8 +26,21 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
             json()
         }
         routing {
+            singlePageApplication{
+                filesPath = "frontend/.next/server/pages/"
+                defaultPage = "index.html"
+                ignoreFiles {
+                    it.endsWith(".txt")
+                }
+            }
             get("/") {
                 call.respondText("Hello World!")
+            }
+            get("/isalive"){
+                call.respondText("ALIVE")
+            }
+            get("/isready"){
+                call.respondText("READY")
             }
             post("/test") {
                 val test = call.receive<Test>()
@@ -37,8 +51,10 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
                 println(test)
                 call.respond(status = HttpStatusCode.Created, message = test)
             }
-
         }
+    }
+    connector {
+        port = 8080
     }
 })
 

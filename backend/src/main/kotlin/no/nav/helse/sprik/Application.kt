@@ -13,9 +13,8 @@ fun main() {
 
 class Application(private val db: Database) {
     fun startBlocking() {
-
         runBlocking {
-            configureRouting().start(wait = false)
+            configureRouting().start(wait = true)
             Runtime.getRuntime().addShutdownHook(
                 Thread {
                     db.dataSource.close()

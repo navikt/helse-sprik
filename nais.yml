@@ -8,6 +8,12 @@ metadata:
 spec:
   image: {{ image }}
   port: 8080
+  liveness:
+    path: isalive
+    initialDelay: 5
+  readiness:
+    path: isready
+    initialDelay: 5
   replicas:
     min: 1
     max: 2
@@ -18,8 +24,6 @@ spec:
         databases:
           - name: helse-sprik
             envVarPrefix: DATABASE
-            users:
-              - name: helse-sprik
   resources:
     requests:
       cpu: 100m

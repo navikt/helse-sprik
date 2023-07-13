@@ -28,8 +28,8 @@ class Database(dbconfig: HikariConfig = dbconfig()) {
 
 private fun dbconfig() = HikariConfig().apply {
     jdbcUrl = DB_URL
-    username = username
-    password = password
+    username = Environment.Database.username
+    password = Environment.Database.password
     maximumPoolSize = 1
     connectionTimeout = 30.seconds.toJavaDuration().toMillis()
     initializationFailTimeout = 1.minutes.toJavaDuration().toMillis()
@@ -37,8 +37,8 @@ private fun dbconfig() = HikariConfig().apply {
 
 private fun migrateconfig() = HikariConfig().apply {
     jdbcUrl = DB_URL
-    username = username
-    password = password
+    username = Environment.Database.username
+    password = Environment.Database.password
     maximumPoolSize = 2
     connectionTimeout = 30.seconds.toJavaDuration().toMillis()
     initializationFailTimeout = 1.minutes.toJavaDuration().toMillis()

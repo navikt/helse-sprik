@@ -5,6 +5,7 @@ import { Button, Heading, TextField, Textarea } from "@navikt/ds-react";
 import post from "../api/http";
 import { useState } from "react";
 import router from "next/router";
+import BildeOpplastning from "@/components/BildeOpplastning";
 import Header from "@/components/Header";
 
 export default function Feil() {
@@ -51,13 +52,7 @@ export default function Feil() {
                             description="Detaljert beskrivelse av problemet"
                             onChange={e => setBeskrivelse(e.target.value)}
                         />
-
-                        <Button
-                            variant="secondary"
-                            icon={<UploadIcon />}
-                        >
-                            Last opp skjermbilder
-                        </Button>
+                        <BildeOpplastning/>
                     </div>
                     <div className="w-1/2 flex flex-col gap-2 justify-center">
                         <Button

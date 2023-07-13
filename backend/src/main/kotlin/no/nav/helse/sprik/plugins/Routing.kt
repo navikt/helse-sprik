@@ -43,8 +43,10 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
                 println(test)
                 call.respond(status = HttpStatusCode.Created, message = test)
             }
-
         }
+    }
+    connector {
+        port = 8080
     }
 })
 

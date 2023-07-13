@@ -11,7 +11,7 @@ spec:
   liveness:
     path: isalive
     initialDelay: 5
-  readyness:
+  readiness:
     path: isready
     initialDelay: 5
   replicas:

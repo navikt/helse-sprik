@@ -5,6 +5,7 @@ import { Button, Heading, TextField, Textarea } from "@navikt/ds-react";
 import post from "../api/http";
 import { useState } from "react";
 import router from "next/router";
+import Header from "@/components/Header";
 
 export default function Feil() {
     const [tittel, setTittel] = useState("");
@@ -23,9 +24,7 @@ export default function Feil() {
 
     return (
         <main className="flex flex-col h-screen">
-                  
-            <div className="h-12 bg-gray-900"></div>
-
+            <Header/>
             <div className="flex grow">
                 <div className="w-1/4 bg-bg-subtle"></div>
                 <div className="flex flex-col justify-center gap-32 p-16 grow">

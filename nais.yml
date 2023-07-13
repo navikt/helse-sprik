@@ -18,8 +18,6 @@ spec:
         databases:
           - name: helse-sprik
             envVarPrefix: DATABASE
-            users:
-              - name: helse-sprik
   resources:
     requests:
       cpu: 100m

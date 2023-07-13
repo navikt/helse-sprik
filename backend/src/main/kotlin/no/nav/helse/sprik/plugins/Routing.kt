@@ -27,9 +27,7 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
         }
         routing {
             singlePageApplication{
-                useResources = true //?????????????????????
-                filesPath = "frontend/.next/server/pages/"
-                defaultPage = "index.html"
+                react("frontend/.next")
                 ignoreFiles {
                     it.endsWith(".txt")
                 }

@@ -44,7 +44,6 @@ export default function Feil() {
                     <div className="w-1/2 flex flex-col gap-4 justify-center">
                         <TextField
                             label="Tittel"
-                            description="En kort oppsummering av problemet"
                             onChange={e => setTittel(e.target.value)}
                         />
                         <Textarea

@@ -8,6 +8,12 @@ metadata:
 spec:
   image: {{ image }}
   port: 8080
+  liveness:
+    path: isalive
+    initialDelay: 5
+  readyness:
+    path: isready
+    initialDelay: 5
   replicas:
     min: 1
     max: 2

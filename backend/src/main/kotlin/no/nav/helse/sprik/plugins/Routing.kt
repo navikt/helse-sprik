@@ -28,6 +28,12 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
             get("/") {
                 call.respondText("Hello World!")
             }
+            get("/isalive"){
+                call.respondText("ALIVE")
+            }
+            get("/isready"){
+                call.respondText("READY")
+            }
             post("/test") {
                 val test = call.receive<Test>()
                 call.respond(status = HttpStatusCode.Created, message = test)

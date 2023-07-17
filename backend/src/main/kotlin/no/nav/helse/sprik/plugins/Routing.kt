@@ -12,9 +12,13 @@ import io.ktor.server.http.content.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.request.*
 import no.nav.helse.sprik.Test
+import no.nav.helse.sprik.db.FeilmeldingRepository
 import no.nav.helse.sprik.modell.Feilmelding
 
 fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngineEnvironment {
+    //Repositories for handlinger mot database:
+    val feilmeldingRepository = FeilmeldingRepository()
+
     module {
         install(CORS) {
             anyHost()
@@ -45,9 +49,9 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
                 call.respond(status = HttpStatusCode.Created, message = test)
             }
             post("/nyFeil") {
-                val test = call.receive<Feilmelding>()
-                println(test)
-                call.respond(status = HttpStatusCode.Created, message = test)
+                val feilmelding = call.receive<Feilmelding>()
+                feilmeldingRepository.lagre(feilmelding)
+                call.respond(status = HttpStatusCode.Created, message = "Feilmelding motatt og sendt til database")
             }
         }
     }

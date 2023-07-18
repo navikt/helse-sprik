@@ -15,7 +15,8 @@ export default function Feil() {
     const handleSubmit = () => {
         const data = {
             "tittel": tittel,
-            "beskrivelse": beskrivelse
+            "beskrivelse": beskrivelse,
+            "dato": new Date()
         };
 
         post("/nyFeil", data)

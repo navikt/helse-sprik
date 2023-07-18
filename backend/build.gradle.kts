@@ -1,6 +1,5 @@
 import java.nio.file.Paths
-private val mainClass = "no.nav.helse.sprik.ApplicationKt"
-
+private val main_class = "no.nav.helse.sprik.ApplicationKt"
 
 private val ktor_version = "2.3.2"
 private val kotlin_version = "1.8.22"
@@ -12,12 +11,15 @@ private val exposed_version = "0.41.1"
 private val testcontainers_postgresql_version = "1.18.3"
 private val junit_jupiter_version = "5.9.3"
 
-
 plugins {
     kotlin("jvm") apply true
+    id("io.ktor.plugin") version "2.3.2"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.20"
 }
 
+application {
+    mainClass.set(main_class)
+}
 
 dependencies {
     implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
@@ -60,7 +62,7 @@ tasks {
         archiveBaseName.set("app")
 
         manifest {
-            attributes["Main-Class"] = mainClass
+            attributes["Main-Class"] = main_class
             attributes["Class-Path"] = configurations.runtimeClasspath.get().joinToString(separator = " ") {
                 it.name
             }

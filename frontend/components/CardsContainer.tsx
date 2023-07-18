@@ -37,7 +37,7 @@ const CardsContainer = () => {
         <div>
             <div className="grid grid-cols-2 gap-4">
                 {feilMeldinger.map((feilMelding) => (
-                    <FeilCard tittel={feilMelding.tittel} beskrivelse={feilMelding.beskrivelse}/> 
+                    <FeilCard key={feilMelding.toString()} tittel={feilMelding.tittel} beskrivelse={feilMelding.beskrivelse}/> 
                 ))}
             </div>     
         </div>

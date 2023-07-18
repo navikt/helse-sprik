@@ -1,15 +1,24 @@
+import axios from "axios";
 import FeilCard from "./FeilCard";
+import useSWR from "swr";
 
 type FeilMelding = {
     tittel: String
     beskrivelse: String
+}
+
+function hentFeilmeldinger() {
+    const fetcher = (url: any) => axios.get(url).then(res => res.data)
+    const {data, error, isLoading} = useSWR('http://0.0.0.0:8080/hentFeil', fetcher);
+    if (error) return <div>failed to load: {error.message}</div>
+    if (isLoading) return <div>Loading...</div>
+    return data
 }
 /**
  * 
  * @returns Komponent for returnering av konteiner med alle feilinnmeldingene. 
  */
 const CardsContainer = () => {
-    
     const feilMeldinger: FeilMelding[] = [
         {
             tittel: "Mangel på hensyn til tariffoppgjør",
@@ -39,7 +48,13 @@ const CardsContainer = () => {
                 {feilMeldinger.map((feilMelding) => (
                     <FeilCard key={feilMelding.toString()} tittel={feilMelding.tittel} beskrivelse={feilMelding.beskrivelse}/> 
                 ))}
-            </div>     
+            </div>
+            <p>
+                Her testes fetching:
+            </p> 
+            <div>
+                {hentFeilmeldinger()}
+            </div>    
         </div>
 
     )

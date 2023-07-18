@@ -3,6 +3,7 @@ import "@navikt/ds-css";
 import { ArrowLeftIcon, BugIcon, UploadIcon } from "@navikt/aksel-icons";
 import { Button, Heading, TextField, Textarea } from "@navikt/ds-react";
 import post from "../api/http";
+import axios from "axios";
 import { useState } from "react";
 import router from "next/router";
 import BildeOpplastning from "@/components/BildeOpplastning";
@@ -13,16 +14,26 @@ export default function Feil() {
     const [beskrivelse, setBeskrivelse] = useState("");
 
     const handleSubmit = () => {
-        const data = {
-            "tittel": tittel,
-            "beskrivelse": beskrivelse,
-            "dato": new Date()
-        };
-
-        post("/nyFeil", data)
-        
-        // TODO: clear data fra felter
+        axios.post("https://helse-sprik.intern.dev.nav.no/nyFeil",
+            {
+                "data": {
+                    tittel: tittel,
+                    beskrivelse: beskrivelse,
+                    dato: new Date()
+                }
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => {
+                console.log(response)
+            }).catch((error) => {
+                console.log(error);
+            })
     }
+
+        // TODO: clear data fra felter
+
 
     return (
         <main className="flex flex-col h-screen">

@@ -32,7 +32,7 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
         routing {
             singlePageApplication{
                 useResources = true
-                filesPath = "frontend/out"
+                filesPath = "frontend/dist"
                 defaultPage = "index.html"
                 ignoreFiles {
                     it.endsWith(".txt")

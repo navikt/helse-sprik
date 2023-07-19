@@ -1,4 +1,4 @@
-import FeilCard from "./FeilCard";
+import FeilCard from "./FeilCard"
 
 type FeilMelding = {
     tittel: String

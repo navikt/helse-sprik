@@ -10,6 +10,8 @@ export default function Home() {
 
   const navigate = useNavigate()
 
+  const navigate = useNavigate()
+
   return (
     <main className="flex flex-col h-screen">
       <Header/>

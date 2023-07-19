@@ -6,13 +6,14 @@ import axios from "axios";
 import { useState } from "react";
 import BildeOpplastning from "../components/BildeOpplastning";
 import Header from "../components/Header";
+import { useNavigate } from "react-router-dom";
 
 export default function Feil() {
     const [tittel, setTittel] = useState("");
     const [beskrivelse, setBeskrivelse] = useState("");
 
     const handleSubmit = () => {
-        axios.post("https://helse-sprik.intern.dev.nav.no/nyFeil",
+        axios.post("https://helse-sprik.intern.dev.nav.no/nyfeil",
             {
                 "data": {
                     tittel: tittel,
@@ -32,6 +33,7 @@ export default function Feil() {
 
         // TODO: clear data fra felter
 
+    const navigate = useNavigate()
 
     return (
         <main className="flex flex-col h-screen">
@@ -76,6 +78,7 @@ export default function Feil() {
                             // onClick={() => {
                             //     router.push('/')
                             // }}
+                            onClick={() => navigate("/")}
                         >
                             Gå tilbake til hovedmenyen
                         </Button>

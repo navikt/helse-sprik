@@ -1,35 +1,35 @@
 import FeilCard from "./FeilCard"
-
-type FeilMelding = {
-    tittel: String
-    beskrivelse: String
-}
 /**
  * 
  * @returns Komponent for returnering av konteiner med alle feilinnmeldingene. 
  */
 const CardsContainer = () => {
     
-    const feilMeldinger: FeilMelding[] = [
+    const feilMeldinger: Feilmelding[] = [
         {
             tittel: "Mangel på hensyn til tariffoppgjør",
-            beskrivelse: "Det har vært ett tariffoppgjør og speil sier sykepengene må tilbakekreves, noe som er feil. (sier vi.. har ikke domenekunnskap)"
+            beskrivelse: "Det har vært ett tariffoppgjør og speil sier sykepengene må tilbakekreves, noe som er feil. (sier vi.. har ikke domenekunnskap)",
+            haster: false
         },
         {
             tittel: "Speil sier NAV må tilbakekreve sykepenger på feil grunnlag",
-            beskrivelse: "baluba"
+            beskrivelse: "baluba",
+            haster: true
         },
         {
             tittel: "Feil A",
-            beskrivelse: "Lorem Ipsum"
+            beskrivelse: "Lorem Ipsum",
+            haster: false
         },
         {
             tittel: "Feil B",
-            beskrivelse: "dolor"
+            beskrivelse: "dolor",
+            haster: false
         },
         {
             tittel: "Håndkle på hue",
-            beskrivelse: "Bombastic side eye"
+            beskrivelse: "Bombastic side eye",
+            haster: true
         }
     ]
 
@@ -37,7 +37,12 @@ const CardsContainer = () => {
         <div>
             <div className="grid grid-cols-2 gap-4">
                 {feilMeldinger.map((feilMelding) => (
-                    <FeilCard key={feilMelding.toString()} tittel={feilMelding.tittel} beskrivelse={feilMelding.beskrivelse}/> 
+                    <FeilCard 
+                        key={feilMeldinger.indexOf(feilMelding)} 
+                        tittel={feilMelding.tittel} 
+                        beskrivelse={feilMelding.beskrivelse} 
+                        haster={feilMelding.haster}
+                    /> 
                 ))}
             </div>     
         </div>

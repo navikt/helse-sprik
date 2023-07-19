@@ -1,24 +1,21 @@
 import "@navikt/ds-css";
 import { ExpansionCard, Tag } from "@navikt/ds-react";
 
-interface feilmeldingInterface {
-    tittel: String,
-    beskrivelse: String
+interface TagBarInterface {
+    haster: boolean
 }
 
-const TagBar = () => {
+//typen på status er veldig wack heheheh, må fjerne any etterhvert men String fungerer ikke 
+const TagBar = (props: TagBarInterface) => {
     return (
         <div className="flex gap-8 mt-4">
             <Tag variant="info">Jobbes med</Tag>
-            <div className="flex gap-2">
-                <Tag variant="neutral">Spleiselaget</Tag>
-                <Tag variant="warning">Haster</Tag>
-            </div>
+            {props.haster === true ? <Tag variant="warning">Haster</Tag> : <></>}
         </div>
     )
 }
 
-const FeilCard = (props: feilmeldingInterface) => {
+const FeilCard = (props: Feilmelding) => {
     return (
         <ExpansionCard aria-label="tekst">
             <ExpansionCard.Header>
@@ -26,7 +23,7 @@ const FeilCard = (props: feilmeldingInterface) => {
                 <ExpansionCard.Description>
                     {props.beskrivelse}
                 </ExpansionCard.Description>
-                <TagBar />
+                <TagBar haster={props.haster}/>
             </ExpansionCard.Header>
             <ExpansionCard.Content>
                 Hællæ

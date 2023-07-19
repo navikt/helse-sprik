@@ -2,12 +2,14 @@ import CardsContainer from "./components/CardsContainer";
 import "@navikt/ds-css";
 import { Button, Heading, Search } from "@navikt/ds-react";
 import Header from "./components/Header";
-
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   // const handleFeil = () => {
   //   router.push('/feil')
   // }
+
+  const navigate = useNavigate()
 
   return (
     <main className="flex flex-col h-screen">
@@ -16,8 +18,9 @@ export default function Home() {
         <div className="bg-bg-subtle w-1/6 p-8 flex flex-col justify-end">
           <div className="flex flex-col gap-4 text-center bottom-0">
             <Button 
-              variant="primary" 
+              variant="primary"
               // onClick={handleFeil}
+              onClick={() => navigate("nyfeil")}
             >
               Meld inn feil
             </Button>

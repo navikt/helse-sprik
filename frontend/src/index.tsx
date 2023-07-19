@@ -1,6 +1,6 @@
 import CardsContainer from "./components/CardsContainer";
 import "@navikt/ds-css";
-import { Button, Heading, Search } from "@navikt/ds-react";
+import { Button, Search } from "@navikt/ds-react";
 import Header from "./components/Header";
 import { PlusIcon } from "@navikt/aksel-icons";
 import Filtermeny from "./components/Filtermeny";

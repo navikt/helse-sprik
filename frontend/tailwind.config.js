@@ -2,9 +2,8 @@
 module.exports = {
   presets: [require("@navikt/ds-tailwind")],
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+    './index.html',
   ],
   "theme": {
     "colors": {

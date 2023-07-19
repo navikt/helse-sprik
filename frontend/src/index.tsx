@@ -2,50 +2,23 @@ import CardsContainer from "./components/CardsContainer";
 import "@navikt/ds-css";
 import { Button, Heading, Search } from "@navikt/ds-react";
 import Header from "./components/Header";
-
+import { PlusIcon } from "@navikt/aksel-icons";
+import Filtermeny from "./components/Filtermeny";
 
 export default function Home() {
-  // const handleFeil = () => {
-  //   router.push('/feil')
-  // }
-
   return (
     <main className="flex flex-col h-screen">
       <Header/>
-      <div className="flex justify-center grow">
-        <div className="bg-bg-subtle w-1/6 p-8 flex flex-col justify-end">
-          <div className="flex flex-col gap-4 text-center bottom-0">
-            <Button 
-              variant="primary" 
-              // onClick={handleFeil}
-            >
+      <div className="flex grow">
+        <Filtermeny/>
+        <div className="grow bg-bg-subtle px-32 py-10 flex flex-col gap-10">
+          <div className="flex gap-12 items-end">
+            <Search label="Søkefelt" hideLabel={false}/>
+            <Button className="w-64 h-min" icon={<PlusIcon/>}>
               Meld inn feil
             </Button>
-            <Button 
-              variant="secondary"
-            >
-              Meld inn funksjonalitetsønsker
-            </Button>
           </div>
-        </div>
-
-        <div className="p-8 grow flex gap-8 flex-col">
-          <Search
-            label="Søk gjennom innmeldte feil (nøkkelord, tags, status)"
-            variant="primary"
-            hideLabel={false}
-          />
-          <Heading 
-            level="1" 
-            size="medium"
-          >
-            Innmeldte feil (saker, feilmeldinger poster, feil)
-          </Heading>
           <CardsContainer/>
-        </div>
-
-        <div className="bg-bg-subtle w-1/6 p-8">
-          <h1>Filter to be</h1>
         </div>
       </div>
     </main>

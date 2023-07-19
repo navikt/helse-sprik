@@ -293,7 +293,10 @@ module.exports = {
         "large": "8px",
         "xlarge": "12px",
         "full": "9999px"
-      }
+      },
+      "width": {
+        "500": "500px",
+      },
     }
   },
   plugins: [],

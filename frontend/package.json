@@ -1,36 +1,28 @@
 {
   "name": "frontend",
-  "version": "0.1.0",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "../frontend/node_modules/.bin/next dev",
-    "build": "../frontend/node_modules/.bin/next build",
-    "start": "../frontend/node_modules/.bin/next start",
-    "lint": "../frontend/node_modules/.bin/next lint"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@navikt/aksel-icons": "^4.4.2",
-    "@navikt/ds-css": "^4.4.2",
-    "@navikt/ds-react": "^4.4.2",
-    "@navikt/ds-tailwind": "^4.6.1",
-    "@navikt/ds-tokens": "^4.6.1",
-    "@types/node": "20.3.2",
-    "@types/react": "18.2.14",
-    "@types/react-dom": "18.2.6",
-    "autoprefixer": "10.4.14",
-    "axios": "^1.4.0",
-    "eslint": "8.43.0",
-    "eslint-config-next": "13.4.7",
-    "next": "13.4.7",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-router-dom": "^6.14.0",
-    "swr": "^2.2.0",
-    "tailwindcss": "3.3.2",
-    "typescript": "5.1.5"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@navikt/aksel-stylelint": "^4.5.0",
-    "stylelint": "^15.10.1"
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
+    "@vitejs/plugin-react": "^4.0.1",
+    "eslint": "^8.44.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.1",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.0"
   }
 }

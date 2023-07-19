@@ -68,7 +68,7 @@ tasks {
             }
         }
         from({ Paths.get(project(":frontend").buildDir.path) }){
-            into("frontend/out")
+            into("frontend/dist")
         }
         doLast {
             configurations.runtimeClasspath.get().forEach {

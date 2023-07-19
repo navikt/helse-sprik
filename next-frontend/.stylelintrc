@@ -1,7 +1,0 @@
-{
-    "stylelint": {
-        "extends": [
-          "@navikt/aksel-stylelint/recommended"
-        ]
-      }
-}

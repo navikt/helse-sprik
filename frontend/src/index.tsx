@@ -4,8 +4,12 @@ import { Button, Heading, Search } from "@navikt/ds-react";
 import Header from "./components/Header";
 import { PlusIcon } from "@navikt/aksel-icons";
 import Filtermeny from "./components/Filtermeny";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+
+  const navigate = useNavigate()
+
   return (
     <main className="flex flex-col h-screen">
       <Header/>
@@ -14,7 +18,11 @@ export default function Home() {
         <div className="grow bg-bg-subtle px-32 py-10 flex flex-col gap-10">
           <div className="flex gap-12 items-end">
             <Search label="Søkefelt" hideLabel={false}/>
-            <Button className="w-64 h-min" icon={<PlusIcon/>}>
+            <Button 
+              className="w-64 h-min" 
+              icon={<PlusIcon/>}
+              onClick={() => navigate("nyfeil")}  
+            >
               Meld inn feil
             </Button>
           </div>

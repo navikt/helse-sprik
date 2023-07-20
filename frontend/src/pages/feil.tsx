@@ -75,9 +75,6 @@ export default function Feil() {
                         <Button
                             variant="tertiary"
                             icon={<ArrowLeftIcon />}
-                            // onClick={() => {
-                            //     router.push('/')
-                            // }}
                             onClick={() => navigate("/")}
                         >
                             Gå tilbake til hovedmenyen

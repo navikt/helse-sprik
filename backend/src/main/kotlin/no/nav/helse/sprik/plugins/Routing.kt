@@ -56,6 +56,9 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
                 feilmeldingRepository.lagre(feilmelding)
                 call.respond(status = HttpStatusCode.Created, message = "Feilmelding motatt og sendt til database")
             }
+            get("/api/hentfeil"){
+                call.respond(status = HttpStatusCode.Created, message = "Prøver å hente feil fra DB")
+            }
         }
     }
     connector {

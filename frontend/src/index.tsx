@@ -15,9 +15,9 @@ export default function Home() {
       <Header/>
       <div className="flex grow">
         <Filtermeny/>
-        <div className="grow bg-bg-subtle px-32 py-10 flex flex-col gap-10">
+        <div className="grow bg-bg-subtle px-32 py-8 flex flex-col gap-10">
           <div className="flex gap-12 items-end">
-            <Search label="Søkefelt" hideLabel={false}/>
+            <Search label="Søkefelt" description="Søk gjennom innmeldte feil (nøkkelord, tags, status)" hideLabel={false}/>
             <Button 
               className="w-64 h-min" 
               icon={<PlusIcon/>}

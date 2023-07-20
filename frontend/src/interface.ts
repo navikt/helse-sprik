@@ -7,4 +7,5 @@ interface Feilmelding {
     tittel: String,
     beskrivelse: String
     haster: boolean
+    dato: Date
 }

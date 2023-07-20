@@ -54,4 +54,17 @@ class FeilmeldingTest {
             assertEquals(LocalDateTime.of(2023, 1, 1, 8, 0), actual[FeilmeldingTable.dato])
         }
     }
+
+    @Test
+    fun `Henter alle feilmeldinger i databasen`() {
+        feilmeldingRepository.lagre(feilmelding)
+        transaction {
+            val res: List<Feilmelding> = feilmeldingRepository.hentAlleFeilmeldinger()
+            val actual = FeilmeldingTable.selectAll()
+            assertEquals(actual.map { it }.size, res.size)
+            assertEquals("Test", res[0].tittel)
+            assertEquals("Testesen", res[0].beskrivelse)
+            assertEquals(LocalDateTime.of(2023, 1, 1, 8, 0), res[0].dato)
+        }
+    }
 }

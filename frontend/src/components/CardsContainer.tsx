@@ -1,4 +1,3 @@
-import axios from "axios"
 import FeilCard from "./FeilCard"
 import useSWR from "swr"
 /**

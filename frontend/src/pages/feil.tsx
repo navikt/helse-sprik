@@ -12,14 +12,15 @@ export default function Feil() {
     const [tittel, setTittel] = useState("");
     const [beskrivelse, setBeskrivelse] = useState("");
 
+    const url = "https://helse-sprik.intern.dev.nav.no"
+    //const url = "http://localhost:5174"
+
     const handleSubmit = () => {
-        axios.post("https://helse-sprik.intern.dev.nav.no/nyfeil",
+        axios.post(url + "/api/nyfeil",
             {
-                "data": {
-                    tittel: tittel,
-                    beskrivelse: beskrivelse,
-                    dato: new Date()
-                }
+                tittel: tittel,
+                beskrivelse: beskrivelse,
+                dato: new Date().toISOString().replace('Z', '')
             }, {
                 headers: {
                     'Content-Type': 'application/json'

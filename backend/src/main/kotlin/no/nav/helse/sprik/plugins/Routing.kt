@@ -53,6 +53,7 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
             }
             post("/api/nyfeil") {
                 val feilmelding = call.receive<Feilmelding>()
+                println(feilmelding.tittel)
                 feilmeldingRepository.lagre(feilmelding)
                 call.respond(status = HttpStatusCode.Created, message = "Feilmelding motatt og sendt til database")
             }

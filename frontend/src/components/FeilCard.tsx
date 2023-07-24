@@ -1,5 +1,6 @@
 import "@navikt/ds-css";
 import { ExpansionCard, Tag } from "@navikt/ds-react";
+import { IFeilmelding } from "../interface";
 
 interface TagBarInterface {
     haster: boolean
@@ -23,7 +24,7 @@ const FeilCard = (props: IFeilmelding) => {
                 <ExpansionCard.Description>
                     {props.beskrivelse}
                 </ExpansionCard.Description>
-                {/* <TagBar haster={props.haster}/> */}
+                <TagBar haster={true}/>
             </ExpansionCard.Header>
             <ExpansionCard.Content>
                 Hællæ

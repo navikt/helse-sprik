@@ -1,8 +1,6 @@
-import { data } from "autoprefixer";
 import FeilCard from "./FeilCard"
-import useSWR from "swr"
 import { backendURL } from "../const.ts"
-import { Feilmelding, IFeilmelding } from "../interface.ts";
+import { Feilmelding } from "../interface.ts";
 /**
  * 
  * @returns Komponent for returnering av konteiner med alle feilinnmeldingene. 
@@ -24,7 +22,7 @@ async function fetchAlleFeil() {
         })
         .then((data) => data.json())
         .then((feil) => {
-            return feil.map(jsonFeilmelding => new Feilmelding(jsonFeilmelding))                          
+            return feil.map((jsonFeilmelding: any) => new Feilmelding(jsonFeilmelding))                          
         })
         .catch((error) => {
             console.log(error)

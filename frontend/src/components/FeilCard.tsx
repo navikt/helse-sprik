@@ -15,7 +15,7 @@ const TagBar = (props: TagBarInterface) => {
     )
 }
 
-const FeilCard = (props: Feilmelding) => {
+const FeilCard = (props: IFeilmelding) => {
     return (
         <ExpansionCard aria-label="tekst">
             <ExpansionCard.Header>
@@ -23,7 +23,7 @@ const FeilCard = (props: Feilmelding) => {
                 <ExpansionCard.Description>
                     {props.beskrivelse}
                 </ExpansionCard.Description>
-                <TagBar haster={props.haster}/>
+                {/* <TagBar haster={props.haster}/> */}
             </ExpansionCard.Header>
             <ExpansionCard.Content>
                 Hællæ

@@ -14,6 +14,7 @@ import io.ktor.server.request.*
 import no.nav.helse.sprik.Test
 import no.nav.helse.sprik.db.FeilmeldingRepository
 import no.nav.helse.sprik.modell.Feilmelding
+import java.time.LocalDateTime
 
 fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngineEnvironment {
     //Repositories for handlinger mot database:
@@ -57,8 +58,9 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
                 feilmeldingRepository.lagre(feilmelding)
                 call.respond(status = HttpStatusCode.Created, message = "Feilmelding motatt og sendt til database")
             }
-            get("/api/hentfeil"){
-                call.respond(status = HttpStatusCode.Created, message = "Prøver å hente feil fra DB")
+            get("/api/hentallefeil"){
+                val testMelding = feilmeldingRepository.hentAlleFeilmeldinger()
+                call.respond(status = HttpStatusCode.Created, message = testMelding)
             }
         }
     }

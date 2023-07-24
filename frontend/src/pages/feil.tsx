@@ -7,21 +7,23 @@ import { useState } from "react";
 import BildeOpplastning from "../components/BildeOpplastning";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
+import { backendURL } from "../const";
 
 export default function Feil() {
     const [tittel, setTittel] = useState("");
     const [beskrivelse, setBeskrivelse] = useState("");
 
-    const url = "https://helse-sprik.intern.dev.nav.no"
-    //const url = "http://localhost:5174"
-
     const handleSubmit = () => {
-        axios.post(url + "/api/nyfeil",
-            {
-                tittel: tittel,
-                beskrivelse: beskrivelse,
-                dato: new Date().toISOString().replace('Z', '')
-            }, {
+
+        const payload = {
+            tittel: tittel,
+            beskrivelse: beskrivelse,
+            dato: new Date().toISOString().replace('Z', '')
+        }
+
+        console.log(payload);
+        
+        axios.post(backendURL + "/api/nyfeil", payload, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

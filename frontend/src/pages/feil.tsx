@@ -1,7 +1,7 @@
 import "@navikt/ds-css";
 
 import { ArrowLeftIcon, BugIcon } from "@navikt/aksel-icons";
-import { Button, Heading, TextField, Textarea } from "@navikt/ds-react";
+import { Alert, Button, Heading, TextField, Textarea } from "@navikt/ds-react";
 import axios from "axios";
 import { useState } from "react";
 import BildeOpplastning from "../components/BildeOpplastning";
@@ -12,6 +12,7 @@ import { backendURL } from "../const";
 export default function Feil() {
     const [tittel, setTittel] = useState("");
     const [beskrivelse, setBeskrivelse] = useState("");
+    const [status, setStatus] = useState(0)
 
     const handleSubmit = () => {
 
@@ -20,21 +21,31 @@ export default function Feil() {
             beskrivelse: beskrivelse,
             dato: new Date().toISOString().replace('Z', '')
         }
-
-        console.log(payload);
         
         axios.post(backendURL + "/api/nyfeil", payload, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).then((response) => {
-                console.log(response)
+                setStatus(response.status)
             }).catch((error) => {
                 console.log(error);
             })
     }
 
+    const handleAlerts = () => {
+        if (status === 201) {
+            console.log("Feil lagt til i database");
+            return <Alert variant="success">Feil er meldt inn! Du vil nå sendes tilbake til hovedmenyen.</Alert>
+            //TODO wait 5 seconds and redirect to home
+        } else {
+            console.log("Noe gikk galt, feil ikke lagt til i database!");
+            return <Alert variant="error">Noe gikk galt! Prøv igjen om noen minutter.</Alert>
+        }
+    }
+
         // TODO: clear data fra felter
+
 
     const navigate = useNavigate()
 
@@ -69,6 +80,7 @@ export default function Feil() {
                         <BildeOpplastning/>
                     </div>
                     <div className="w-1/2 flex flex-col gap-2 justify-center">
+                        {status != 0 ? handleAlerts() : <></>}
                         <Button
                             onClick={handleSubmit}
                             variant="primary"

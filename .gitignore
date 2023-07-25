@@ -72,3 +72,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 ### Next ###
+
+#constants for backend and frontend
+./frontend/src/const.ts

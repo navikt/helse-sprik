@@ -14,11 +14,13 @@ import io.ktor.server.request.*
 import no.nav.helse.sprik.Test
 import no.nav.helse.sprik.db.FeilmeldingRepository
 import no.nav.helse.sprik.modell.Feilmelding
+import no.nav.helse.sprik.modell.Sokemotor
 import java.time.LocalDateTime
 
 fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngineEnvironment {
     //Repositories for handlinger mot database:
     val feilmeldingRepository = FeilmeldingRepository()
+    val sokemotor = Sokemotor()
 
     module {
         install(CORS) {
@@ -56,6 +58,10 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
             get("/api/hentallefeil"){
                 val testMelding = feilmeldingRepository.hentAlleFeilmeldinger()
                 call.respond(status = HttpStatusCode.Created, message = testMelding)
+            }
+            post("/api/hentsok"){
+                val sokestreng = call.receive<String>()
+                call.respond(status = HttpStatusCode.Created, message = sokestreng + ": " + sokemotor.sok(sokestreng))
             }
         }
     }

@@ -48,13 +48,8 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
             get("/api/test") {
                 call.respondText("test")
             }
-            post("/test") {
-                val test = call.receive<Test>()
-                call.respond(status = HttpStatusCode.Created, message = test)
-            }
             post("/api/nyfeil") {
                 val feilmelding = call.receive<Feilmelding>()
-                println(feilmelding.tittel)
                 feilmeldingRepository.lagre(feilmelding)
                 call.respond(status = HttpStatusCode.Created, message = "Feilmelding motatt og sendt til database")
             }

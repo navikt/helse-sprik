@@ -1,30 +1,13 @@
 import FeilCard from "./FeilCard";
 import { backendURL } from "../const.ts";
 import { Feilmelding } from "../interface.ts";
-import { useState } from "react";
-/**
- *
- * @returns Komponent for returnering av konteiner med alle feilinnmeldingene.
- */
-// const fetcher = (url: RequestInfo | URL) => fetch(url).then(r => r.json())
-
-// const test = async () => {
-//     const response = await fetch(backendURL + "/api/hentallefeil")
-//     const data = await response.json() // data er Promise
-//     return data.then({
-
-//     })
-// }
+import { useEffect, useState } from "react";
 
 const CardsContainer = () => {
   const [test, setTest] = useState([]);
+  const feilMeldinger: Feilmelding[] = test;
 
   async function fetchAlleFeil() {
-    // const {data, error, isLoading } = useSWR("/api/hentallefeil", fetcher)
-    // if (error) return <div>fail</div>
-    // if (isLoading) return <div>loader</div>
-    // return <div>hello {data.data}!</div>
-
     const response = await fetch(backendURL + "/api/hentallefeil", {
       method: "GET",
       headers: {
@@ -43,11 +26,7 @@ const CardsContainer = () => {
     return response;
   }
 
-//   fetchAlleFeil();
-
-  const feilMeldinger: Feilmelding[] = test;
-
-  // console.log(test())
+  useEffect(() => {fetchAlleFeil()})
 
   return (
     <div>
@@ -62,11 +41,9 @@ const CardsContainer = () => {
           />
         ))}
       </div>
-      <div>
-        <br />
-        <p>Forsøker å loade feil objekter her:</p>
-      </div>
     </div>
   );
+
 };
+
 export default CardsContainer;

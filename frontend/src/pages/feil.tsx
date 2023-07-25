@@ -36,8 +36,12 @@ export default function Feil() {
     const handleAlerts = () => {
         if (status === 201) {
             console.log("Feil lagt til i database");
-            return <Alert variant="success">Feil er meldt inn! Du vil nå sendes tilbake til hovedmenyen.</Alert>
-            //TODO wait 5 seconds and redirect to home
+            setTimeout(() => 
+            {
+                navigate("/");
+            },
+            5000);           
+            return <Alert variant="success">Feil er meldt inn! Du vil nå sendes tilbake til hovedmenyen om fem sekunder.</Alert>
         } else {
             console.log("Noe gikk galt, feil ikke lagt til i database!");
             return <Alert variant="error">Noe gikk galt! Prøv igjen om noen minutter.</Alert>

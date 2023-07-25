@@ -15,12 +15,12 @@ fun main() {
     val app = Application(db)
     ExposedDatabase.connect(db.dataSource)
 
-    oppretteMockData(db.dataSource) // WIP
+    oppretteMockData() // WIP
 
     app.startBlocking()
 }
 
-private fun oppretteMockData(dataSource: DataSource) {
+private fun oppretteMockData() {
     val feilmeldingRepository = FeilmeldingRepository()
     feilmeldingRepository.lagre(Feilmelding("Mangel på hensyn til tariffoppgjør", "Det har vært ett tariffoppgjør og speil sier sykepengene må tilbakekreves, noe som er feil. (sier vi.. har ikke domenekunnskap)", LocalDateTime.of(2023, 1, 1, 8, 0, 0)))
     feilmeldingRepository.lagre(Feilmelding("Speil sier NAV må tilbakekreve sykepenger på feil grunnlag", "Beskrivelse Test2", LocalDateTime.of(2023, 2, 1, 8, 0, 0)))

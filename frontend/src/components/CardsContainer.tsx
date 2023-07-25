@@ -3,10 +3,19 @@ import { backendURL } from "../const.ts";
 import { Feilmelding } from "../interface.ts";
 import { useEffect, useState } from "react";
 
+/**
+ * Komponent som laster inn feilmeldinger i kort fra database.
+ * @returns grid med feilmeldinger 
+ */
 const CardsContainer = () => {
-  const [test, setTest] = useState([]);
-  const feilMeldinger: Feilmelding[] = test;
+  // Array med feilmeldinger
+  const [feilMeldinger, setFeilmeldinger] = useState<Feilmelding[]>([]);
 
+  /**
+   * Fetcher feilmeldinger fra backend.
+   * Bruker endepunktet /api/hentallefeil.
+   * @returns response
+   */
   async function fetchAlleFeil() {
     const response = await fetch(backendURL + "/api/hentallefeil", {
       method: "GET",
@@ -16,7 +25,7 @@ const CardsContainer = () => {
     })
       .then((data) => data.json())
       .then((feil) => {
-        setTest(
+        setFeilmeldinger(
           feil.map((jsonFeilmelding: any) => new Feilmelding(jsonFeilmelding))
         );
       })
@@ -26,7 +35,10 @@ const CardsContainer = () => {
     return response;
   }
 
-  useEffect(() => {fetchAlleFeil()})
+  // Sørger for at fetchAlleFeil() kun kjører når komponentet laster inn
+  useEffect(() => {
+    fetchAlleFeil()
+  }, [])
 
   return (
     <div>
@@ -36,14 +48,12 @@ const CardsContainer = () => {
             key={feilMeldinger.indexOf(feilMelding)}
             tittel={feilMelding.tittel}
             beskrivelse={feilMelding.beskrivelse}
-            // haster={feilMelding.haster}
             dato={new Date()}
           />
         ))}
       </div>
     </div>
   );
-
 };
 
 export default CardsContainer;

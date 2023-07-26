@@ -17,7 +17,6 @@ import java.time.LocalDateTime
 import kotlin.test.assertEquals
 import org.jetbrains.exposed.sql.Database as ExposedDatabase
 
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class FeilmeldingTest {
     private val database = Database(dbconfig()).configureFlyway()
@@ -83,7 +82,7 @@ class FeilmeldingTest {
 
     @Test
     fun `Henter feilmeldinger som har søkestreng som substreng`() {
-        val sokeresultat: List<Feilmelding> = feilmeldingRepository.hentSokteFeilmeldinger("Teste")
+        val sokeresultat: List<Feilmelding> = feilmeldingRepository.hentSokteFeilmeldinger("este")
         assertEquals(1, sokeresultat.size)
         assertEquals("Test", sokeresultat[0].tittel)
         assertEquals("Testesen", sokeresultat[0].beskrivelse)
@@ -93,5 +92,13 @@ class FeilmeldingTest {
     fun `Finner ingen feilmeldinger som matcher søk`() {
         val sokeresultat: List<Feilmelding> = feilmeldingRepository.hentSokteFeilmeldinger("abrakadabra")
         assertEquals(0, sokeresultat.size)
+    }
+
+    @Test
+    fun `Søk er ikke case sensitivt`() {
+        val sokeresultat: List<Feilmelding> = feilmeldingRepository.hentSokteFeilmeldinger("test")
+        assertEquals(1, sokeresultat.size)
+        assertEquals("Test", sokeresultat[0].tittel)
+        assertEquals("Testesen", sokeresultat[0].beskrivelse)
     }
 }

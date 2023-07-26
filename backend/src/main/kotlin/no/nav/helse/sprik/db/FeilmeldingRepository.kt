@@ -34,16 +34,11 @@ class FeilmeldingRepository {
     }
 
     fun hentSokteFeilmeldinger(sokeord: String): List<Feilmelding> = transaction {
-        /* val query = FeilmeldingTable.selectAll()
-        tittel?.let {
-            query.andWhere { FeilmeldingTable.tittel like sokeord }
-        }
-        beskrivelse?.let {
-            query.andWhere { FeilmeldingTable.beskrivelse like sokeord }
-        } */
-        val sok = "%${sokeord}%"
+        val sok = "%${sokeord.lowercase()}%"
 
-        FeilmeldingTable.select((FeilmeldingTable.tittel like sok) or (FeilmeldingTable.beskrivelse like sok)).map(::radTilFeilmelding)
+        FeilmeldingTable.select((FeilmeldingTable.tittel.lowerCase() like sok)
+                                or (FeilmeldingTable.beskrivelse.lowerCase() like sok))
+                                .map(::radTilFeilmelding)
 
     }
 }

@@ -17,7 +17,6 @@ import no.nav.helse.sprik.modell.Feilmelding
 fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngineEnvironment {
     //Repositories for handlinger mot database:
     val feilmeldingRepository = FeilmeldingRepository()
-    val sokemotor = Sokemotor()
 
     module {
         install(CORS) {

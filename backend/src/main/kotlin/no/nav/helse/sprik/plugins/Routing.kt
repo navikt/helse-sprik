@@ -11,11 +11,8 @@ import io.ktor.server.engine.*
 import io.ktor.server.http.content.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.request.*
-import no.nav.helse.sprik.Test
 import no.nav.helse.sprik.db.FeilmeldingRepository
 import no.nav.helse.sprik.modell.Feilmelding
-import no.nav.helse.sprik.modell.Sokemotor
-import java.time.LocalDateTime
 
 fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngineEnvironment {
     //Repositories for handlinger mot database:
@@ -59,9 +56,9 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
                 val testMelding = feilmeldingRepository.hentAlleFeilmeldinger()
                 call.respond(status = HttpStatusCode.Created, message = testMelding)
             }
-            post("/api/hentsok"){
+            get("/api/hentsok/{sokestreng}"){
                 val sokestreng = call.receive<String>()
-                call.respond(status = HttpStatusCode.Created, message = sokestreng + ": " + sokemotor.sok(sokestreng))
+                call.respond(status = HttpStatusCode.Created, message = sokestreng)
             }
         }
     }

@@ -6,6 +6,7 @@ import no.nav.helse.sprik.db.FeilmeldingTable.dato
 import no.nav.helse.sprik.db.FeilmeldingTable.tittel
 import no.nav.helse.sprik.modell.Feilmelding
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 
@@ -30,5 +31,19 @@ class FeilmeldingRepository {
 
     fun hentAlleFeilmeldinger(): List<Feilmelding> = transaction {
         FeilmeldingTable.selectAll().map(::radTilFeilmelding)
+    }
+
+    fun hentSokteFeilmeldinger(sokeord: String): List<Feilmelding> = transaction {
+        /* val query = FeilmeldingTable.selectAll()
+        tittel?.let {
+            query.andWhere { FeilmeldingTable.tittel like sokeord }
+        }
+        beskrivelse?.let {
+            query.andWhere { FeilmeldingTable.beskrivelse like sokeord }
+        } */
+        val sok = "%${sokeord}%"
+
+        FeilmeldingTable.select((FeilmeldingTable.tittel like sok) or (FeilmeldingTable.beskrivelse like sok)).map(::radTilFeilmelding)
+
     }
 }

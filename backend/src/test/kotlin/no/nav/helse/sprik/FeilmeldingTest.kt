@@ -23,10 +23,13 @@ class FeilmeldingTest {
     private val database = Database(dbconfig()).configureFlyway()
     private val feilmeldingRepository = FeilmeldingRepository()
     private val feilmelding = Feilmelding("Test", "Testesen", LocalDateTime.of(2023,1,1,8,0))
+    private val feilmelding2 = Feilmelding("Tittel", "Beskrivelse", LocalDateTime.of(2023,2,1,8,0))
 
     @BeforeAll
     fun setup() {
         ExposedDatabase.connect(database.dataSource)
+        feilmeldingRepository.lagre(feilmelding)
+
     }
     @AfterEach
     fun wipe() {
@@ -36,7 +39,6 @@ class FeilmeldingTest {
     }
     @Test
     fun `Sett opp testdatabasen riktig`(){
-        feilmeldingRepository.lagre(feilmelding)
         transaction {
             assertEquals(1, FeilmeldingTable.selectAll().map {
                 it
@@ -46,7 +48,6 @@ class FeilmeldingTest {
 
     @Test
     fun `Lagrer feilmelding i databasen`() {
-        feilmeldingRepository.lagre(feilmelding)
         transaction {
             val actual = FeilmeldingTable.selectAll().single()
             assertEquals("Test", actual[FeilmeldingTable.tittel])
@@ -57,14 +58,35 @@ class FeilmeldingTest {
 
     @Test
     fun `Henter alle feilmeldinger i databasen`() {
-        feilmeldingRepository.lagre(feilmelding)
         transaction {
-            val res: List<Feilmelding> = feilmeldingRepository.hentAlleFeilmeldinger()
+            val resultat: List<Feilmelding> = feilmeldingRepository.hentAlleFeilmeldinger()
             val actual = FeilmeldingTable.selectAll()
-            assertEquals(actual.map { it }.size, res.size)
-            assertEquals("Test", res[0].tittel)
-            assertEquals("Testesen", res[0].beskrivelse)
-            assertEquals(LocalDateTime.of(2023, 1, 1, 8, 0), res[0].dato)
+            assertEquals(actual.map { it }.size, resultat.size)
+            assertEquals("Test", resultat[0].tittel)
+            assertEquals("Testesen", resultat[0].beskrivelse)
+            assertEquals(LocalDateTime.of(2023, 1, 1, 8, 0), resultat[0].dato)
         }
+    }
+
+    @Test
+    fun `Henter feilmeldinger som matcher søk`() {
+        val sokeresultat: List<Feilmelding> = feilmeldingRepository.hentSokteFeilmeldinger("Test")
+        assertEquals(1, sokeresultat.size)
+        assertEquals("Test", sokeresultat[0].tittel)
+        assertEquals("Testesen", sokeresultat[0].beskrivelse)
+    }
+
+    @Test
+    fun `Henter feilmeldinger som har søkestreng som substreng`() {
+        val sokeresultat: List<Feilmelding> = feilmeldingRepository.hentSokteFeilmeldinger("Teste")
+        assertEquals(1, sokeresultat.size)
+        assertEquals("Test", sokeresultat[0].tittel)
+        assertEquals("Testesen", sokeresultat[0].beskrivelse)
+    }
+
+    @Test
+    fun `Finner ingen feilmeldinger som matcher søk`() {
+        val sokeresultat: List<Feilmelding> = feilmeldingRepository.hentSokteFeilmeldinger("abrakadabra")
+        assertEquals(0, sokeresultat.size)
     }
 }

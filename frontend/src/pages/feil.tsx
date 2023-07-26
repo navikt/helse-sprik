@@ -7,7 +7,6 @@ import { useState } from "react";
 import BildeOpplastning from "../components/BildeOpplastning";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
-import { backendURL } from "../const";
 
 export default function Feil() {
     const [tittel, setTittel] = useState("");
@@ -22,7 +21,7 @@ export default function Feil() {
             dato: new Date().toISOString().replace('Z', '')
         }
         
-        axios.post(backendURL + "/api/nyfeil", payload, {
+        axios.post("/api/nyfeil", payload, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

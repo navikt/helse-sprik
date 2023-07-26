@@ -1,5 +1,4 @@
 import FeilCard from "./FeilCard";
-import { backendURL } from "../const.ts";
 import { Feilmelding } from "../interface.ts";
 import { useEffect, useState } from "react";
 
@@ -17,7 +16,7 @@ const CardsContainer = () => {
    * @returns response
    */
   async function fetchAlleFeil() {
-    const response = await fetch(backendURL + "/api/hentallefeil", {
+    const response = await fetch("/api/hentallefeil", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

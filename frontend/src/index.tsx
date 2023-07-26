@@ -6,7 +6,6 @@ import { PlusIcon } from "@navikt/aksel-icons";
 import Filtermeny from "./components/Filtermeny";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { backendURL } from "./const";
 
 export default function Home() {
   const navigate = useNavigate()
@@ -14,7 +13,7 @@ export default function Home() {
   const handleChange = (soeketekst: string) => {
     console.log("search changed")  
 
-    axios.post(backendURL + "/api/hentsok", soeketekst, {
+    axios.post("/api/hentsok", soeketekst, {
       headers: {
           'Content-Type': 'application/json'
       }

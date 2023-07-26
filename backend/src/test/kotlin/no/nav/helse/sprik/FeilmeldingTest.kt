@@ -8,9 +8,9 @@ import no.nav.helse.sprik.modell.Feilmelding
 import org.jetbrains.exposed.sql.deleteAll
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import java.time.LocalDateTime
@@ -28,9 +28,14 @@ class FeilmeldingTest {
     @BeforeAll
     fun setup() {
         ExposedDatabase.connect(database.dataSource)
-        feilmeldingRepository.lagre(feilmelding)
 
     }
+
+    @BeforeEach
+    fun lagreFeilmelding() {
+        feilmeldingRepository.lagre(feilmelding)
+    }
+
     @AfterEach
     fun wipe() {
         transaction {

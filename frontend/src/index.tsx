@@ -6,22 +6,46 @@ import { PlusIcon } from "@navikt/aksel-icons";
 import Filtermeny from "./components/Filtermeny";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { Feilmelding } from "./interface";
 
 export default function Home() {
   const navigate = useNavigate()
+  
+  const [feilmeldinger, setFeilmeldinger] = useState<Feilmelding[]>([]);
 
-  const handleChange = (soeketekst: string) => {
-    console.log("search changed")  
+  /**
+   * Henter alle feilmeldinger fra backend.
+   * Bruker endepunktet /api/hentallefeil.
+   */  
+  const hentAlleFeil = async () => {
+    await axios.get("/api/hentallefeil")
+      .then(data => data.data)
+      .then(feil => {
+        setFeilmeldinger(
+          feil.map((jsonFeilmelding: any) => new Feilmelding(jsonFeilmelding))
+        );
+      })
+  }
 
-    axios.post("/api/hentsok", soeketekst, {
-      headers: {
-          'Content-Type': 'application/json'
-      }
-    }).then((response) => {
-      console.log(response.data);
-    }).catch((error) => {
-        console.log(error);
-    })
+  // Sørger for at hentAlleFeil() kun kjører når komponentet laster inn
+  useEffect(() => {
+    hentAlleFeil();
+  }, [])
+
+  /**
+   * Oppdaterer viste feilmeldinger ved endring i søkefelt.
+   * Kontakter endepunktet /api/hentsok/.
+   * @param soketekst 
+   */
+  const handleSearch = async (soketekst: string) => {
+    // Ved tomt søkefelt hentes alle feilmeldinger
+    if (soketekst === "") {
+      hentAlleFeil()
+      return
+    }
+    const { data } = await axios.get(`/api/hentsok/${soketekst}`)
+    setFeilmeldinger(data)
   }
 
   return (
@@ -35,7 +59,7 @@ export default function Home() {
               label="Søkefelt"
               description="Søk gjennom innmeldte feil (nøkkelord, tags, status)"
               hideLabel={false}
-              onChange={(soeketekst) => handleChange(soeketekst)}
+              onChange={soeketekst => handleSearch(soeketekst)}
             />
             <Button 
               className="w-64 h-min" 
@@ -45,7 +69,7 @@ export default function Home() {
               Meld inn feil
             </Button>
           </div>
-          <CardsContainer/>
+          <CardsContainer feilmeldinger={feilmeldinger}/>
         </div>
       </div>
     </main>

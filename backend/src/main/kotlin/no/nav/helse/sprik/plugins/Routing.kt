@@ -56,8 +56,10 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
                 call.respond(status = HttpStatusCode.Created, message = testMelding)
             }
             get("/api/hentsok/{sokestreng}"){
-                val sokestreng = call.receive<String>()
-                call.respond(status = HttpStatusCode.Created, message = sokestreng)
+                val sokestreng = call.parameters["sokestreng"]
+                    ?: return@get call.respond(HttpStatusCode.BadRequest, "Sokestreng må være definert")
+                val sokeresultat = feilmeldingRepository.hentSokteFeilmeldinger(sokestreng)
+                call.respond(status = HttpStatusCode.Created, message = sokeresultat)
             }
         }
     }

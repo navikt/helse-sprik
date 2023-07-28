@@ -46,7 +46,9 @@ export const FeilCard = (props: IFeilmelding) => {
                         bg-bg-default border border-border-default p-7 rounded-lg
                         h-1/2 w-1/2
                     ">
-                        <Button onClick={() => {
+                        <Button onClick={(e) => {
+                                //hindrer DOM bubbling https://stackoverflow.com/questions/1369035/how-do-i-prevent-a-parents-onclick-event-from-firing-when-a-child-anchor-is-cli
+                                e.stopPropagation()
                                 setVisFeilinformasjon(false)
                         }}>
                             Avslutt kortvisning

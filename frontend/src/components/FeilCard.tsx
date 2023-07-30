@@ -4,22 +4,30 @@ import { IFeilmelding } from "../interface";
 import { createContext, useContext, useState } from "react";
 import { XMarkIcon } from "@navikt/aksel-icons";
 
-interface TagBarInterface {
-    haster: boolean
-}
-
-interface HeaderInterface {
-    tittel: string,
-    beskrivelse: string,
-    haster: boolean
-}
-
+/**
+ * Kontekst som brukes for å vise og skjule FullvisningsKort-komponentet.
+ * 
+ * @param visHeleKortet en boolean som bestemmer om FullvisningsKort-komponentet skal vises eller ikke. 
+ * True viser komponentet, false skjuler komponentet.
+ * 
+ * @param setVisHeleKortet en state-funksjon som endrer visHeleKortet. 
+ * Gjør det mulig å endre visningsmodus fra andre komponenter en bare provider (Feilcard).
+ */
 const visningsContext = createContext({
     visHeleKortet: false,
     setVisHeleKortet: (value: boolean) => {}
 })
 
-export const FeilCard = (props: IFeilmelding) => {
+
+
+/**
+ * En konteiner som inneholder all informasjon og funksjonalitet for å vise og interagere med en feilmelding.
+ * @param tittel
+ * @param beskrivelse
+ * @param dato
+ * @returns JSX komponent som beskriver innholdet i feilmeldinger.
+ */
+export const FeilKort = (props: IFeilmelding) => {
     const [visHeleKortet, setVisHeleKortet] = useState(false)
     const visningsModus = {visHeleKortet, setVisHeleKortet}
 
@@ -33,13 +41,24 @@ export const FeilCard = (props: IFeilmelding) => {
                 onClick={() => {
                     setVisHeleKortet(true)
                 }}>
-                <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} haster={false}/>
-                <FullvisningsKort tittel={props.tittel} beskrivelse={props.beskrivelse} dato={new Date()}/>
+                <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} haster={false} dato={props.dato}/>
+                <FullvisningsKort tittel={props.tittel} beskrivelse={props.beskrivelse} dato={props.dato}/>
             </div>
         </visningsContext.Provider>
     )
 }
 
+
+
+/**
+ * Fullvisningskortet er en komponent som viser all informasjon om en feilmelding.
+ * Alle brukere skal ikke ha tilgang til denne informasjonen, visningen av komponentet er derfor avhengig av en kontekst.
+ * dersom visHeleKortet er true vises komponentet, ellers vises ikke komponentet og det returneres react fragmenter.
+ * @param tittel
+ * @param beskrivelse
+ * @param dato
+ * @returns JSX komponent som beskriver innholdet i feilmeldinger.
+ */
 const FullvisningsKort = (props: IFeilmelding) => {
     const {visHeleKortet, setVisHeleKortet} = useContext(visningsContext)
     return(
@@ -48,7 +67,7 @@ const FullvisningsKort = (props: IFeilmelding) => {
                 <div className="w-full h-full flex justify-center items-center">
                     <div className="bg-bg-default border border-border-default p-7 rounded-lg w-1/2">
                         <div className="flex justify-between gap-4">
-                            <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} haster={true}/>
+                            <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} dato={props.dato}/>
                             <Button
                                 icon={<XMarkIcon/>}
                                 className="max-h-14 min-w-fit"
@@ -70,7 +89,15 @@ const FullvisningsKort = (props: IFeilmelding) => {
 }
 
 
-//typen på status er veldig wack heheheh, må fjerne any etterhvert men String fungerer ikke 
+
+interface TagBarInterface {
+    haster: boolean
+}
+/**
+ * Komponentet er en bar (vanrett linje) som inneholder to statusflagg: "arbeidsstatus" og "Haster".
+ * Komponentet er en del av FeilKortHeader
+ * @param haster 
+ */
 const TagBar = (props: TagBarInterface) => {
     return (
         <div className="flex gap-8 mt-4">
@@ -81,14 +108,26 @@ const TagBar = (props: TagBarInterface) => {
 }
 
 
-const FeilkortHeader = (props: HeaderInterface) => {
+
+/**
+ * FeilkortHeader er komponent som beskriver ikke-sensitiv informasjon om feilmeldingen og vises for alle på forsiden.
+ * FeilkortHeaderen er en del av FeilKort-komponenten og FullvisningsKort-komponenten. 
+ * Midlertidig implementerer komponentet @requires IFeilmelding for props, men dette må endres når IFeilmelding utvides i fremtiden for støtte av flere typer feilmeldinger.
+ * @param tittel
+ * @param beskrivelse
+ * @param haster
+ * @param dato
+ * @returns JSX komponent som skal vise nødvendig informasjon for å forstå en feil.
+ */
+const FeilkortHeader = (props: IFeilmelding) => {
     return(
         <div className="flex justify-between flex-col">
             <div>
                 <Heading size="medium">{props.tittel}</Heading>
-                <p>{props.beskrivelse}</p>       
+                <p className="text-text-subtle mb-4">{props.dato.toDateString()}</p>
+                <p>{props.beskrivelse}</p>    
             </div>  
-            <TagBar haster={props.haster}/>              
+            <TagBar haster={false}/>              
         </div>
     )
 }

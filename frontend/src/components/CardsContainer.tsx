@@ -1,4 +1,4 @@
-import { FeilCard } from "./FeilCard";
+import { FeilKort } from "./FeilCard";
 import { Feilmelding } from "../interface.ts";
 
 interface ICardsContainer {
@@ -22,7 +22,7 @@ const CardsContainer = (props: ICardsContainer) => {
           />
         ))} */}
         {props.feilmeldinger.map((feilMelding) => (
-          <FeilCard
+          <FeilKort
             key={props.feilmeldinger.indexOf(feilMelding)}
             tittel={feilMelding.tittel}
             beskrivelse={feilMelding.beskrivelse}

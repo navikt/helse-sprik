@@ -8,25 +8,36 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Feilmelding } from "./interface";
-import { AlertContext } from "./pages/feil";
+import { StatusContext } from "./pages/feil";
 
 export default function Home() {
   const navigate = useNavigate()
   
   const [feilmeldinger, setFeilmeldinger] = useState<Feilmelding[]>([]);
 
-  const alertValue = useContext(AlertContext)
+  const [alert, setAlert] = useState(<></>)
+  
+  const status = useContext(StatusContext)
 
-  /**
-   * 
-   */
-  const handleAlerts = () => {
-    if (alertValue.status === 201) {
-        return <Alert variant="success">Feil er meldt inn! Du vil nå sendes tilbake til hovedmenyen om fem sekunder.</Alert>
-    } else {
-        return <Alert variant="error">Noe gikk galt! Prøv igjen om noen minutter.</Alert>
+  const toggleAlert = (status: number) => {
+    if (status === 0) {
+      console.log("oppdaget status var 0");
+      return
     }
+    else if (status === 201) {
+      setAlert(<Alert variant="success">Woho</Alert>)
+    } else {
+      setAlert(<Alert variant="error">error</Alert>)
+    }
+
+    setTimeout(() => {
+      setAlert(<></>)
+    }, 3000);
   }
+
+  useEffect(() => {
+    toggleAlert(status.status)   
+  })
   
   /**
    * Henter alle feilmeldinger fra backend.
@@ -68,7 +79,7 @@ export default function Home() {
       <div className="flex grow">
         <Filtermeny/>
         <div className="grow bg-bg-subtle px-32 py-8 flex flex-col gap-10">
-          {alertValue.status != 0 ? handleAlerts() : <></>}
+          {alert}
           <div className="flex gap-12 items-end">
             <Search 
               label="Søkefelt"

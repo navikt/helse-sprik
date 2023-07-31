@@ -1,22 +1,22 @@
 import "@navikt/ds-css";
 
 import { ArrowLeftIcon, BugIcon } from "@navikt/aksel-icons";
-import { Alert, Button, Heading, TextField, Textarea } from "@navikt/ds-react";
+import { Button, Heading, TextField, Textarea } from "@navikt/ds-react";
 import axios from "axios";
 import { createContext, useState } from "react";
 import BildeOpplastning from "../components/BildeOpplastning";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 
-export const AlertContext = createContext({
-    status: null,
+export const StatusContext = createContext({
+    status: 404,
     setStatus: (value: number) => {}
 })
 
 export default function Feil() {
+    const navigate = useNavigate()
     const [tittel, setTittel] = useState("");
     const [beskrivelse, setBeskrivelse] = useState("");
-    const [status, setStatus] = useState(0)
 
     const handleSubmit = () => {
 
@@ -35,28 +35,18 @@ export default function Feil() {
             }).catch((error) => {
                 console.log(error);
             })
-        
-        handleAlerts()
+
+        navigate("/")
     }
 
-    const handleAlerts = () => {
-        if (status === 201) {
-            console.log("Feil lagt til i database");
-            navigate("/");         
-            return <Alert variant="success">Feil er meldt inn! Du vil nå sendes tilbake til hovedmenyen om fem sekunder.</Alert>
-        } else {
-            console.log("Noe gikk galt, feil ikke lagt til i database!");
-            navigate("/");         
-            return <Alert variant="error">Noe gikk galt! Prøv igjen om noen minutter.</Alert>
-        }
-    }
+    const [status, setStatus] = useState(0)
+
+    const statusContextVerdi = {status, setStatus}
 
         // TODO: clear data fra felter
 
-
-    const navigate = useNavigate()
-
     return (
+        <StatusContext.Provider value={statusContextVerdi}>
         <main className="flex flex-col h-screen">
             <Header/>
             <div className="flex grow">
@@ -105,5 +95,6 @@ export default function Feil() {
                 <div className="w-1/4 bg-bg-subtle"></div>
             </div>
         </main>
+        </StatusContext.Provider>
     )
 }

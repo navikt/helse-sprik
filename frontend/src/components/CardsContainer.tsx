@@ -1,4 +1,4 @@
-import FeilCard from "./FeilCard";
+import { FeilKort } from "./FeilCard";
 import { Feilmelding } from "../interface.ts";
 
 interface ICardsContainer {
@@ -10,19 +10,19 @@ interface ICardsContainer {
  * @returns grid med feilmeldinger 
  */
 const CardsContainer = (props: ICardsContainer) => {
+  
   return (
-    <div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-6">
         {props.feilmeldinger.map((feilMelding) => (
-          <FeilCard
-            key={props.feilmeldinger.indexOf(feilMelding)}
-            tittel={feilMelding.tittel}
-            beskrivelse={feilMelding.beskrivelse}
-            dato={new Date()}
-          />
-        ))}
+            <FeilKort
+              key={props.feilmeldinger.indexOf(feilMelding)}
+              tittel={feilMelding.tittel}
+              beskrivelse={feilMelding.beskrivelse}
+              dato={new Date()}
+            />         
+            ))
+          }
       </div>
-    </div>
   );
 };
 

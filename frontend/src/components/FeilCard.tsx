@@ -1,8 +1,8 @@
 import "@navikt/ds-css";
-import { Heading, Tag } from "@navikt/ds-react";
+import { Heading, Modal, Tag } from "@navikt/ds-react";
 import { IFeilmelding } from "../interface";
 import FeilModal from "./FeilModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * En konteiner som inneholder all informasjon og funksjonalitet for å vise og interagere med en feilmelding.
@@ -11,12 +11,15 @@ import { useState } from "react";
  * @param dato
  * @returns JSX komponent som beskriver innholdet i feilmeldinger.
  */
-
 interface IFeilKort extends IFeilmelding {
     key: number
 }
 export const FeilKort = (props: IFeilKort) => {
     const [visModal, setVisModal] = useState<boolean>(false)
+
+    useEffect(() => {
+        Modal.setAppElement(document.getElementById('root'));
+    }, []);
     
     return(
         <>
@@ -30,13 +33,11 @@ export const FeilKort = (props: IFeilKort) => {
             >
                 <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} dato={props.dato}/>
             </div>
-            { visModal ? 
-                <FeilModal open={visModal} setOpen={setVisModal} >
-                  <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} dato={new Date()} />
-                  <div className="h-2 bg-gray-200 my-4 rounded-lg"></div>
-                  {/* TODO: HER KOMMER CONTENT */}
-                </FeilModal> : null
-            } 
+            <FeilModal open={visModal} setOpen={setVisModal} >
+                <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} dato={new Date()} />
+                <div className="h-2 bg-gray-200 my-4 rounded-lg"></div>
+                {/* TODO: HER KOMMER CONTENT */}
+            </FeilModal>
         </>
     )
 }

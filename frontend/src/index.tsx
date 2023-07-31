@@ -1,19 +1,33 @@
 import CardsContainer from "./components/CardsContainer";
 import "@navikt/ds-css";
-import { Button, Search } from "@navikt/ds-react";
+import { Alert, Button, Search } from "@navikt/ds-react";
 import Header from "./components/Header";
 import { PlusIcon } from "@navikt/aksel-icons";
 import Filtermeny from "./components/Filtermeny";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Feilmelding } from "./interface";
+import { AlertContext } from "./pages/feil";
 
 export default function Home() {
   const navigate = useNavigate()
   
   const [feilmeldinger, setFeilmeldinger] = useState<Feilmelding[]>([]);
 
+  const alertValue = useContext(AlertContext)
+
+  /**
+   * 
+   */
+  const handleAlerts = () => {
+    if (alertValue.status === 201) {
+        return <Alert variant="success">Feil er meldt inn! Du vil nå sendes tilbake til hovedmenyen om fem sekunder.</Alert>
+    } else {
+        return <Alert variant="error">Noe gikk galt! Prøv igjen om noen minutter.</Alert>
+    }
+  }
+  
   /**
    * Henter alle feilmeldinger fra backend.
    * Bruker endepunktet /api/hentallefeil.
@@ -54,6 +68,7 @@ export default function Home() {
       <div className="flex grow">
         <Filtermeny/>
         <div className="grow bg-bg-subtle px-32 py-8 flex flex-col gap-10">
+          {alertValue.status != 0 ? handleAlerts() : <></>}
           <div className="flex gap-12 items-end">
             <Search 
               label="Søkefelt"

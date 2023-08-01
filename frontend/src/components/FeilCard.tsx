@@ -1,5 +1,5 @@
 import "@navikt/ds-css";
-import { Button, Heading, Modal, Radio, RadioGroup, Tag, TextField } from "@navikt/ds-react";
+import { Button, Checkbox, CheckboxGroup, Heading, Modal, Radio, RadioGroup, Tag, TextField } from "@navikt/ds-react";
 import { IFeilmelding } from "../interface";
 import FeilModal from "./FeilModal";
 import { useEffect, useState } from "react";
@@ -20,15 +20,19 @@ interface IFeilKort extends IFeilmelding {
 export const FeilKort = (props: IFeilKort) => {
     const [visModal, setVisModal] = useState<boolean>(false)
     const [redigeringsmodus, setRedigeringsmodus] = useState(false)
+    const [tittel, setTittel] = useState(props.tittel)
+    const [beskrivelse, setBeskrivelse] = useState(props.beskrivelse)
+    const [arbeidsstatus, setArbeidsstatus] = useState(props.arbeidsstatus)
+    const [haster, setHaster] = useState(props.haster)
+
 
     useEffect(() => {
         Modal.setAppElement(document.getElementById('root'));
     }, []);
 
-    const [arbeidsstatus, setArbeidsstatus] = useState(0)
-
     const lagreEndringer = () => {
         setRedigeringsmodus(false)
+        // TODO - send endring til database
     }
     
     return(
@@ -56,12 +60,13 @@ export const FeilKort = (props: IFeilKort) => {
                         <div className="flex flex-col gap-4 w-1/2">
                             <TextField 
                                 label="Tittel"
-                                value={props.tittel}
+                                value={tittel}
+                                onChange={e => setTittel(e.target.value)}
                             />
                             <TextField 
-                                
                                 label="Beskrivelse"
-                                value={props.beskrivelse}
+                                value={beskrivelse}
+                                onChange={e => setBeskrivelse(e.target.value)}
                             />
                             <RadioGroup
                                 legend="Velg arbeidsstatus for feil"
@@ -71,6 +76,14 @@ export const FeilKort = (props: IFeilKort) => {
                                 <Radio value={0}>Ikke påbegynt</Radio>
                                 <Radio value={1}>Feilen jobbes med</Radio>
                                 <Radio value={2}>Feilen er fikset</Radio>
+                            </RadioGroup>
+                            <RadioGroup
+                                legend="Hvor vil du sitte?"
+                                onChange={(haster: boolean) => {setHaster(haster)}}
+                                value={haster}
+                            >
+                                <Radio value={true}>Ja</Radio>
+                                <Radio value={false}>Nei</Radio>
                             </RadioGroup>
                         </div>
                         <div className="flex gap-4 items-start">

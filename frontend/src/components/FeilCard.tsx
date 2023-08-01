@@ -41,7 +41,13 @@ export const FeilKort = (props: IFeilKort) => {
                 active:bg-surface-active"
                 onClick={() => setVisModal(true)}
             >
-                <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} dato={props.dato}/>
+                <FeilkortHeader 
+                    tittel={props.tittel}
+                    beskrivelse={props.beskrivelse}
+                    dato={props.dato}
+                    haster={props.haster}
+                    arbeidsstatus={props.arbeidsstatus}
+                />
             </div>
             <FeilModal open={visModal} setOpen={setVisModal} >
                 {redigeringsmodus ? 
@@ -89,7 +95,13 @@ export const FeilKort = (props: IFeilKort) => {
 
                 : 
                     <div className="flex justify-between">
-                        <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} dato={new Date()} />
+                        <FeilkortHeader 
+                            tittel={props.tittel}
+                            beskrivelse={props.beskrivelse}
+                            dato={props.dato}
+                            haster={props.haster}
+                            arbeidsstatus={props.arbeidsstatus}
+                        />
                         <div className="flex gap-4 items-start">
                             <Button
                                 variant="secondary"
@@ -137,7 +149,7 @@ export const FeilkortHeader = (props: IFeilmelding) => {
                 <p className="text-text-subtle mb-4">{props.dato.toDateString()}</p>
                 <p>{props.beskrivelse}</p>    
             </div>  
-            <TagBar haster={false}/>              
+            <TagBar haster={props.haster}/>              
         </div>
     )
 }

@@ -6,14 +6,17 @@
 export interface IFeilmelding {
     tittel: string,
     beskrivelse: string
-    // haster: boolean
     dato: Date
+    haster: boolean
+    arbeidsstatus: number
 }
 
 export class Feilmelding implements IFeilmelding {
     tittel: string = "default tittel"
     beskrivelse: string = "default beskrivelse"
     dato: Date = new Date()
+    haster: boolean = false
+    arbeidsstatus: number = 0
 
     /**
      * Typescript 2.1 syntax som lar deg sende inn et JSON object og mappe det til class.
@@ -24,6 +27,8 @@ export class Feilmelding implements IFeilmelding {
             tittel: string,
             beskrivelse: string,
             dato: Date
+            haster: boolean
+            arbeidsstatus: number
         }) {
         if (fields) Object.assign(this, fields);    
     }

@@ -31,10 +31,22 @@ export const FeilKort = (props: IFeilKort) => {
                 active:bg-surface-active"
                 onClick={() => setVisModal(true)}
             >
-                <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} dato={props.dato}/>
+                <FeilkortHeader 
+                    tittel={props.tittel}
+                    beskrivelse={props.beskrivelse}
+                    dato={props.dato}
+                    haster={props.haster}
+                    arbeidsstatus={props.arbeidsstatus}
+                />
             </div>
             <FeilModal open={visModal} setOpen={setVisModal} >
-                <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} dato={new Date()} />
+                <FeilkortHeader 
+                    tittel={props.tittel}
+                    beskrivelse={props.beskrivelse}
+                    dato={props.dato}
+                    haster={props.haster}
+                    arbeidsstatus={props.arbeidsstatus}
+                />
                 <div className="h-2 bg-gray-200 my-4 rounded-lg"></div>
                 {/* TODO: HER KOMMER CONTENT */}
             </FeilModal>
@@ -60,7 +72,7 @@ export const FeilkortHeader = (props: IFeilmelding) => {
                 <p className="text-text-subtle mb-4">{props.dato.toDateString()}</p>
                 <p>{props.beskrivelse}</p>    
             </div>  
-            <TagBar haster={true} arbeidsstatus={2}/>              
+            <TagBar haster={props.haster} arbeidsstatus={props.arbeidsstatus}/>              
         </div>
     )
 }

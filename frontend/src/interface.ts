@@ -4,6 +4,7 @@
 
 
 export interface IFeilmelding {
+    id: number,
     tittel: string,
     beskrivelse: string
     dato: Date
@@ -12,6 +13,7 @@ export interface IFeilmelding {
 }
 
 export class Feilmelding implements IFeilmelding {
+    id: number = 0
     tittel: string = "default tittel"
     beskrivelse: string = "default beskrivelse"
     dato: Date = new Date()
@@ -24,8 +26,9 @@ export class Feilmelding implements IFeilmelding {
      */
     public constructor(
         fields: {
-            tittel: string,
-            beskrivelse: string,
+            id: number
+            tittel: string
+            beskrivelse: string
             dato: Date
             haster: boolean
             arbeidsstatus: number

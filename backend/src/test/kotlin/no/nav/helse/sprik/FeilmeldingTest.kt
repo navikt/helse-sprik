@@ -25,6 +25,7 @@ class FeilmeldingTest {
     private val feilmelding = Feilmelding(1, "Test", "Testesen", LocalDateTime.of(2023,1,1,8,0), 0, true)
     // private val feilmelding2 = Feilmelding(2, "Tittel", "Beskrivelse", LocalDateTime.of(2023,2,1,8,0), 1, false)
 
+
     @BeforeAll
     fun setup() {
         ExposedDatabase.connect(database.dataSource)

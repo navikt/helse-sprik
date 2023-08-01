@@ -45,12 +45,7 @@ class FeilmeldingRepository {
         FeilmeldingTable.select((FeilmeldingTable.tittel.lowerCase() like sok)
                                 or (FeilmeldingTable.beskrivelse.lowerCase() like sok))
                                 .map(::radTilFeilmelding)
-
     }
-
-    //fun hentFeilmelding(id: String) = transaction {
-    //    FeilmeldingTable.select()
-    //}
 
     fun oppdaterFeilmelding(feilmelding: Feilmelding) = transaction {
         val id = feilmelding.id
@@ -62,5 +57,4 @@ class FeilmeldingRepository {
                 it[FeilmeldingTable.haster] = feilmelding.haster
             }
         }
-    }
 }

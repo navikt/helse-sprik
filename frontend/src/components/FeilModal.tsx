@@ -16,6 +16,7 @@ const FeilModal = (props: modalInterface) => {
             aria-label={" modal"}
             onClose={() => props.setOpen(false)}
             aria-labelledby="modal-heading"
+            closeButton={false}
         >
         <Modal.Content>
             {props.children}

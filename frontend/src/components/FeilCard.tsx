@@ -1,8 +1,9 @@
 import "@navikt/ds-css";
-import { Heading, Modal, Tag } from "@navikt/ds-react";
+import { Button, Heading, Modal, Tag } from "@navikt/ds-react";
 import { IFeilmelding } from "../interface";
 import FeilModal from "./FeilModal";
 import { useEffect, useState } from "react";
+import { PencilIcon, XMarkIcon } from "@navikt/aksel-icons";
 
 /**
  * En konteiner som inneholder all informasjon og funksjonalitet for å vise og interagere med en feilmelding.
@@ -34,7 +35,25 @@ export const FeilKort = (props: IFeilKort) => {
                 <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} dato={props.dato}/>
             </div>
             <FeilModal open={visModal} setOpen={setVisModal} >
-                <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} dato={new Date()} />
+                <div className="flex justify-between">
+                    <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} dato={new Date()} />
+                    <div className="flex gap-4 items-start">
+                        <Button
+                            variant="secondary"
+                            icon={<PencilIcon/>}
+                        >
+                            Rediger
+                        </Button>
+                        <Button
+                            icon={<XMarkIcon/>}
+                            onClick={() => setVisModal(false)}
+                        >
+                            Lukk
+                        </Button>
+                    </div>
+                </div>
+
+
                 <div className="h-2 bg-gray-200 my-4 rounded-lg"></div>
                 {/* TODO: HER KOMMER CONTENT */}
             </FeilModal>

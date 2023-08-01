@@ -3,7 +3,7 @@ import { Button, Heading, Modal, Tag } from "@navikt/ds-react";
 import { IFeilmelding } from "../interface";
 import FeilModal from "./FeilModal";
 import { useEffect, useState } from "react";
-import { PencilIcon, XMarkIcon } from "@navikt/aksel-icons";
+import { FloppydiskIcon, PencilIcon, XMarkIcon } from "@navikt/aksel-icons";
 
 /**
  * En konteiner som inneholder all informasjon og funksjonalitet for å vise og interagere med en feilmelding.
@@ -15,12 +15,20 @@ import { PencilIcon, XMarkIcon } from "@navikt/aksel-icons";
 interface IFeilKort extends IFeilmelding {
     key: number
 }
+
+
 export const FeilKort = (props: IFeilKort) => {
     const [visModal, setVisModal] = useState<boolean>(false)
+    const [redigeringsmodus, setRedigeringsmodus] = useState(false)
 
     useEffect(() => {
         Modal.setAppElement(document.getElementById('root'));
     }, []);
+
+    const lagreEndringer = () => {
+        setRedigeringsmodus(false)
+        
+    }
     
     return(
         <>
@@ -35,23 +43,53 @@ export const FeilKort = (props: IFeilKort) => {
                 <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} dato={props.dato}/>
             </div>
             <FeilModal open={visModal} setOpen={setVisModal} >
-                <div className="flex justify-between">
-                    <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} dato={new Date()} />
-                    <div className="flex gap-4 items-start">
-                        <Button
-                            variant="secondary"
-                            icon={<PencilIcon/>}
-                        >
-                            Rediger
-                        </Button>
-                        <Button
-                            icon={<XMarkIcon/>}
-                            onClick={() => setVisModal(false)}
-                        >
-                            Lukk
-                        </Button>
+                {redigeringsmodus ? 
+
+                    <div className="flex justify-between">
+                        <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} dato={new Date()} />
+                        <div className="flex gap-4 items-start">
+                            <Button
+                                variant="primary"
+                                icon={<FloppydiskIcon/>}
+                                onClick={() => lagreEndringer()}
+                            >
+                                Lagre
+                            </Button>
+                            <Button
+                                variant="danger"
+                                icon={<XMarkIcon/>}
+                                onClick={() => {
+                                    setRedigeringsmodus(false)
+                                }}
+                            >
+                                Avbryt
+                            </Button>
+                        </div>
                     </div>
-                </div>
+
+                : 
+                    <div className="flex justify-between">
+                        <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} dato={new Date()} />
+                        <div className="flex gap-4 items-start">
+                            <Button
+                                variant="secondary"
+                                icon={<PencilIcon/>}
+                                onClick={() => setRedigeringsmodus(true)}
+                            >
+                                Rediger
+                            </Button>
+                            <Button
+                                icon={<XMarkIcon/>}
+                                onClick={() => {
+                                    setVisModal(false)
+                                    setRedigeringsmodus(false)
+                                }}
+                            >
+                                Lukk
+                            </Button>
+                        </div>
+                    </div>
+                }
 
 
                 <div className="h-2 bg-gray-200 my-4 rounded-lg"></div>

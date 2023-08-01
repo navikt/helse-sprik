@@ -1,4 +1,4 @@
-DROP TABLE feilmelding
+DROP TABLE feilmelding;
 
 CREATE TABLE feilmelding (
     id SERIAL PRIMARY KEY ,
@@ -7,4 +7,4 @@ CREATE TABLE feilmelding (
     dato TIMESTAMP NOT NULL,
     arbeidsstatus SMALLINT NOT NULL DEFAULT 0,
     haster BOOLEAN NOT NULL DEFAULT false
-)
+);

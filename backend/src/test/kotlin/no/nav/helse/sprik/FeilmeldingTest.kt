@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import java.time.LocalDateTime
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import org.jetbrains.exposed.sql.Database as ExposedDatabase
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -22,7 +23,8 @@ class FeilmeldingTest {
     private val database = Database(dbconfig()).configureFlyway()
     private val feilmeldingRepository = FeilmeldingRepository()
     private val feilmelding = Feilmelding(1, "Test", "Testesen", LocalDateTime.of(2023,1,1,8,0), 0, true)
-    private val feilmelding2 = Feilmelding(2, "Tittel", "Beskrivelse", LocalDateTime.of(2023,2,1,8,0), 1, false)
+    // private val feilmelding2 = Feilmelding(2, "Tittel", "Beskrivelse", LocalDateTime.of(2023,2,1,8,0), 1, false)
+
 
     @BeforeAll
     fun setup() {
@@ -104,6 +106,14 @@ class FeilmeldingTest {
 
     @Test
     fun `Oppdaterer en feilmelding`() {
-        
+        val oppdatertFeilmelding = Feilmelding(1, "Oppdatert", "Oppdatert feil", LocalDateTime.of(2023,1,1,8,0), 1, false)
+        feilmeldingRepository.oppdaterFeilmelding(oppdatertFeilmelding)
+        transaction {
+            val actual = FeilmeldingTable.selectAll().single()
+            assertEquals("Oppdatert", actual[FeilmeldingTable.tittel])
+            assertEquals("Oppdatert feil", actual[FeilmeldingTable.beskrivelse])
+            assertFalse ( actual[FeilmeldingTable.haster] )
+            assertEquals(1, actual[FeilmeldingTable.arbeidsstatus])
+        }
     }
 }

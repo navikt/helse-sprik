@@ -1,6 +1,5 @@
 package no.nav.helse.sprik.db
 
-import com.typesafe.config.ConfigException.Null
 import no.nav.helse.sprik.db.FeilmeldingTable.arbeidsstatus
 import no.nav.helse.sprik.db.FeilmeldingTable.beskrivelse
 import no.nav.helse.sprik.db.FeilmeldingTable.dato
@@ -11,7 +10,6 @@ import no.nav.helse.sprik.modell.Feilmelding
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.time.LocalDateTime
 
 class FeilmeldingRepository {
     fun lagre(feilmelding: Feilmelding) {
@@ -44,18 +42,22 @@ class FeilmeldingRepository {
     fun hentSokteFeilmeldinger(sokeord: String): List<Feilmelding> = transaction {
         val sok = "%${sokeord.lowercase()}%"
 
-        FeilmeldingTable.select((FeilmeldingTable.tittel.lowerCase() like sok)
-                                or (FeilmeldingTable.beskrivelse.lowerCase() like sok))
-                                .map(::radTilFeilmelding)
-
+        FeilmeldingTable.select(
+            (FeilmeldingTable.tittel.lowerCase() like sok)
+                    or (FeilmeldingTable.beskrivelse.lowerCase() like sok)
+        )
+            .map(::radTilFeilmelding)
     }
 
-    fun hentFeilmelding(id: String) = transaction {
-        TODO()
-        FeilmeldingTable.id
-    }
-
-    fun oppdaterFeilmelding(id: String): Nothing = transaction {
-        TODO()
+    fun oppdaterFeilmelding(feilmelding: Feilmelding) = transaction {
+        val id = feilmelding.id
+        if (id != null) {
+            FeilmeldingTable.update({ FeilmeldingTable.id eq id }) {
+                it[FeilmeldingTable.tittel] = feilmelding.tittel
+                it[FeilmeldingTable.beskrivelse] = feilmelding.beskrivelse
+                it[FeilmeldingTable.arbeidsstatus] = feilmelding.arbeidsstatus
+                it[FeilmeldingTable.haster] = feilmelding.haster
+            }
+        }
     }
 }

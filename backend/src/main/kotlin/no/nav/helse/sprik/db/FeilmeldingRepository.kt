@@ -1,8 +1,10 @@
 package no.nav.helse.sprik.db
 
 import com.typesafe.config.ConfigException.Null
+import no.nav.helse.sprik.db.FeilmeldingTable.arbeidsstatus
 import no.nav.helse.sprik.db.FeilmeldingTable.beskrivelse
 import no.nav.helse.sprik.db.FeilmeldingTable.dato
+import no.nav.helse.sprik.db.FeilmeldingTable.haster
 import no.nav.helse.sprik.db.FeilmeldingTable.tittel
 import no.nav.helse.sprik.modell.Feilmelding
 import org.jetbrains.exposed.sql.*
@@ -18,6 +20,8 @@ class FeilmeldingRepository {
                     it[FeilmeldingTable.tittel] = feilmelding.tittel
                     it[FeilmeldingTable.beskrivelse] = feilmelding.beskrivelse
                     it[FeilmeldingTable.dato] = feilmelding.dato
+                    it[FeilmeldingTable.arbeidsstatus] = feilmelding.arbeidsstatus
+                    it[FeilmeldingTable.haster] = feilmelding.haster
                 }
             }
         }
@@ -26,7 +30,9 @@ class FeilmeldingRepository {
     private fun radTilFeilmelding(rad: ResultRow) = Feilmelding(
         tittel = rad[tittel],
         beskrivelse = rad[beskrivelse],
-        dato = rad[dato]
+        dato = rad[dato],
+        arbeidsstatus = rad[arbeidsstatus],
+        haster = rad[haster]
     )
 
     fun hentAlleFeilmeldinger(): List<Feilmelding> = transaction {

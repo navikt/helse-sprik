@@ -48,12 +48,19 @@ class FeilmeldingRepository {
 
     }
 
-    fun hentFeilmelding(id: String) = transaction {
-        TODO()
-        FeilmeldingTable.id
-    }
+    //fun hentFeilmelding(id: String) = transaction {
+    //    FeilmeldingTable.select()
+    //}
 
-    fun oppdaterFeilmelding(id: String): Nothing = transaction {
-        TODO()
+    fun oppdaterFeilmelding(feilmelding: Feilmelding) = transaction {
+        val id = feilmelding.id
+        if (id != null) {
+            FeilmeldingTable.update({ FeilmeldingTable.id eq id }) {
+                it[FeilmeldingTable.tittel] = feilmelding.tittel
+                it[FeilmeldingTable.beskrivelse] = feilmelding.beskrivelse
+                it[FeilmeldingTable.arbeidsstatus] = feilmelding.arbeidsstatus
+                it[FeilmeldingTable.haster] = feilmelding.haster
+            }
+        }
     }
 }

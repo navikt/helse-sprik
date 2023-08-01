@@ -18,7 +18,9 @@ export default function Feil() {
         const payload = {
             tittel: tittel,
             beskrivelse: beskrivelse,
-            dato: new Date().toISOString().replace('Z', '')
+            dato: new Date().toISOString().replace('Z', ''), // Litt wack fix, burde endres
+            arbeidsstatus: 0,
+            haster: false
         }
         
         axios.post("/api/nyfeil", payload, {

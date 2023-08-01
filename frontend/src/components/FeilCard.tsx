@@ -71,7 +71,7 @@ export const FeilkortHeader = (props: IFeilmelding) => {
                 <Heading size="medium">{props.tittel}</Heading>
                 <p className="text-text-subtle mb-4">{props.dato.toDateString()}</p>
                 <p>{props.beskrivelse}</p>    
-            </div>  
+            </div>
             <TagBar haster={props.haster} arbeidsstatus={props.arbeidsstatus}/>              
         </div>
     )

@@ -12,6 +12,7 @@ export default function Feil() {
     const [tittel, setTittel] = useState("");
     const [beskrivelse, setBeskrivelse] = useState("");
     const [status, setStatus] = useState(0)
+    //const [haster, setHaster] = useState(false)
 
     const handleSubmit = () => {
 

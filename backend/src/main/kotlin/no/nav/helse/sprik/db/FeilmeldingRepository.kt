@@ -5,6 +5,7 @@ import no.nav.helse.sprik.db.FeilmeldingTable.arbeidsstatus
 import no.nav.helse.sprik.db.FeilmeldingTable.beskrivelse
 import no.nav.helse.sprik.db.FeilmeldingTable.dato
 import no.nav.helse.sprik.db.FeilmeldingTable.haster
+import no.nav.helse.sprik.db.FeilmeldingTable.id
 import no.nav.helse.sprik.db.FeilmeldingTable.tittel
 import no.nav.helse.sprik.modell.Feilmelding
 import org.jetbrains.exposed.sql.*
@@ -20,14 +21,13 @@ class FeilmeldingRepository {
                     it[FeilmeldingTable.tittel] = feilmelding.tittel
                     it[FeilmeldingTable.beskrivelse] = feilmelding.beskrivelse
                     it[FeilmeldingTable.dato] = feilmelding.dato
-                    it[FeilmeldingTable.arbeidsstatus] = feilmelding.arbeidsstatus
-                    it[FeilmeldingTable.haster] = feilmelding.haster
                 }
             }
         }
     }
 
     private fun radTilFeilmelding(rad: ResultRow) = Feilmelding(
+        id = rad[id],
         tittel = rad[tittel],
         beskrivelse = rad[beskrivelse],
         dato = rad[dato],
@@ -46,5 +46,14 @@ class FeilmeldingRepository {
                                 or (FeilmeldingTable.beskrivelse.lowerCase() like sok))
                                 .map(::radTilFeilmelding)
 
+    }
+
+    fun hentFeilmelding(id: String) = transaction {
+        TODO()
+        FeilmeldingTable.id
+    }
+
+    fun oppdaterFeilmelding(id: String): Nothing = transaction {
+        TODO()
     }
 }

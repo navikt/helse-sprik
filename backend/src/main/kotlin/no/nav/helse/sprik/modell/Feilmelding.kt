@@ -14,10 +14,11 @@ import java.time.LocalDateTime
  * */
 @Serializable
 class Feilmelding(
+    val id: Int?,
     val tittel: String,
     val beskrivelse: String,
     val dato: LocalDateTime, //Krever en spesiallaget serialiserer i KotlinX
-    val arbeidsstatus: Int,
+    val arbeidsstatus: Int?,
     val haster: Boolean
     //val bilde: String,
 ) {

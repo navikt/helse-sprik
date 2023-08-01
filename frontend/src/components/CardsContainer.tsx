@@ -16,6 +16,7 @@ const CardsContainer = (props: ICardsContainer) => {
         {props.feilmeldinger.map((feilMelding) => (
             <FeilKort
               key={props.feilmeldinger.indexOf(feilMelding)}
+              id={feilMelding.id}
               tittel={feilMelding.tittel}
               beskrivelse={feilMelding.beskrivelse}
               dato={new Date()}

@@ -1,9 +1,10 @@
 import "@navikt/ds-css";
-import { Button, Checkbox, CheckboxGroup, Heading, Modal, Radio, RadioGroup, Tag, TextField } from "@navikt/ds-react";
-import { IFeilmelding } from "../interface";
+import { Button, Heading, Modal, Radio, RadioGroup, Tag, TextField, Textarea } from "@navikt/ds-react";
+import { Feilmelding, IFeilmelding } from "../interface";
 import FeilModal from "./FeilModal";
 import { useEffect, useState } from "react";
 import { FloppydiskIcon, PencilIcon, XMarkIcon } from "@navikt/aksel-icons";
+import axios from "axios";
 
 /**
  * En konteiner som inneholder all informasjon og funksjonalitet for å vise og interagere med en feilmelding.
@@ -32,7 +33,27 @@ export const FeilKort = (props: IFeilKort) => {
 
     const lagreEndringer = () => {
         setRedigeringsmodus(false)
-        // TODO - send endring til database
+
+        const fields = {
+            id: props.id,
+            tittel: tittel,
+            beskrivelse: beskrivelse,
+            dato: props.dato,
+            arbeidsstatus: arbeidsstatus,
+            haster: haster
+        }
+
+        const endretFeilmelding = new Feilmelding(fields)
+
+        axios.put(`/api/oppdaterfeil/${props.id}`, endretFeilmelding, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        })
     }
     
     return(
@@ -46,6 +67,7 @@ export const FeilKort = (props: IFeilKort) => {
                 onClick={() => setVisModal(true)}
             >
                 <FeilkortHeader 
+                    id={props.id}
                     tittel={props.tittel}
                     beskrivelse={props.beskrivelse}
                     dato={props.dato}
@@ -63,7 +85,7 @@ export const FeilKort = (props: IFeilKort) => {
                                 value={tittel}
                                 onChange={e => setTittel(e.target.value)}
                             />
-                            <TextField 
+                            <Textarea 
                                 label="Beskrivelse"
                                 value={beskrivelse}
                                 onChange={e => setBeskrivelse(e.target.value)}
@@ -107,8 +129,10 @@ export const FeilKort = (props: IFeilKort) => {
                     </div>
 
                 : 
+                <div>
                     <div className="flex justify-between">
                         <FeilkortHeader 
+                            id={props.id}
                             tittel={props.tittel}
                             beskrivelse={props.beskrivelse}
                             dato={props.dato}
@@ -134,10 +158,11 @@ export const FeilKort = (props: IFeilKort) => {
                             </Button>
                         </div>
                     </div>
+                    <div className="h-2 bg-gray-200 my-4 rounded-lg"></div>
+                </div>
                 }
 
 
-                <div className="h-2 bg-gray-200 my-4 rounded-lg"></div>
                 {/* TODO: HER KOMMER CONTENT */}
             </FeilModal>
         </>

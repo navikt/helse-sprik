@@ -7,4 +7,6 @@ object FeilmeldingTable : Table("feilmelding") {
     val tittel = text("tittel")
     val beskrivelse = text("beskrivelse")
     val dato = datetime("dato")
+    val arbeidsstatus = integer("arbeidsstatus")
+    val haster = bool("haster")
 }

@@ -22,10 +22,10 @@ fun main() {
 
 private fun oppretteMockData() {
     val feilmeldingRepository = FeilmeldingRepository()
-    feilmeldingRepository.lagre(Feilmelding("Mangel på hensyn til tariffoppgjør", "Det har vært ett tariffoppgjør og speil sier sykepengene må tilbakekreves, noe som er feil. (sier vi.. har ikke domenekunnskap)", LocalDateTime.of(2023, 1, 1, 8, 0, 0)))
-    feilmeldingRepository.lagre(Feilmelding("Speil sier NAV må tilbakekreve sykepenger på feil grunnlag", "Beskrivelse Test2", LocalDateTime.of(2023, 2, 1, 8, 0, 0)))
-    feilmeldingRepository.lagre(Feilmelding("Feil A", "Lorem Ipsum", LocalDateTime.of(2023, 3, 1, 8, 0, 0)))
-    feilmeldingRepository.lagre(Feilmelding("Feil B", "Lorem Ipsum", LocalDateTime.of(2023, 4, 1, 8, 0, 0)))
-    feilmeldingRepository.lagre(Feilmelding("Feil C", "Lorem Ipsum", LocalDateTime.of(2023, 5, 1, 8, 0, 0)))
-    feilmeldingRepository.lagre(Feilmelding("Feil D", "Lorem Ipsum", LocalDateTime.of(2023, 6, 1, 8, 0, 0)))
+    feilmeldingRepository.lagre(Feilmelding("Mangel på hensyn til tariffoppgjør", "Det har vært ett tariffoppgjør og speil sier sykepengene må tilbakekreves, noe som er feil. (sier vi.. har ikke domenekunnskap)", LocalDateTime.of(2023, 1, 1, 8, 0, 0), 0, false))
+    feilmeldingRepository.lagre(Feilmelding("Speil sier NAV må tilbakekreve sykepenger på feil grunnlag", "Beskrivelse Test2", LocalDateTime.of(2023, 2, 1, 8, 0, 0), 1, true))
+    feilmeldingRepository.lagre(Feilmelding("Feil A", "Lorem Ipsum", LocalDateTime.of(2023, 3, 1, 8, 0, 0), 2, false))
+    feilmeldingRepository.lagre(Feilmelding("Feil B", "Lorem Ipsum", LocalDateTime.of(2023, 4, 1, 8, 0, 0), 1, true))
+    feilmeldingRepository.lagre(Feilmelding("Feil C", "Lorem Ipsum", LocalDateTime.of(2023, 5, 1, 8, 0, 0), 1, true))
+    feilmeldingRepository.lagre(Feilmelding("Feil D", "Lorem Ipsum", LocalDateTime.of(2023, 6, 1, 8, 0, 0), 0, false))
 }

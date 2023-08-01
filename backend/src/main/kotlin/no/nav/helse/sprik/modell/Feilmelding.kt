@@ -17,7 +17,8 @@ class Feilmelding(
     val tittel: String,
     val beskrivelse: String,
     val dato: LocalDateTime, //Krever en spesiallaget serialiserer i KotlinX
-    //val tags: ArrayList<String> = arrayListOf<String>()
+    val arbeidsstatus: Int,
+    val haster: Boolean
     //val bilde: String,
 ) {
     override fun toString(): String {

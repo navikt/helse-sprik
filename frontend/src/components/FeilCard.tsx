@@ -1,5 +1,5 @@
 import "@navikt/ds-css";
-import { Button, Heading, Modal, Tag } from "@navikt/ds-react";
+import { Button, Heading, Modal, Radio, RadioGroup, Tag, TextField } from "@navikt/ds-react";
 import { IFeilmelding } from "../interface";
 import FeilModal from "./FeilModal";
 import { useEffect, useState } from "react";
@@ -25,9 +25,10 @@ export const FeilKort = (props: IFeilKort) => {
         Modal.setAppElement(document.getElementById('root'));
     }, []);
 
+    const [arbeidsstatus, setArbeidsstatus] = useState(0)
+
     const lagreEndringer = () => {
         setRedigeringsmodus(false)
-        
     }
     
     return(
@@ -46,7 +47,26 @@ export const FeilKort = (props: IFeilKort) => {
                 {redigeringsmodus ? 
 
                     <div className="flex justify-between">
-                        <FeilkortHeader tittel={props.tittel} beskrivelse={props.beskrivelse} dato={new Date()} />
+                        <div className="flex flex-col gap-4 w-1/2">
+                            <TextField 
+                                label="Tittel"
+                                value={props.tittel}
+                            />
+                            <TextField 
+                                
+                                label="Beskrivelse"
+                                value={props.beskrivelse}
+                            />
+                            <RadioGroup
+                                legend="Velg arbeidsstatus for feil"
+                                onChange={(arbeidsstatus: number) => {setArbeidsstatus(arbeidsstatus)}}
+                                value={arbeidsstatus}
+                            >
+                                <Radio value={0}>Ikke påbegynt</Radio>
+                                <Radio value={1}>Feilen jobbes med</Radio>
+                                <Radio value={2}>Feilen er fikset</Radio>
+                            </RadioGroup>
+                        </div>
                         <div className="flex gap-4 items-start">
                             <Button
                                 variant="primary"

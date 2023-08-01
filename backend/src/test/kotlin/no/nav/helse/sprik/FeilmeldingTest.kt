@@ -21,8 +21,8 @@ import org.jetbrains.exposed.sql.Database as ExposedDatabase
 class FeilmeldingTest {
     private val database = Database(dbconfig()).configureFlyway()
     private val feilmeldingRepository = FeilmeldingRepository()
-    private val feilmelding = Feilmelding("Test", "Testesen", LocalDateTime.of(2023,1,1,8,0))
-    private val feilmelding2 = Feilmelding("Tittel", "Beskrivelse", LocalDateTime.of(2023,2,1,8,0))
+    private val feilmelding = Feilmelding("Test", "Testesen", LocalDateTime.of(2023,1,1,8,0), 0, true)
+    private val feilmelding2 = Feilmelding("Tittel", "Beskrivelse", LocalDateTime.of(2023,2,1,8,0), 1, false)
 
     @BeforeAll
     fun setup() {

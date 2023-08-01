@@ -23,6 +23,7 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
             anyHost()
             allowMethod(HttpMethod.Get)
             allowMethod(HttpMethod.Post)
+            allowMethod(HttpMethod.Put)
             allowNonSimpleContentTypes = true
         }
         install(ContentNegotiation) {
@@ -60,6 +61,11 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
                     ?: return@get call.respond(HttpStatusCode.BadRequest, "Sokestreng må være definert")
                 val sokeresultat = feilmeldingRepository.hentSokteFeilmeldinger(sokestreng)
                 call.respond(status = HttpStatusCode.Created, message = sokeresultat)
+            }
+            put("/api/oppdaterfeil/{id}") {
+                val id = call.parameters["id"]
+                val oppdatertFeilmelding = call.receive<Feilmelding>()
+
             }
         }
     }

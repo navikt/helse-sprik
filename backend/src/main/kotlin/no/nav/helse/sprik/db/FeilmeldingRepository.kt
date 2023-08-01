@@ -21,6 +21,8 @@ class FeilmeldingRepository {
                     it[FeilmeldingTable.tittel] = feilmelding.tittel
                     it[FeilmeldingTable.beskrivelse] = feilmelding.beskrivelse
                     it[FeilmeldingTable.dato] = feilmelding.dato
+                    it[FeilmeldingTable.arbeidsstatus] = feilmelding.arbeidsstatus
+                    it[FeilmeldingTable.haster] = feilmelding.haster
                 }
             }
         }

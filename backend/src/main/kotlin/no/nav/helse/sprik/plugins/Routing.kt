@@ -65,7 +65,7 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
             put("/api/oppdaterfeil/{id}") {
                 val id = call.parameters["id"]
                 val oppdatertFeilmelding = call.receive<Feilmelding>()
-
+                call.respond(status = HttpStatusCode.Created, message = "Feilmelding oppdatert")
             }
         }
     }

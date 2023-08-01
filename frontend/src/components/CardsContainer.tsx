@@ -9,9 +9,7 @@ interface ICardsContainer {
  * Komponent som laster inn feilmeldinger i kort fra database.
  * @returns grid med feilmeldinger 
  */
-const CardsContainer = (props: ICardsContainer) => {
-  {props.feilmeldinger.map((feilMelding) => console.log(feilMelding))}
-  
+const CardsContainer = (props: ICardsContainer) => {  
   return (
       <div className="grid grid-cols-2 gap-6">
         

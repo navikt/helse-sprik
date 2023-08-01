@@ -159,11 +159,9 @@ export const FeilKort = (props: IFeilKort) => {
                         </div>
                     </div>
                     <div className="h-2 bg-gray-200 my-4 rounded-lg"></div>
+                    {/* TODO: HER KOMMER CONTENT */}
                 </div>
-                }
-
-
-                {/* TODO: HER KOMMER CONTENT */}
+                }              
             </FeilModal>
         </>
     )

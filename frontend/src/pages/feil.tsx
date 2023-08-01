@@ -17,6 +17,7 @@ export default function Feil() {
     const handleSubmit = () => {
 
         const payload = {
+            id: null,
             tittel: tittel,
             beskrivelse: beskrivelse,
             dato: new Date().toISOString().replace('Z', ''), // Litt wack fix, burde endres

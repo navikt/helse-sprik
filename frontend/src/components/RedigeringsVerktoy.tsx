@@ -42,8 +42,8 @@ const RedigeringsVerktoy = (props: redigeringsInterface) => {
     }
 
     return (
-        <div className="flex justify-between">
-            <div className="flex flex-col gap-4 w-1/2">
+        <div className="flex flex-col gap-12">
+            <div className="flex flex-col gap-4">
                 <TextField 
                     label="Tittel"
                     value={tittel}

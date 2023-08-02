@@ -27,7 +27,6 @@ interface IFeilKort extends IFeilmelding {
     const [arbeidsstatus, setArbeidsstatus] = useState(props.arbeidsstatus)
     const [haster, setHaster] = useState(props.haster)
 
-
     useEffect(() => {
         Modal.setAppElement(document.getElementById('root'));
     }, []);
@@ -35,18 +34,16 @@ interface IFeilKort extends IFeilmelding {
     const lagreEndringer = () => {
         setRedigeringsmodus(false)
 
-        const fields = {
+        const payload = {
             id: props.id,
             tittel: tittel,
             beskrivelse: beskrivelse,
-            dato: props.dato,
+            dato: props.dato.toISOString().replace('Z', ''),
             arbeidsstatus: arbeidsstatus,
             haster: haster
         }
 
-        const endretFeilmelding = new Feilmelding(fields)
-
-        axios.put(`/api/oppdaterfeil/${props.id}`, endretFeilmelding, {
+        axios.put(`/api/oppdaterfeil/${props.id}`, payload, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -55,6 +52,8 @@ interface IFeilKort extends IFeilmelding {
         }).catch((error) => {
             console.log(error);
         })
+
+
     }
     
     return(

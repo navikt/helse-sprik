@@ -19,7 +19,8 @@ class Feilmelding(
     val beskrivelse: String,
     val dato: LocalDateTime, //Krever en spesiallaget serialiserer i KotlinX
     val arbeidsstatus: Int,
-    val haster: Boolean
+    val haster: Boolean,
+    val kommentar: String?
     //val bilde: String,
 ) {
     override fun toString(): String {

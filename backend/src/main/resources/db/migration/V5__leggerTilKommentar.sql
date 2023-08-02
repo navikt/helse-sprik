@@ -1,0 +1,1 @@
+ALTER TABLE feilmelding ADD kommentar VARCHAR

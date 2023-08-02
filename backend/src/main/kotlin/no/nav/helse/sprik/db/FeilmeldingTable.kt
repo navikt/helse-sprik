@@ -10,4 +10,5 @@ object FeilmeldingTable : Table("feilmelding") {
     val dato = datetime("dato")
     val arbeidsstatus = integer("arbeidsstatus")
     val haster = bool("haster")
+    val kommentar = text("kommentar")
 }

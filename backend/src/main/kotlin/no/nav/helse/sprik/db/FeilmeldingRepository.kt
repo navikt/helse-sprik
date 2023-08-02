@@ -5,6 +5,7 @@ import no.nav.helse.sprik.db.FeilmeldingTable.beskrivelse
 import no.nav.helse.sprik.db.FeilmeldingTable.dato
 import no.nav.helse.sprik.db.FeilmeldingTable.haster
 import no.nav.helse.sprik.db.FeilmeldingTable.id
+import no.nav.helse.sprik.db.FeilmeldingTable.kommentar
 import no.nav.helse.sprik.db.FeilmeldingTable.tittel
 import no.nav.helse.sprik.modell.Feilmelding
 import org.jetbrains.exposed.sql.*
@@ -32,7 +33,8 @@ class FeilmeldingRepository {
         beskrivelse = rad[beskrivelse],
         dato = rad[dato],
         arbeidsstatus = rad[arbeidsstatus],
-        haster = rad[haster]
+        haster = rad[haster],
+        kommentar = rad[kommentar]
     )
 
     fun hentAlleFeilmeldinger(): List<Feilmelding> = transaction {
@@ -58,6 +60,12 @@ class FeilmeldingRepository {
                 it[FeilmeldingTable.arbeidsstatus] = feilmelding.arbeidsstatus
                 it[FeilmeldingTable.haster] = feilmelding.haster
             }
+        }
+    }
+
+    fun oppdaterKommentar(id: Int, kommentar: String) = transaction {
+        FeilmeldingTable.update({ FeilmeldingTable.id eq id }) {
+            it[FeilmeldingTable.kommentar] = kommentar
         }
     }
 }

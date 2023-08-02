@@ -12,6 +12,12 @@ export interface IFeilmelding {
     arbeidsstatus: number
 }
 
+export interface FeilmeldingsInnholdInterface extends IFeilmelding {
+    children?: React.ReactNode
+    setRedigeringsmodus: (redigeringsmodus: boolean) => void
+    setVisModal: (visModal: boolean) => void
+}
+
 export class Feilmelding implements IFeilmelding {
     id: number = 0
     tittel: string = "default tittel"

@@ -1,11 +1,11 @@
 import "@navikt/ds-css";
-import { Button, Modal, Radio, RadioGroup, TextField, Textarea } from "@navikt/ds-react";
+import { Modal} from "@navikt/ds-react";
 import { IFeilmelding } from "../interface";
 import FeilModal from "./FeilModal";
 import { useEffect, useState } from "react";
-import { FloppydiskIcon, PencilIcon, XMarkIcon } from "@navikt/aksel-icons";
-import axios from "axios";
 import FeilkortHeader from "./FeilkortHeader";
+import RedigeringsVerktoy from "./RedigeringsVerktoy";
+import FeilmeldingsInnhold from "./FeilmeldingsInnhold";
 
 /**
  * En konteiner som inneholder all informasjon og funksjonalitet for å vise og interagere med en feilmelding.
@@ -16,46 +16,17 @@ import FeilkortHeader from "./FeilkortHeader";
  */
 interface IFeilKort extends IFeilmelding {
     key: number
+    reset: () => void
 }
 
-
- const FeilKort = (props: IFeilKort) => {
+const FeilKort = (props: IFeilKort) => {
     const [visModal, setVisModal] = useState<boolean>(false)
     const [redigeringsmodus, setRedigeringsmodus] = useState(false)
-    const [tittel, setTittel] = useState(props.tittel)
-    const [beskrivelse, setBeskrivelse] = useState(props.beskrivelse)
-    const [arbeidsstatus, setArbeidsstatus] = useState(props.arbeidsstatus)
-    const [haster, setHaster] = useState(props.haster)
 
     useEffect(() => {
         Modal.setAppElement(document.getElementById('root'));
     }, []);
 
-    const lagreEndringer = () => {
-        setRedigeringsmodus(false)
-
-        const payload = {
-            id: props.id,
-            tittel: tittel,
-            beskrivelse: beskrivelse,
-            dato: props.dato.toISOString().replace('Z', ''),
-            arbeidsstatus: arbeidsstatus,
-            haster: haster
-        }
-
-        axios.put(`/api/oppdaterfeil/${props.id}`, payload, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((response) => {
-            console.log(response);
-        }).catch((error) => {
-            console.log(error);
-        })
-
-
-    }
-    
     return(
         <>
             <div 
@@ -77,90 +48,30 @@ interface IFeilKort extends IFeilmelding {
             </div>
             <FeilModal open={visModal} setOpen={setVisModal} >
                 {redigeringsmodus ? 
-
-                    <div className="flex justify-between">
-                        <div className="flex flex-col gap-4 w-1/2">
-                            <TextField 
-                                label="Tittel"
-                                value={tittel}
-                                onChange={e => setTittel(e.target.value)}
-                            />
-                            <Textarea 
-                                label="Beskrivelse"
-                                value={beskrivelse}
-                                onChange={e => setBeskrivelse(e.target.value)}
-                            />
-                            <RadioGroup
-                                legend="Velg arbeidsstatus for feil"
-                                onChange={(arbeidsstatus: number) => {setArbeidsstatus(arbeidsstatus)}}
-                                value={arbeidsstatus}
-                            >
-                                <Radio value={0}>Ikke påbegynt</Radio>
-                                <Radio value={1}>Feilen jobbes med</Radio>
-                                <Radio value={2}>Feilen er fikset</Radio>
-                            </RadioGroup>
-                            <RadioGroup
-                                legend="Hvor vil du sitte?"
-                                onChange={(haster: boolean) => {setHaster(haster)}}
-                                value={haster}
-                            >
-                                <Radio value={true}>Ja</Radio>
-                                <Radio value={false}>Nei</Radio>
-                            </RadioGroup>
-                        </div>
-                        <div className="flex gap-4 items-start">
-                            <Button
-                                variant="primary"
-                                icon={<FloppydiskIcon/>}
-                                onClick={() => lagreEndringer()}
-                            >
-                                Lagre
-                            </Button>
-                            <Button
-                                variant="danger"
-                                icon={<XMarkIcon/>}
-                                onClick={() => {
-                                    setRedigeringsmodus(false)
-                                }}
-                            >
-                                Avbryt
-                            </Button>
-                        </div>
-                    </div>
-
+                    <RedigeringsVerktoy 
+                        id={props.id}
+                        tittel={props.tittel}
+                        beskrivelse={props.beskrivelse}
+                        dato={props.dato}
+                        haster={props.haster}
+                        arbeidsstatus={props.arbeidsstatus}
+                        setRedigeringsmodus={setRedigeringsmodus}
+                        setVisModal={setVisModal}
+                        reset={props.reset}
+                    />
                 : 
-                <div>
-                    <div className="flex justify-between">
-                        <FeilkortHeader 
-                            id={props.id}
-                            tittel={props.tittel}
-                            beskrivelse={props.beskrivelse}
-                            dato={props.dato}
-                            haster={props.haster}
-                            arbeidsstatus={props.arbeidsstatus}
-                        />
-                        <div className="flex gap-4 items-start">
-                            <Button
-                                variant="secondary"
-                                icon={<PencilIcon/>}
-                                onClick={() => setRedigeringsmodus(true)}
-                            >
-                                Rediger
-                            </Button>
-                            <Button
-                                icon={<XMarkIcon/>}
-                                onClick={() => {
-                                    setVisModal(false)
-                                    setRedigeringsmodus(false)
-                                }}
-                            >
-                                Lukk
-                            </Button>
-                        </div>
-                    </div>
-                    <div className="h-2 bg-gray-200 my-4 rounded-lg"></div>
-                    {/* TODO: HER KOMMER CONTENT */}
-                </div>
+                    <FeilmeldingsInnhold
+                        id={props.id}
+                        tittel={props.tittel}
+                        beskrivelse={props.beskrivelse}
+                        dato={props.dato}
+                        haster={props.haster}
+                        arbeidsstatus={props.arbeidsstatus}
+                        setVisModal={setVisModal}
+                        setRedigeringsmodus={setRedigeringsmodus}
+                    >
+                        <p>Her kommer det content</p>
+                    </FeilmeldingsInnhold>
                 }              
             </FeilModal>
         </>

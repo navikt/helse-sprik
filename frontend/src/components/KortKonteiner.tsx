@@ -3,6 +3,7 @@ import { Feilmelding } from "../interface.ts";
 
 interface IKortKonteiner {
   feilmeldinger: Feilmelding[]
+  reset: () => void
 }
 
 /**
@@ -22,6 +23,7 @@ const KortKonteiner = (props: IKortKonteiner) => {
               dato={new Date()}
               haster={feilMelding.haster}
               arbeidsstatus={feilMelding.arbeidsstatus}
+              reset={props.reset}
             />         
             ))
           }

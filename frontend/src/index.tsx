@@ -19,6 +19,8 @@ export default function Home() {
    * Bruker endepunktet /api/hentallefeil.
    */  
   const hentAlleFeil = async () => {
+    console.log("hentAlleFeil");
+    
     await axios.get("/api/hentallefeil")
       .then(data => data.data)
       .then(feil => {
@@ -69,7 +71,7 @@ export default function Home() {
               Meld inn feil
             </Button>
           </div>
-          <KortKonteiner feilmeldinger={feilmeldinger}/>
+          <KortKonteiner reset={hentAlleFeil} feilmeldinger={feilmeldinger}/>
         </div>
       </div>
     </main>

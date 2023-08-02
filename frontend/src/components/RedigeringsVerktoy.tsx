@@ -4,14 +4,17 @@ import { useState } from "react"
 import { FeilmeldingsInnholdInterface } from "../interface"
 import axios from "axios"
 
+interface redigeringsInterface extends FeilmeldingsInnholdInterface {
+    reset: () => void
+}
 
-const RedigeringsVerktoy = (props: FeilmeldingsInnholdInterface) => {
+const RedigeringsVerktoy = (props: redigeringsInterface) => {
     const [tittel, setTittel] = useState(props.tittel)
     const [beskrivelse, setBeskrivelse] = useState(props.beskrivelse)
     const [arbeidsstatus, setArbeidsstatus] = useState(props.arbeidsstatus)
     const [haster, setHaster] = useState(props.haster)
 
-    const lagreEndringer = () => {
+    const lagreEndringer = async() => {
         props.setVisModal(false)
         props.setRedigeringsmodus(false)
 
@@ -24,7 +27,7 @@ const RedigeringsVerktoy = (props: FeilmeldingsInnholdInterface) => {
             haster: haster
         }
 
-        axios.put(`/api/oppdaterfeil/${props.id}`, payload, {
+        await axios.put(`/api/oppdaterfeil/${props.id}`, payload, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -33,6 +36,8 @@ const RedigeringsVerktoy = (props: FeilmeldingsInnholdInterface) => {
         }).catch((error) => {
             console.log(error);
         })
+
+        props.reset()
     }
 
     return (

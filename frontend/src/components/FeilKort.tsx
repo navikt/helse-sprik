@@ -16,6 +16,7 @@ import FeilmeldingsInnhold from "./FeilmeldingsInnhold";
  */
 interface IFeilKort extends IFeilmelding {
     key: number
+    reset: () => void
 }
 
 const FeilKort = (props: IFeilKort) => {
@@ -56,6 +57,7 @@ const FeilKort = (props: IFeilKort) => {
                         arbeidsstatus={props.arbeidsstatus}
                         setRedigeringsmodus={setRedigeringsmodus}
                         setVisModal={setVisModal}
+                        reset={props.reset}
                     />
                 : 
                     <FeilmeldingsInnhold

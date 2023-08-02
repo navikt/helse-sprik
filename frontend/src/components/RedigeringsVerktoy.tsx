@@ -3,6 +3,7 @@ import { TextField, Textarea, RadioGroup, Radio, Button, Switch } from "@navikt/
 import { useState } from "react"
 import { FeilmeldingsInnholdInterface } from "../interface"
 import axios from "axios"
+import Skillelinje from "./Skillelinje"
 
 interface redigeringsInterface extends FeilmeldingsInnholdInterface {
     reset: () => void
@@ -55,6 +56,7 @@ const RedigeringsVerktoy = (props: redigeringsInterface) => {
                     value={beskrivelse}
                     onChange={e => setBeskrivelse(e.target.value)}
                 />
+                <Skillelinje/>
                 <RadioGroup
                     legend="Velg arbeidsstatus for feil"
                     onChange={(arbeidsstatus: number) => {setArbeidsstatus(arbeidsstatus)}}
@@ -64,6 +66,7 @@ const RedigeringsVerktoy = (props: redigeringsInterface) => {
                     <Radio value={1}>Feilen jobbes med</Radio>
                     <Radio value={2}>Feilen er fikset</Radio>
                 </RadioGroup>
+                <Skillelinje/>
                 <Switch checked={haster} onClick={() => setHaster(!haster)}>
                     Saken haster
                 </Switch>

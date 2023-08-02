@@ -1,5 +1,5 @@
 import { FileImageIcon, UploadIcon } from "@navikt/aksel-icons"
-import { Button } from "@navikt/ds-react"
+import { Button, Heading } from "@navikt/ds-react"
 
 
 /**
@@ -10,6 +10,9 @@ import { Button } from "@navikt/ds-react"
 const BildeOpplastning = () => {
     return(
         <div className="flex gap-2 flex-col">
+            <Heading size="xsmall">
+                Skjermbilder
+            </Heading>
             <div className="
                 h-48 p-5 bg-bg-subtle hover:bg-surface-selected border-2 border-blue-500
                 rounded-lg border-dashed flex flex-col items-center justify-center text-center gap-2 

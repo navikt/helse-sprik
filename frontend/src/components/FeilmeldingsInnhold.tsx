@@ -74,6 +74,7 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
                     tekst={kommentar}
                 />
             }
+            Test: {props.kommentar ? props.kommentar : "null"}
         </div>
     )
 }

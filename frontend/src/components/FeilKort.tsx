@@ -1,6 +1,6 @@
 import "@navikt/ds-css";
 import { Button, Modal, Radio, RadioGroup, TextField, Textarea } from "@navikt/ds-react";
-import { Feilmelding, IFeilmelding } from "../interface";
+import { IFeilmelding } from "../interface";
 import FeilModal from "./FeilModal";
 import { useEffect, useState } from "react";
 import { FloppydiskIcon, PencilIcon, XMarkIcon } from "@navikt/aksel-icons";

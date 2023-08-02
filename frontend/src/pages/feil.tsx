@@ -22,7 +22,8 @@ export default function Feil() {
             beskrivelse: beskrivelse,
             dato: new Date().toISOString().replace('Z', ''), // Litt wack fix, burde endres
             arbeidsstatus: 0,
-            haster: false
+            haster: false,
+            kommentar: ""
         }
         
         axios.post("/api/nyfeil", payload, {

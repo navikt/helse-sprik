@@ -1,9 +1,8 @@
 import "@navikt/ds-css";
-import { Button, Modal} from "@navikt/ds-react";
-import { Feilmelding, IFeilmelding } from "../interface";
+import { Modal} from "@navikt/ds-react";
+import { IFeilmelding } from "../interface";
 import FeilModal from "./FeilModal";
 import { useEffect, useState } from "react";
-import { PencilIcon, XMarkIcon } from "@navikt/aksel-icons";
 import FeilkortHeader from "./FeilkortHeader";
 import RedigeringsVerktoy from "./RedigeringsVerktoy";
 import FeilmeldingsInnhold from "./FeilmeldingsInnhold";

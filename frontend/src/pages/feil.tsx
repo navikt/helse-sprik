@@ -7,6 +7,7 @@ import { useState } from "react";
 import BildeOpplastning from "../components/BildeOpplastning";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
+import Skillelinje from "../components/Skillelinje";
 
 export default function Feil() {
     const [tittel, setTittel] = useState("");
@@ -85,7 +86,9 @@ export default function Feil() {
                             description="Detaljert beskrivelse av problemet"
                             onChange={e => setBeskrivelse(e.target.value)}
                         />
+                        <Skillelinje/>
                         <BildeOpplastning/>
+                        <Skillelinje/>
                     </div>
                     <div className="w-1/2 flex flex-col gap-2 justify-center">
                         {status != 0 ? handleAlerts() : <></>}

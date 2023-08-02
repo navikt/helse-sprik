@@ -22,18 +22,19 @@ import org.jetbrains.exposed.sql.Database as ExposedDatabase
 class FeilmeldingTest {
     private val database = Database(dbconfig()).configureFlyway()
     private val feilmeldingRepository = FeilmeldingRepository()
-    private val feilmelding = Feilmelding(1, "Test", "Testesen", LocalDateTime.of(2023,1,1,8,0), 0, true)
-    // private val feilmelding2 = Feilmelding(2, "Tittel", "Beskrivelse", LocalDateTime.of(2023,2,1,8,0), 1, false)
 
+    fun getId() = transaction {
+        FeilmeldingTable.selectAll().single()[FeilmeldingTable.id]
+    }
 
     @BeforeAll
     fun setup() {
         ExposedDatabase.connect(database.dataSource)
-
     }
 
     @BeforeEach
     fun lagreFeilmelding() {
+        val feilmelding = Feilmelding(null, "Test", "Testesen", LocalDateTime.of(2023,1,1,8,0), 0, true)
         feilmeldingRepository.lagre(feilmelding)
     }
 
@@ -43,6 +44,8 @@ class FeilmeldingTest {
             FeilmeldingTable.deleteAll()
         }
     }
+
+
     @Test
     fun `Sett opp testdatabasen riktig`(){
         transaction {
@@ -59,6 +62,7 @@ class FeilmeldingTest {
             assertEquals("Test", actual[FeilmeldingTable.tittel])
             assertEquals("Testesen", actual[FeilmeldingTable.beskrivelse])
             assertEquals(LocalDateTime.of(2023, 1, 1, 8, 0), actual[FeilmeldingTable.dato])
+            assertEquals(1, actual[FeilmeldingTable.id])
         }
     }
 
@@ -103,16 +107,15 @@ class FeilmeldingTest {
         assertEquals("Test", sokeresultat[0].tittel)
         assertEquals("Testesen", sokeresultat[0].beskrivelse)
     }
-/**
     @Test
     fun `Oppdaterer en feilmelding`() {
-        val oppdatertFeilmelding = Feilmelding(1, "Oppdatert", "Oppdatert feil", LocalDateTime.of(2023,1,1,8,0), 1, false)
+        val oppdatertFeilmelding = Feilmelding(getId(), "Oppdatert", "Oppdatert feil", LocalDateTime.of(2023, 1, 1, 8, 0), 1, false)
         feilmeldingRepository.oppdaterFeilmelding(oppdatertFeilmelding)
-        val actual = transaction { FeilmeldingTable.selectAll().single()}
-        assertEquals("Oppdatert", actual[FeilmeldingTable.tittel])
-        assertEquals("Oppdatert feil", actual[FeilmeldingTable.beskrivelse])
-        assertFalse ( actual[FeilmeldingTable.haster] )
-        assertEquals(1, actual[FeilmeldingTable.arbeidsstatus])
+        val actualOppdatert = transaction { FeilmeldingTable.selectAll().single() }
+        assertEquals("Oppdatert", actualOppdatert[FeilmeldingTable.tittel])
+        assertEquals("Oppdatert feil", actualOppdatert[FeilmeldingTable.beskrivelse])
+        assertFalse ( actualOppdatert[FeilmeldingTable.haster] )
+        assertEquals(1, actualOppdatert[FeilmeldingTable.arbeidsstatus])
     }
-    */
+
 }

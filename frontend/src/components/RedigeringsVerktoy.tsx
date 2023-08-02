@@ -1,5 +1,5 @@
 import { FloppydiskIcon, XMarkIcon } from "@navikt/aksel-icons"
-import { TextField, Textarea, RadioGroup, Radio, Button, Switch } from "@navikt/ds-react"
+import { TextField, Textarea, RadioGroup, Radio, Button, Switch, Heading } from "@navikt/ds-react"
 import { useState } from "react"
 import { FeilmeldingsInnholdInterface } from "../interface"
 import axios from "axios"
@@ -67,8 +67,11 @@ const RedigeringsVerktoy = (props: redigeringsInterface) => {
                     <Radio value={2}>Feilen er fikset</Radio>
                 </RadioGroup>
                 <Skillelinje/>
+                <Heading size="xsmall">
+                    Haster det å fikse feilen?
+                </Heading>
                 <Switch checked={haster} onClick={() => setHaster(!haster)}>
-                    Saken haster
+                    Feilen haster
                 </Switch>
             </div>
             <div className="flex gap-4 items-start">

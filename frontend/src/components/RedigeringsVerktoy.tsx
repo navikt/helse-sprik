@@ -13,6 +13,7 @@ const RedigeringsVerktoy = (props: redigeringsInterface) => {
     const [beskrivelse, setBeskrivelse] = useState(props.beskrivelse)
     const [arbeidsstatus, setArbeidsstatus] = useState(props.arbeidsstatus)
     const [haster, setHaster] = useState(props.haster)
+    const [kommentar, setKommentar] = useState(props.kommentar)
 
     const lagreEndringer = async() => {
         props.setVisModal(false)
@@ -24,10 +25,11 @@ const RedigeringsVerktoy = (props: redigeringsInterface) => {
             beskrivelse: beskrivelse,
             dato: props.dato.toISOString().replace('Z', ''),
             arbeidsstatus: arbeidsstatus,
-            haster: haster
+            haster: haster,
+            kommentar: (kommentar ? kommentar : null)
         }
 
-        await axios.put(`/api/oppdaterfeil/${props.id}`, payload, {
+        await axios.put(`/api/oppdaterfeil/`, payload, {
             headers: {
                 'Content-Type': 'application/json'
             }

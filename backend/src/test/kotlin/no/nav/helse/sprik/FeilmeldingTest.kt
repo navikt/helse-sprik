@@ -124,5 +124,4 @@ class FeilmeldingTest {
         val actual = transaction { FeilmeldingTable.selectAll().single() }
         assertEquals("Feilen fikses nå!", actual[FeilmeldingTable.kommentar])
     }
-
 }

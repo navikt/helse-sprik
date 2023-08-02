@@ -35,6 +35,7 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
             </div>
             <div className="h-2 bg-gray-200 my-4 rounded-lg"></div>
             {props.children}
+            Test: {props.kommentar ? props.kommentar : "null"}
         </div>
     )
 }

@@ -70,6 +70,15 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
                 feilmeldingRepository.oppdaterFeilmelding(oppdatertFeilmelding)
                 call.respond(status = HttpStatusCode.Created, message = "Feilmelding oppdatert")
             }
+            put("/api/oppdaterkommentar") {
+                val oppdatertKommentarFeilmelding = call.receive<Feilmelding>()
+                if (oppdatertKommentarFeilmelding.id == null || oppdatertKommentarFeilmelding.kommentar == null) {
+                    call.respond(status = HttpStatusCode.NotAcceptable, message = "Må ha id og kommentar for å oppdatere feilmelding")
+                } else {
+                    feilmeldingRepository.oppdaterKommentar(oppdatertKommentarFeilmelding.id, oppdatertKommentarFeilmelding.kommentar)
+                    call.respond(status = HttpStatusCode.Created, message = "Feilmelding oppdatert")
+                }
+            }
         }
     }
     

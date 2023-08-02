@@ -1,4 +1,4 @@
-import CardsContainer from "./components/CardsContainer";
+import KortKonteiner from "./components/KortKonteiner";
 import "@navikt/ds-css";
 import { Button, Search } from "@navikt/ds-react";
 import Header from "./components/Header";
@@ -69,7 +69,7 @@ export default function Home() {
               Meld inn feil
             </Button>
           </div>
-          <CardsContainer feilmeldinger={feilmeldinger}/>
+          <KortKonteiner feilmeldinger={feilmeldinger}/>
         </div>
       </div>
     </main>

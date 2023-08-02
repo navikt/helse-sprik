@@ -1,10 +1,11 @@
 import "@navikt/ds-css";
-import { Button, Heading, Modal, Radio, RadioGroup, Tag, TextField, Textarea } from "@navikt/ds-react";
+import { Button, Modal, Radio, RadioGroup, TextField, Textarea } from "@navikt/ds-react";
 import { Feilmelding, IFeilmelding } from "../interface";
 import FeilModal from "./FeilModal";
 import { useEffect, useState } from "react";
 import { FloppydiskIcon, PencilIcon, XMarkIcon } from "@navikt/aksel-icons";
 import axios from "axios";
+import FeilkortHeader from "./FeilkortHeader";
 
 /**
  * En konteiner som inneholder all informasjon og funksjonalitet for å vise og interagere med en feilmelding.
@@ -18,7 +19,7 @@ interface IFeilKort extends IFeilmelding {
 }
 
 
-export const FeilKort = (props: IFeilKort) => {
+ const FeilKort = (props: IFeilKort) => {
     const [visModal, setVisModal] = useState<boolean>(false)
     const [redigeringsmodus, setRedigeringsmodus] = useState(false)
     const [tittel, setTittel] = useState(props.tittel)
@@ -166,69 +167,4 @@ export const FeilKort = (props: IFeilKort) => {
         </>
     )
 }
-
-/**
- * FeilkortHeader er komponent som beskriver ikke-sensitiv informasjon om feilmeldingen og vises for alle på forsiden.
- * FeilkortHeaderen er en del av FeilKort-komponenten og FullvisningsKort-komponenten. 
- * Midlertidig implementerer komponentet @requires IFeilmelding for props, men dette må endres når IFeilmelding utvides i fremtiden for støtte av flere typer feilmeldinger.
- * @param tittel
- * @param beskrivelse
- * @param haster
- * @param dato
- * @returns JSX komponent som skal vise nødvendig informasjon for å forstå en feil.
- */
-export const FeilkortHeader = (props: IFeilmelding) => {
-    return(
-        <div className="flex justify-between flex-col">
-            <div>
-                <Heading size="medium">{props.tittel}</Heading>
-                <p className="text-text-subtle mb-4">{props.dato.toDateString()}</p>
-                <p>{props.beskrivelse}</p>    
-            </div>
-            <TagBar haster={props.haster} arbeidsstatus={props.arbeidsstatus}/>              
-        </div>
-    )
-}
-
-
-interface TagBarInterface {
-    haster: boolean
-    arbeidsstatus: number
-}
-/**
- * Komponentet er en bar (vanrett linje) som inneholder to statusflagg: "arbeidsstatus" og "Haster".
- * Komponentet er en del av FeilKortHeader
- * @param haster er en boolean som beskriver om feilen haster eller ikke.
- * @param arbeidsstatus
- */
-const TagBar = (props: TagBarInterface) => {
-
-    /**
-     * Funksjonen tar inn 
-     * @param arbeidsstatus 
-     * @returns 
-     */
-    const toggleArbeidsstatus = (arbeidsstatus: number) => {
-        switch (arbeidsstatus) {
-            case 0:
-                return <Tag variant="neutral">Ikke påbegynt</Tag>;
-            case 1:
-                return <Tag variant="info">Feilen jobbes med</Tag>;
-            case 2:
-                return <Tag variant="success">Feilen er fikset</Tag>;
-            default:
-                throw new Error("Ikke gyldig arbeidsstatus-kode. Koden må være 0, 1 eller 2");
-                
-        }
-    }
-
-    return (
-        <div className="flex gap-3 mt-4">
-            {toggleArbeidsstatus(props.arbeidsstatus)}
-            {props.haster ? <Tag variant="warning">Haster</Tag> : <></>}
-        </div>
-    )
-}
-
-
-
+export default FeilKort

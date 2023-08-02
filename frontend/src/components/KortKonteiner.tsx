@@ -1,7 +1,7 @@
-import { FeilKort } from "./FeilCard";
+import FeilKort from "./FeilKort.tsx";
 import { Feilmelding } from "../interface.ts";
 
-interface ICardsContainer {
+interface IKortKonteiner {
   feilmeldinger: Feilmelding[]
 }
 
@@ -9,7 +9,7 @@ interface ICardsContainer {
  * Komponent som laster inn feilmeldinger i kort fra database.
  * @returns grid med feilmeldinger 
  */
-const CardsContainer = (props: ICardsContainer) => {  
+const KortKonteiner = (props: IKortKonteiner) => {  
   return (
       <div className="grid grid-cols-2 gap-6">
         
@@ -29,4 +29,4 @@ const CardsContainer = (props: ICardsContainer) => {
   );
 };
 
-export default CardsContainer;
+export default KortKonteiner;

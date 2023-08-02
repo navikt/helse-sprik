@@ -56,6 +56,7 @@ const FeilKort = (props: IFeilKort) => {
                         haster={props.haster}
                         arbeidsstatus={props.arbeidsstatus}
                         setRedigeringsmodus={setRedigeringsmodus}
+                        setVisModal={setVisModal}
                     />
                 : 
                     <FeilmeldingsInnhold

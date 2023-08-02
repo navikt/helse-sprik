@@ -1,20 +1,18 @@
 import { FloppydiskIcon, XMarkIcon } from "@navikt/aksel-icons"
 import { TextField, Textarea, RadioGroup, Radio, Button } from "@navikt/ds-react"
 import { useState } from "react"
-import { IFeilmelding } from "../interface"
+import { FeilmeldingsInnholdInterface } from "../interface"
 import axios from "axios"
 
-interface RedigeringsInterface extends IFeilmelding {
-    setRedigeringsmodus: (redigeringsmodus: boolean) => void
-}
 
-const RedigeringsVerktoy = (props: RedigeringsInterface) => {
+const RedigeringsVerktoy = (props: FeilmeldingsInnholdInterface) => {
     const [tittel, setTittel] = useState(props.tittel)
     const [beskrivelse, setBeskrivelse] = useState(props.beskrivelse)
     const [arbeidsstatus, setArbeidsstatus] = useState(props.arbeidsstatus)
     const [haster, setHaster] = useState(props.haster)
 
     const lagreEndringer = () => {
+        props.setVisModal(false)
         props.setRedigeringsmodus(false)
 
         const payload = {

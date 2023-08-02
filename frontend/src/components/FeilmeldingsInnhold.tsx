@@ -1,14 +1,7 @@
 import { PencilIcon, XMarkIcon } from "@navikt/aksel-icons"
 import { Button } from "@navikt/ds-react"
-import { IFeilmelding } from "../interface"
+import { FeilmeldingsInnholdInterface } from "../interface"
 import FeilkortHeader from "./FeilkortHeader"
-
-
-interface FeilmeldingsInnholdInterface extends IFeilmelding {
-    children: React.ReactNode
-    setVisModal: (visModal: boolean) => void
-    setRedigeringsmodus: (redigeringsmodus: boolean) => void
-}
 
 const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
     return(
@@ -34,7 +27,7 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
                         onClick={() => {
                             props.setVisModal(false)
                             props.setRedigeringsmodus(false)
-                        }}
+                        } }
                     >
                         Lukk
                     </Button>

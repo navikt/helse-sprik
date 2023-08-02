@@ -1,12 +1,12 @@
 import "@navikt/ds-css";
-import { Button, Modal, Radio, RadioGroup, TextField, Textarea } from "@navikt/ds-react";
-import { IFeilmelding } from "../interface";
+import { Button, Modal} from "@navikt/ds-react";
+import { Feilmelding, IFeilmelding } from "../interface";
 import FeilModal from "./FeilModal";
 import { useEffect, useState } from "react";
-import { FloppydiskIcon, PencilIcon, XMarkIcon } from "@navikt/aksel-icons";
-import axios from "axios";
+import { PencilIcon, XMarkIcon } from "@navikt/aksel-icons";
 import FeilkortHeader from "./FeilkortHeader";
 import RedigeringsVerktoy from "./RedigeringsVerktoy";
+import FeilmeldingsInnhold from "./FeilmeldingsInnhold";
 
 /**
  * En konteiner som inneholder all informasjon og funksjonalitet for å vise og interagere med en feilmelding.
@@ -58,38 +58,18 @@ const FeilKort = (props: IFeilKort) => {
                         setRedigeringsmodus={setRedigeringsmodus}
                     />
                 : 
-                <div>
-                    <div className="flex justify-between">
-                        <FeilkortHeader 
-                            id={props.id}
-                            tittel={props.tittel}
-                            beskrivelse={props.beskrivelse}
-                            dato={props.dato}
-                            haster={props.haster}
-                            arbeidsstatus={props.arbeidsstatus}
-                        />
-                        <div className="flex gap-4 items-start">
-                            <Button
-                                variant="secondary"
-                                icon={<PencilIcon/>}
-                                onClick={() => setRedigeringsmodus(true)}
-                            >
-                                Rediger
-                            </Button>
-                            <Button
-                                icon={<XMarkIcon/>}
-                                onClick={() => {
-                                    setVisModal(false)
-                                    setRedigeringsmodus(false)
-                                }}
-                            >
-                                Lukk
-                            </Button>
-                        </div>
-                    </div>
-                    <div className="h-2 bg-gray-200 my-4 rounded-lg"></div>
-                    {/* TODO: HER KOMMER CONTENT */}
-                </div>
+                    <FeilmeldingsInnhold
+                        id={props.id}
+                        tittel={props.tittel}
+                        beskrivelse={props.beskrivelse}
+                        dato={props.dato}
+                        haster={props.haster}
+                        arbeidsstatus={props.arbeidsstatus}
+                        setVisModal={setVisModal}
+                        setRedigeringsmodus={setRedigeringsmodus}
+                    >
+                        <p>Her kommer det content</p>
+                    </FeilmeldingsInnhold>
                 }              
             </FeilModal>
         </>

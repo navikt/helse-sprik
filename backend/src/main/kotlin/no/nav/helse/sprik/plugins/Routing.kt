@@ -12,7 +12,10 @@ import io.ktor.server.http.content.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.request.*
 import no.nav.helse.sprik.db.FeilmeldingRepository
+import no.nav.helse.sprik.db.FeilmeldingTable
 import no.nav.helse.sprik.modell.Feilmelding
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.update
 
 fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngineEnvironment {
     //Repositories for handlinger mot database:
@@ -62,9 +65,9 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
                 val sokeresultat = feilmeldingRepository.hentSokteFeilmeldinger(sokestreng)
                 call.respond(status = HttpStatusCode.Created, message = sokeresultat)
             }
-            put("/api/oppdaterfeil/{id}") {
-                val id = call.parameters["id"]
+            put("/api/oppdaterfeil") {
                 val oppdatertFeilmelding = call.receive<Feilmelding>()
+                feilmeldingRepository.oppdaterFeilmelding(oppdatertFeilmelding)
                 call.respond(status = HttpStatusCode.Created, message = "Feilmelding oppdatert")
             }
         }

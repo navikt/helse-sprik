@@ -46,7 +46,10 @@ const FeilKort = (props: IFeilKort) => {
                     arbeidsstatus={props.arbeidsstatus}
                 />
             </div>
-            <FeilModal open={visModal} setOpen={setVisModal} >
+            <FeilModal 
+                open={visModal} 
+                setOpen={setVisModal} 
+            >
                 {redigeringsmodus ? 
                     <RedigeringsVerktoy 
                         id={props.id}

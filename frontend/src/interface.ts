@@ -16,6 +16,7 @@ export interface FeilmeldingsInnholdInterface extends IFeilmelding {
     children?: React.ReactNode
     setRedigeringsmodus: (redigeringsmodus: boolean) => void
     setVisModal: (visModal: boolean) => void
+    reset: () => void
 }
 
 export class Feilmelding implements IFeilmelding {

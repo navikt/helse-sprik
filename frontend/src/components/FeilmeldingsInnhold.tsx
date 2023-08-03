@@ -2,11 +2,12 @@ import { PencilIcon, XMarkIcon } from "@navikt/aksel-icons"
 import { Button } from "@navikt/ds-react"
 import { FeilmeldingsInnholdInterface } from "../interface"
 import FeilkortHeader from "./FeilkortHeader"
+import Skillelinje from "./Skillelinje"
 
 const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
     return(
-        <div>
-            <div className="flex justify-between">
+        <>
+            <div className="flex justify-between ">
                 <FeilkortHeader
                     id={props.id}
                     tittel={props.tittel}
@@ -27,15 +28,15 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
                         onClick={() => {
                             props.setVisModal(false)
                             props.setRedigeringsmodus(false)
-                        } }
+                        }}
                     >
                         Lukk
                     </Button>
                 </div>
             </div>
-            <div className="h-2 bg-gray-200 my-4 rounded-lg"></div>
+            <Skillelinje/>
             {props.children}
-        </div>
+        </>
     )
 }
 export default FeilmeldingsInnhold;

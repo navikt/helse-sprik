@@ -42,8 +42,12 @@ const RedigeringsVerktoy = (props: redigeringsInterface) => {
     }
 
     return (
-        <div className="flex flex-col gap-12">
-            <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-12 items-center px-12">
+
+            <div className="flex flex-col gap-6 w-full">
+            <Heading className="" size="large">
+                Rediger feil
+            </Heading>
                 <TextField 
                     label="Tittel"
                     value={tittel}
@@ -65,14 +69,16 @@ const RedigeringsVerktoy = (props: redigeringsInterface) => {
                     <Radio value={2}>Feilen er fikset</Radio>
                 </RadioGroup>
                 <Skillelinje/>
-                <Heading size="xsmall">
-                    Haster det å fikse feilen?
-                </Heading>
-                <Switch checked={haster} onClick={() => setHaster(!haster)}>
-                    Feilen haster
-                </Switch>
+                <div>
+                    <Heading size="xsmall">
+                        Haster det å fikse feilen?
+                    </Heading>
+                    <Switch checked={haster} onClick={() => setHaster(!haster)}>
+                        Feilen haster
+                    </Switch>
+                </div>
             </div>
-            <div className="flex gap-4 items-start">
+            <div className="flex gap-4 items-start w-full">
                 <Button
                     variant="primary"
                     icon={<FloppydiskIcon/>}

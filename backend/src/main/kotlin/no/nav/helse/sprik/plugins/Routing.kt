@@ -1,5 +1,6 @@
 package no.nav.helse.sprik.plugins
 
+import InnkommendeKommentar
 import io.ktor.http.*
 import io.ktor.server.routing.*
 import io.ktor.server.response.*
@@ -71,13 +72,9 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
                 call.respond(status = HttpStatusCode.Created, message = "Feilmelding oppdatert")
             }
             put("/api/oppdaterkommentar") {
-                val oppdatertKommentarFeilmelding = call.receive<Feilmelding>()
-                if (oppdatertKommentarFeilmelding.id == null || oppdatertKommentarFeilmelding.kommentar == null) {
-                    call.respond(status = HttpStatusCode.NotAcceptable, message = "Må ha id og kommentar for å oppdatere feilmelding")
-                } else {
-                    feilmeldingRepository.oppdaterKommentar(oppdatertKommentarFeilmelding.id, oppdatertKommentarFeilmelding.kommentar)
-                    call.respond(status = HttpStatusCode.Created, message = "Feilmelding oppdatert")
-                }
+                val innkommendeKommentar = call.receive<InnkommendeKommentar>()
+                feilmeldingRepository.oppdaterKommentar(innkommendeKommentar.id, innkommendeKommentar.kommentar)
+                call.respond(status = HttpStatusCode.Created, message = "Feilmelding oppdatert")
             }
         }
     }

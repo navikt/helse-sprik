@@ -72,6 +72,7 @@ const FeilKort = (props: IFeilKort) => {
                         arbeidsstatus={props.arbeidsstatus}
                         setVisModal={setVisModal}
                         setRedigeringsmodus={setRedigeringsmodus}
+                        reset={props.reset}
                     >
                         <p>Her kommer det content</p>
                     </FeilmeldingsInnhold>

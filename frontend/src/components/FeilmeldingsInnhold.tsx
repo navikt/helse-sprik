@@ -1,8 +1,9 @@
 import { ChatElipsisIcon, PencilIcon, XMarkIcon } from "@navikt/aksel-icons"
-import { Button, Chat, TextField, Textarea } from "@navikt/ds-react"
+import { Button, Heading, TextField } from "@navikt/ds-react"
 import { FeilmeldingsInnholdInterface } from "../interface"
 import FeilkortHeader from "./FeilkortHeader"
 import { useState } from "react"
+import Skillelinje from "./Skillelinje"
 
 
 const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
@@ -38,40 +39,71 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
                     </Button>
                 </div>
             </div>
-            <div className="h-2 bg-gray-200 my-4 rounded-lg"></div>
+            <Skillelinje/>
             {props.children}
-            {kommentar.length === 0 ? <></> : (<Kommentar tekst={kommentar}/>)}
-            <div className="flex items-end gap-12 w-full mt-12">
-                <TextField
-                    className="grow"
-                    label="Skriv inn din kommentar til feilen"
-                    value={kommentarfelt}
-                    onChange={e => setKommentarfelt(e.target.value)}
-                >
-
-                </TextField>
-                <Button
-                    variant="secondary"
-                    icon={<ChatElipsisIcon/>}
-                    onClick={() => {
-                        setKommentar(kommentarfelt)
-                    }}
-                >
-                    Legg til kommentar
-                </Button>
-            </div>
+            {kommentar.length === 0 ? 
+                <KommentarTekstfelt
+                    kommentarfelt={kommentarfelt} 
+                    setKommentarfelt={setKommentarfelt}
+                    setKommentar={setKommentar}
+                /> 
+                    : 
+                <Kommentar 
+                    tekst={kommentar}
+                    setKommentarfelt={setKommentarfelt}
+                    setKommentar={setKommentar}
+                />
+            }
         </div>
     )
 }
 export default FeilmeldingsInnhold;
 
 
-const Kommentar = ({tekst} : {tekst: string}) => {
+interface Ikommentar {
+    setKommentarfelt: (val: string) => void
+    setKommentar: (val: string) => void     
+}
+
+interface kommentarTekstfeltInterface extends Ikommentar{
+    kommentarfelt: string,
+}
+interface kommentarInterface extends Ikommentar {
+    tekst: string
+}
+
+
+const KommentarTekstfelt = (props: kommentarTekstfeltInterface) => {
     return(
-            <Chat>
-                <Chat.Bubble from="user" timestamp="10:00">
-                    <p>{tekst}</p>
-                </Chat.Bubble>
-            </Chat>
+        <div className="flex items-end gap-12 w-full mt-4 h-fit">
+            <TextField
+                className="grow"
+                label="Skriv inn din kommentar til feilen"
+                value={props.kommentarfelt}
+                onChange={e => props.setKommentarfelt(e.target.value)}
+            >
+            </TextField>
+            <Button
+                variant="secondary"
+                icon={<ChatElipsisIcon/>}
+                onClick={() => {
+                    props.setKommentar(props.kommentarfelt)
+                }}
+            >
+                Legg til kommentar
+            </Button>
+        </div>
+    )
+}
+
+const Kommentar = (props: kommentarInterface) => {
+    return(
+        <>
+            <Skillelinje/>
+            <div className="p-5 bg-bg-subtle rounded-lg w-2/3 my-4">
+                <Heading size="medium">Notat</Heading>
+                <p className="break-words">{props.tekst}</p>
+            </div> 
+        </>
     )
 }

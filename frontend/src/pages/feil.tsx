@@ -17,6 +17,9 @@ export default function Feil() {
     const [valgteTags, setValgteTags] = useState([] as string[]);
     const [aktørId, setAktørId] = useState("");
 
+    console.log(aktørId);
+    
+
     const handleSubmit = () => {
 
         const payload = {
@@ -121,7 +124,7 @@ export default function Feil() {
 
                         <Skillelinje/>
                         <Heading size="xsmall">
-                            Haster det å fikse feilen?
+                            Velg kategorier som passer
                         </Heading>
                         <Chips>
                         {tags.map((c) => (

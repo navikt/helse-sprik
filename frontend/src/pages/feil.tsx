@@ -63,7 +63,7 @@ export default function Feil() {
             <Header/>
             <div className="flex grow">
                 <div className="w-1/4 bg-bg-subtle"></div>
-                <div className="flex flex-col justify-center gap-16 p-8 px-16  grow">
+                <div className="flex flex-col justify-center gap-8 p-8 px-16  grow">
                     <div className=" flex flex-col gap-2 justify-center">
                         <BugIcon
                             title="Insekts ikon"
@@ -88,12 +88,15 @@ export default function Feil() {
                         />
                         <Skillelinje/>
                         <BildeOpplastning/>
+                        <Skillelinje/>
+                        <Heading size="xsmall">
+                            Haster det å fikse feilen?
+                        </Heading>
                         <Switch 
                             onClick={() => setHaster(!haster)}
                         >
                             Saken Haster
                         </Switch>
-                        <Skillelinje/>
                     </div>
 
 

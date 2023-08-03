@@ -4,11 +4,33 @@ import { FeilmeldingsInnholdInterface } from "../interface"
 import FeilkortHeader from "./FeilkortHeader"
 import { useState } from "react"
 import Skillelinje from "./Skillelinje"
+import axios from "axios"
 
 
 const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
     const [kommentar, setKommentar] = useState("") 
     const [kommentarfelt, setKommentarfelt] = useState("")
+
+    const oppdaterkommentar = async() => {
+        setKommentar(kommentarfelt)
+
+        const payload = {
+            id: props.id,
+            tittel: kommentar,
+        }
+
+        await axios.put("/api/oppdaterkommentar", payload, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        })
+
+        props.reset()
+    }
 
     return(
         <div>
@@ -45,13 +67,11 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
                 <KommentarTekstfelt
                     kommentarfelt={kommentarfelt} 
                     setKommentarfelt={setKommentarfelt}
-                    setKommentar={setKommentar}
+                    oppdaterKommentar={() => oppdaterkommentar()}
                 /> 
                     : 
                 <Kommentar 
                     tekst={kommentar}
-                    setKommentarfelt={setKommentarfelt}
-                    setKommentar={setKommentar}
                 />
             }
         </div>
@@ -62,13 +82,13 @@ export default FeilmeldingsInnhold;
 
 interface Ikommentar {
     setKommentarfelt: (val: string) => void
-    setKommentar: (val: string) => void     
+    oppdaterKommentar: () => void
 }
 
 interface kommentarTekstfeltInterface extends Ikommentar{
     kommentarfelt: string,
 }
-interface kommentarInterface extends Ikommentar {
+interface kommentarInterface {
     tekst: string
 }
 
@@ -86,9 +106,7 @@ const KommentarTekstfelt = (props: kommentarTekstfeltInterface) => {
             <Button
                 variant="secondary"
                 icon={<ChatElipsisIcon/>}
-                onClick={() => {
-                    props.setKommentar(props.kommentarfelt)
-                }}
+                onClick={() => props.oppdaterKommentar()}
             >
                 Legg til kommentar
             </Button>

@@ -118,7 +118,10 @@ const Kommentar = (props: kommentarInterface) => {
         <>
             <Skillelinje/>
             <div className="p-5 bg-bg-subtle rounded-lg w-2/3 my-4">
-                <Heading size="medium">Notat</Heading>
+                <div className="flex justify-between items-center">
+                    <Heading size="medium">Notat</Heading>
+                    <Button variant="tertiary" icon={<PencilIcon/>}></Button>
+                </div>
                 <p className="break-words">{props.tekst}</p>
             </div> 
         </>

@@ -1,7 +1,7 @@
 import "@navikt/ds-css";
 
 import { ArrowLeftIcon, BugIcon } from "@navikt/aksel-icons";
-import { Alert, Button, Heading, Switch, TextField, Textarea } from "@navikt/ds-react";
+import { Alert, Button, Chips, Heading, Switch, TextField, Textarea } from "@navikt/ds-react";
 import axios from "axios";
 import { useState } from "react";
 import BildeOpplastning from "../components/BildeOpplastning";
@@ -14,6 +14,8 @@ export default function Feil() {
     const [beskrivelse, setBeskrivelse] = useState("");
     const [status, setStatus] = useState(0)
     const [haster, setHaster] = useState(false)
+    const [valgteTags, setValgteTags] = useState([] as string[]);
+    const [aktørId, setAktørId] = useState("");
 
     const handleSubmit = () => {
 
@@ -25,6 +27,8 @@ export default function Feil() {
             arbeidsstatus: 0,
             haster: haster,
             kommentar: null
+            //kategorier: valgteTags
+            //aktørId: aktørId
         }
         
         axios.post("/api/nyfeil", payload, {
@@ -58,12 +62,20 @@ export default function Feil() {
 
     const navigate = useNavigate()
 
+    const tags = [
+        "Utbetaling",
+        "Inntekt",
+        "Speil",
+        "Annet"
+    ];
+
     return (
         <main className="flex flex-col h-screen">
             <Header/>
-            <div className="flex grow">
-                <div className="w-1/4 bg-bg-subtle"></div>
-                <div className="flex flex-col justify-center gap-8 p-8 px-16  grow">
+            <div className="flex items">
+                <div className=" bg-bg-subtle grow"></div>
+
+                <div className="w-3/5 flex flex-col justify-center gap-8 px-16 py-8">
                     <div className=" flex flex-col gap-2 justify-center">
                         <BugIcon
                             title="Insekts ikon"
@@ -81,6 +93,7 @@ export default function Feil() {
                             label="Tittel"
                             onChange={e => setTittel(e.target.value)}
                         />
+
                         <Textarea
                             label="Beskrivelse"
                             description="Detaljert beskrivelse av problemet"
@@ -88,6 +101,7 @@ export default function Feil() {
                         />
                         <Skillelinje/>
                         <BildeOpplastning/>
+
                         <Skillelinje/>
                         <Heading size="xsmall">
                             Haster det å fikse feilen?
@@ -97,10 +111,38 @@ export default function Feil() {
                         >
                             Saken Haster
                         </Switch>
+
+                        <Skillelinje/>
+                        <TextField
+                            label="Aktør-ID (valgfritt)"
+                            description="Legg ved Aktør-ID om det er relevant"
+                            onChange={e => setAktørId(e.target.value)}
+                        />
+
+                        <Skillelinje/>
+                        <Heading size="xsmall">
+                            Haster det å fikse feilen?
+                        </Heading>
+                        <Chips>
+                        {tags.map((c) => (
+                            <Chips.Toggle
+                            selected={valgteTags.includes(c)}
+                            key={c}
+                            onClick={() =>
+                                setValgteTags(
+                                valgteTags.includes(c)
+                                    ? valgteTags.filter((x) => x !== c)
+                                    : [...valgteTags, c]
+                                )
+                            }
+                            >
+                            {c}
+                            </Chips.Toggle>
+                        ))}
+                        </Chips>
+
                     </div>
-
-
-                    <div className="w-1/2 flex flex-col gap-2 justify-center">
+                    <div className="w-1/2 flex flex-col gap-2 justify-center mt-8">
                         {status != 0 ? handleAlerts() : <></>}
                         <Button
                             onClick={handleSubmit}
@@ -117,7 +159,8 @@ export default function Feil() {
                         </Button>
                     </div>                
                 </div>
-                <div className="w-1/4 bg-bg-subtle"></div>
+
+                <div className=" bg-bg-subtle grow"></div>
             </div>
         </main>
     )

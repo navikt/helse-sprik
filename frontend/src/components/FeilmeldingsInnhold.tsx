@@ -7,7 +7,7 @@ import Skillelinje from "./Skillelinje"
 import axios from "axios"
 
 const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
-    const [kommentar, setKommentar] = useState(props.kommentar ? props.kommentar : "") 
+    const [kommentar, setKommentar] = useState(props.kommentar != (null || undefined)  ? props.kommentar : "") 
     const [kommentarfelt, setKommentarfelt] = useState("") 
 
     const oppdaterkommentar = async() => {
@@ -42,7 +42,9 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
                     beskrivelse={props.beskrivelse}
                     dato={props.dato}
                     haster={props.haster}
-                    arbeidsstatus={props.arbeidsstatus} />
+                    arbeidsstatus={props.arbeidsstatus} 
+                    kommentar={props.kommentar}
+                />
                 <div className="flex gap-4 items-start">
                     <Button
                         variant="tertiary"

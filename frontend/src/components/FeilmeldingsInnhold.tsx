@@ -6,7 +6,6 @@ import { useState } from "react"
 import Skillelinje from "./Skillelinje"
 import axios from "axios"
 
-
 const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
     const [kommentar, setKommentar] = useState("") 
     const [kommentarfelt, setKommentarfelt] = useState("")
@@ -33,8 +32,8 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
     }
 
     return(
-        <div>
-            <div className="flex justify-between">
+        <>
+            <div className="flex justify-between ">
                 <FeilkortHeader
                     id={props.id}
                     tittel={props.tittel}
@@ -55,7 +54,7 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
                         onClick={() => {
                             props.setVisModal(false)
                             props.setRedigeringsmodus(false)
-                        } }
+                        }}
                     >
                         Lukk
                     </Button>
@@ -74,7 +73,7 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
                     tekst={kommentar}
                 />
             }
-        </div>
+      </>
     )
 }
 export default FeilmeldingsInnhold;

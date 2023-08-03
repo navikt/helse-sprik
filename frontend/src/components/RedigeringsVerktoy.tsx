@@ -1,8 +1,9 @@
 import { FloppydiskIcon, XMarkIcon } from "@navikt/aksel-icons"
-import { TextField, Textarea, RadioGroup, Radio, Button } from "@navikt/ds-react"
+import { TextField, Textarea, RadioGroup, Radio, Button, Switch, Heading } from "@navikt/ds-react"
 import { useState } from "react"
 import { FeilmeldingsInnholdInterface } from "../interface"
 import axios from "axios"
+import Skillelinje from "./Skillelinje"
 
 interface redigeringsInterface extends FeilmeldingsInnholdInterface {
     reset: () => void
@@ -53,6 +54,7 @@ const RedigeringsVerktoy = (props: redigeringsInterface) => {
                     value={beskrivelse}
                     onChange={e => setBeskrivelse(e.target.value)}
                 />
+                <Skillelinje/>
                 <RadioGroup
                     legend="Velg arbeidsstatus for feil"
                     onChange={(arbeidsstatus: number) => {setArbeidsstatus(arbeidsstatus)}}
@@ -62,14 +64,13 @@ const RedigeringsVerktoy = (props: redigeringsInterface) => {
                     <Radio value={1}>Feilen jobbes med</Radio>
                     <Radio value={2}>Feilen er fikset</Radio>
                 </RadioGroup>
-                <RadioGroup
-                    legend="Hvor vil du sitte?"
-                    onChange={(haster: boolean) => {setHaster(haster)}}
-                    value={haster}
-                >
-                    <Radio value={true}>Ja</Radio>
-                    <Radio value={false}>Nei</Radio>
-                </RadioGroup>
+                <Skillelinje/>
+                <Heading size="xsmall">
+                    Haster det å fikse feilen?
+                </Heading>
+                <Switch checked={haster} onClick={() => setHaster(!haster)}>
+                    Feilen haster
+                </Switch>
             </div>
             <div className="flex gap-4 items-start">
                 <Button

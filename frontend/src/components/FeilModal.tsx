@@ -11,7 +11,7 @@ interface modalInterface {
 const FeilModal = (props: modalInterface) => {
     return(                  
         <Modal
-            className="w-3/5"
+            className="w-3/5 p-5"
             open={props.open}
             aria-label={" modal"}
             onClose={() => props.setOpen(false)}

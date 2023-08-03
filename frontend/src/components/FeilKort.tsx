@@ -62,6 +62,7 @@ const FeilKort = (props: IFeilKort) => {
                         setRedigeringsmodus={setRedigeringsmodus}
                         setVisModal={setVisModal}
                         reset={props.reset}
+                        kommentar={props.kommentar}
                     />
                 : 
                     <FeilmeldingsInnhold

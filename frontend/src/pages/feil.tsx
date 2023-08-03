@@ -1,7 +1,7 @@
 import "@navikt/ds-css";
 
 import { ArrowLeftIcon, BugIcon } from "@navikt/aksel-icons";
-import { Alert, Button, Heading, TextField, Textarea } from "@navikt/ds-react";
+import { Alert, Button, Heading, Switch, TextField, Textarea } from "@navikt/ds-react";
 import axios from "axios";
 import { useState } from "react";
 import BildeOpplastning from "../components/BildeOpplastning";
@@ -13,7 +13,7 @@ export default function Feil() {
     const [tittel, setTittel] = useState("");
     const [beskrivelse, setBeskrivelse] = useState("");
     const [status, setStatus] = useState(0)
-    //const [haster, setHaster] = useState(false)
+    const [haster, setHaster] = useState(false)
 
     const handleSubmit = () => {
 
@@ -23,8 +23,8 @@ export default function Feil() {
             beskrivelse: beskrivelse,
             dato: new Date().toISOString().replace('Z', ''), // Litt wack fix, burde endres
             arbeidsstatus: 0,
-            haster: false,
-            kommentar: ""
+            haster: haster,
+            kommentar: null
         }
         
         axios.post("/api/nyfeil", payload, {
@@ -88,8 +88,15 @@ export default function Feil() {
                         />
                         <Skillelinje/>
                         <BildeOpplastning/>
+                        <Switch 
+                            onClick={() => setHaster(!haster)}
+                        >
+                            Saken Haster
+                        </Switch>
                         <Skillelinje/>
                     </div>
+
+
                     <div className="w-1/2 flex flex-col gap-2 justify-center">
                         {status != 0 ? handleAlerts() : <></>}
                         <Button

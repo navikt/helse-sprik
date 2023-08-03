@@ -1,9 +1,37 @@
-import { PencilIcon, XMarkIcon } from "@navikt/aksel-icons"
-import { Button } from "@navikt/ds-react"
+import { ChatElipsisIcon, PencilIcon, XMarkIcon } from "@navikt/aksel-icons"
+import { Button, Heading, TextField } from "@navikt/ds-react"
 import { FeilmeldingsInnholdInterface } from "../interface"
 import FeilkortHeader from "./FeilkortHeader"
+import { useState } from "react"
+import Skillelinje from "./Skillelinje"
+import axios from "axios"
+
 
 const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
+    const [kommentar, setKommentar] = useState("") 
+    const [kommentarfelt, setKommentarfelt] = useState("")
+
+    const oppdaterkommentar = async() => {
+        setKommentar(kommentarfelt)
+
+        const payload = {
+            id: props.id,
+            tittel: kommentar,
+        }
+
+        await axios.put("/api/oppdaterkommentar", payload, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        })
+
+        props.reset()
+    }
+
     return(
         <div>
             <div className="flex justify-between">
@@ -16,7 +44,7 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
                     arbeidsstatus={props.arbeidsstatus} />
                 <div className="flex gap-4 items-start">
                     <Button
-                        variant="secondary"
+                        variant="tertiary"
                         icon={<PencilIcon />}
                         onClick={() => props.setRedigeringsmodus(true)}
                     >
@@ -33,10 +61,67 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
                     </Button>
                 </div>
             </div>
-            <div className="h-2 bg-gray-200 my-4 rounded-lg"></div>
+            <Skillelinje/>
             {props.children}
-            Test: {props.kommentar ? props.kommentar : "null"}
+            {kommentar.length === 0 ? 
+                <KommentarTekstfelt
+                    kommentarfelt={kommentarfelt} 
+                    setKommentarfelt={setKommentarfelt}
+                    oppdaterKommentar={() => oppdaterkommentar()}
+                /> 
+                    : 
+                <Kommentar 
+                    tekst={kommentar}
+                />
+            }
         </div>
     )
 }
 export default FeilmeldingsInnhold;
+
+
+interface Ikommentar {
+    setKommentarfelt: (val: string) => void
+    oppdaterKommentar: () => void
+}
+
+interface kommentarTekstfeltInterface extends Ikommentar{
+    kommentarfelt: string,
+}
+interface kommentarInterface {
+    tekst: string
+}
+
+
+const KommentarTekstfelt = (props: kommentarTekstfeltInterface) => {
+    return(
+        <div className="flex items-end gap-12 w-full mt-4 h-fit">
+            <TextField
+                className="grow"
+                label="Skriv inn din kommentar til feilen"
+                value={props.kommentarfelt}
+                onChange={e => props.setKommentarfelt(e.target.value)}
+            >
+            </TextField>
+            <Button
+                variant="secondary"
+                icon={<ChatElipsisIcon/>}
+                onClick={() => props.oppdaterKommentar()}
+            >
+                Legg til kommentar
+            </Button>
+        </div>
+    )
+}
+
+const Kommentar = (props: kommentarInterface) => {
+    return(
+        <>
+            <Skillelinje/>
+            <div className="p-5 bg-bg-subtle rounded-lg w-2/3 my-4">
+                <Heading size="medium">Notat</Heading>
+                <p className="break-words">{props.tekst}</p>
+            </div> 
+        </>
+    )
+}

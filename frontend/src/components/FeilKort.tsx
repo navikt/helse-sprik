@@ -47,7 +47,10 @@ const FeilKort = (props: IFeilKort) => {
                     kommentar={props.kommentar}
                 />
             </div>
-            <FeilModal open={visModal} setOpen={setVisModal} >
+            <FeilModal 
+                open={visModal} 
+                setOpen={setVisModal} 
+            >
                 {redigeringsmodus ? 
                     <RedigeringsVerktoy 
                         id={props.id}
@@ -70,6 +73,7 @@ const FeilKort = (props: IFeilKort) => {
                         arbeidsstatus={props.arbeidsstatus}
                         setVisModal={setVisModal}
                         setRedigeringsmodus={setRedigeringsmodus}
+                        reset={props.reset}
                     >
                         <p>Her kommer det content</p>
                     </FeilmeldingsInnhold>

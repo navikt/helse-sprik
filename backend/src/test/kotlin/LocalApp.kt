@@ -28,4 +28,5 @@ private fun oppretteMockData() {
     feilmeldingRepository.lagre(Feilmelding(null, "Feil B", "Lorem Ipsum", LocalDateTime.of(2023, 4, 1, 8, 0, 0), 1, true, null))
     feilmeldingRepository.lagre(Feilmelding(null, "Feil C", "Lorem Ipsum", LocalDateTime.of(2023, 5, 1, 8, 0, 0), 1, true, null))
     feilmeldingRepository.lagre(Feilmelding(null, "Feil D", "Lorem Ipsum", LocalDateTime.of(2023, 6, 1, 8, 0, 0), 0, false, null))
+    feilmeldingRepository.oppdaterKommentar(1, "Test kommentar")
 }

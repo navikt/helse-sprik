@@ -7,15 +7,17 @@ import Skillelinje from "./Skillelinje"
 import axios from "axios"
 
 const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
-    const [kommentar, setKommentar] = useState("") 
-    const [kommentarfelt, setKommentarfelt] = useState("")
+    const [kommentar, setKommentar] = useState(props.kommentar ? props.kommentar : "") 
+    const [kommentarfelt, setKommentarfelt] = useState("") 
 
     const oppdaterkommentar = async() => {
-        setKommentar(kommentarfelt)
+        console.log(kommentarfelt)
+        console.log(kommentar);
+        
 
         const payload = {
             id: props.id,
-            tittel: kommentar,
+            kommentar: kommentarfelt,
         }
 
         await axios.put("/api/oppdaterkommentar", payload, {
@@ -66,7 +68,10 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
                 <KommentarTekstfelt
                     kommentarfelt={kommentarfelt} 
                     setKommentarfelt={setKommentarfelt}
-                    oppdaterKommentar={() => oppdaterkommentar()}
+                    oppdaterKommentar={() => {
+                        setKommentar(kommentarfelt)
+                        oppdaterkommentar()}
+                    }
                 /> 
                     : 
                 <Kommentar 

@@ -44,6 +44,7 @@ const FeilKort = (props: IFeilKort) => {
                     dato={props.dato}
                     haster={props.haster}
                     arbeidsstatus={props.arbeidsstatus}
+                    kommentar={props.kommentar}
                 />
             </div>
             <FeilModal 

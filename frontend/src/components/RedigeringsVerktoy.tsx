@@ -25,10 +25,10 @@ const RedigeringsVerktoy = (props: redigeringsInterface) => {
             beskrivelse: beskrivelse,
             dato: props.dato.toISOString().replace('Z', ''),
             arbeidsstatus: arbeidsstatus,
-            haster: haster
+            haster: haster,
         }
 
-        await axios.put(`/api/oppdaterfeil/${props.id}`, payload, {
+        await axios.put(`/api/oppdaterfeil/`, payload, {
             headers: {
                 'Content-Type': 'application/json'
             }

@@ -15,7 +15,7 @@ export default function Feil() {
     const [status, setStatus] = useState(0)
     const [haster, setHaster] = useState(false)
     const [valgteTags, setValgteTags] = useState([] as string[]);
-    const [aktorid, setAktorid] = useState(0);
+    const [aktorid, setAktorid] = useState<number|null>(null);
     
     const handleSubmit = () => {
         const payload = {
@@ -113,8 +113,8 @@ export default function Feil() {
 
                         <Skillelinje/>
                         <TextField
-                            label="aktor-ID (valgfritt)"
-                            description="Legg ved aktor-ID om det er relevant"
+                            label="Aktør-ID (valgfritt)"
+                            description="Legg ved aktør-ID om det er relevant"
                             onChange={e => setAktorid(parseInt(e.target.value))}
                         />
 

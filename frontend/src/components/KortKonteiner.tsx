@@ -25,7 +25,7 @@ const KortKonteiner = (props: IKortKonteiner) => {
               haster={feilMelding.haster}
               reset={props.reset}
               kommentar={feilMelding.kommentar}
-              aktorId={feilMelding.aktorId}
+              aktorId={feilMelding.aktorid}
             />         
             ))
           }

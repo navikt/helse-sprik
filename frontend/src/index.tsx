@@ -24,6 +24,7 @@ export default function Home() {
     await axios.get("/api/hentallefeil")
       .then(data => data.data)
       .then(feil => {
+        feil.map((f: any) => console.log(f))
         setFeilmeldinger(
           feil.map((jsonFeilmelding: any) => new Feilmelding(jsonFeilmelding))
         );

@@ -29,7 +29,7 @@ export class Feilmelding implements IFeilmelding {
     arbeidsstatus: number = 0
     haster: boolean = false
     kommentar?: string = undefined
-    aktorId?: number = undefined
+    aktorid?: number = undefined
 
     /**
      * Typescript 2.1 syntax som lar deg sende inn et JSON object og mappe det til class.

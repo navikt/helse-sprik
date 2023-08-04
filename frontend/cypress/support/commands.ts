@@ -1,3 +1,5 @@
+import 'cypress-axe'
+
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -24,14 +26,19 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+
+Cypress.Commands.add("checkPageA11y", () => {
+    cy.injectAxe();
+    cy.configureAxe({
+      rules: [
+       // {
+       //   id: "svg-img-alt",
+       //   enabled: false,
+       // },
+        //Skrur av fordi checkA11y ikke vet at div er en gyldig children av <dl>-elementer
+      ],
+    });
+    cy.checkA11y(
+      undefined
+    );
+  });

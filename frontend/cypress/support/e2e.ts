@@ -18,3 +18,11 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+declare global {
+    namespace Cypress {
+      interface Chainable {
+        checkPageA11y(): Chainable<JQuery<HTMLElement>>;
+      }
+    }
+}

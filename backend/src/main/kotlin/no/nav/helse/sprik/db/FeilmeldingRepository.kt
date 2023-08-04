@@ -16,6 +16,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 class FeilmeldingRepository {
     fun lagre(feilmelding: Feilmelding) {
+
         transaction {
             FeilmeldingTable.run {
                 insert {
@@ -24,6 +25,10 @@ class FeilmeldingRepository {
                     it[FeilmeldingTable.dato] = feilmelding.dato
                     it[FeilmeldingTable.arbeidsstatus] = feilmelding.arbeidsstatus
                     it[FeilmeldingTable.haster] = feilmelding.haster
+
+                    if (feilmelding.aktorid != null){
+                        it[FeilmeldingTable.aktorid] = feilmelding.aktorid
+                    }
                 }
             }
         }

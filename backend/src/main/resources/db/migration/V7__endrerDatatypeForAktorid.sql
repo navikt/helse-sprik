@@ -1,0 +1,2 @@
+ALTER TABLE feilmelding
+ALTER COLUMN aktorid TYPE BIGINT

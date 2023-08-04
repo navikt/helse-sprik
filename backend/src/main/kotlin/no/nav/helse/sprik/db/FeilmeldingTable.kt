@@ -11,5 +11,5 @@ object FeilmeldingTable : Table("feilmelding") {
     val arbeidsstatus = integer("arbeidsstatus")
     val haster = bool("haster")
     val kommentar = text("kommentar")
-    val aktorid = integer("aktorid")
+    val aktorid = long("aktorid")
 }

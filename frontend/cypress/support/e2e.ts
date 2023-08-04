@@ -22,6 +22,10 @@ import './commands'
 declare global {
     namespace Cypress {
       interface Chainable {
+        getByTestId(
+            selector: string,
+            ...rest: any
+          ): Chainable<JQuery<HTMLElement>>;
         checkPageA11y(): Chainable<JQuery<HTMLElement>>;
       }
     }

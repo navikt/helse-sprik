@@ -93,11 +93,13 @@ export default function Feil() {
                     </div>
                     <div className="w-1/2 flex flex-col gap-4 justify-center">
                         <TextField
+                            data-testid="tittel-inputfelt"
                             label="Tittel"
                             onChange={e => setTittel(e.target.value)}
                         />
 
                         <Textarea
+                            data-testid="beskrivelse-inputfelt"
                             label="Beskrivelse"
                             description="Detaljert beskrivelse av problemet"
                             onChange={e => setBeskrivelse(e.target.value)}
@@ -109,7 +111,8 @@ export default function Feil() {
                         <Heading size="xsmall">
                             Haster det å fikse feilen?
                         </Heading>
-                        <Switch 
+                        <Switch
+                            data-testid="switch-toggle"
                             onClick={() => setHaster(!haster)}
                         >
                             Saken Haster

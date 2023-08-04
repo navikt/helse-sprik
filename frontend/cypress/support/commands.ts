@@ -1,5 +1,4 @@
 import 'cypress-axe'
-
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -27,6 +26,10 @@ import 'cypress-axe'
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+Cypress.Commands.add("getByTestId", (selector, ...args) => {
+    return cy.get(`[data-testid=${selector}]`, ...args);
+});
+
 Cypress.Commands.add("checkPageA11y", () => {
     cy.injectAxe();
     cy.configureAxe({
@@ -35,7 +38,7 @@ Cypress.Commands.add("checkPageA11y", () => {
        //   id: "svg-img-alt",
        //   enabled: false,
        // },
-        //Skrur av fordi checkA11y ikke vet at div er en gyldig children av <dl>-elementer
+      // Skrur av fordi checkA11y ikke vet at div er en gyldig children av <dl>-elementer
       ],
     });
     cy.checkA11y(

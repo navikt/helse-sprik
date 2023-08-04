@@ -1,0 +1,1 @@
+ALTER TABLE feilmelding ADD aktorid INT

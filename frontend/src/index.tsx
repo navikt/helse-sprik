@@ -59,6 +59,7 @@ export default function Home() {
           <Heading level="1" size="xlarge">Innmeldte feil</Heading>
           <div className="flex gap-12 items-end">
             <Search 
+              data-testid="soke-inputfelt"
               label="Søkefelt"
               description="Søk gjennom innmeldte feil (nøkkelord, tags, status)"
               hideLabel={false}

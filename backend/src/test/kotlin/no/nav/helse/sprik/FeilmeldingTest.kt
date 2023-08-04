@@ -25,7 +25,7 @@ class FeilmeldingTest {
             null,
             "Test",
             "Testesen",
-            LocalDateTime.of(2023,1,1,8,0),
+            1.januar,
             0,
             true,
             null,
@@ -67,7 +67,7 @@ class FeilmeldingTest {
                 getId(),
                 "Test",
                 "Testesen",
-                LocalDateTime.of(2023,1,1,8,0),
+                1.januar,
                 0,
                 true,
                 null,
@@ -86,7 +86,7 @@ class FeilmeldingTest {
                 getId(),
                 "Test",
                 "Testesen",
-                LocalDateTime.of(2023,1,1,8,0),
+                1.januar,
                 0,
                 true,
                 null,
@@ -148,7 +148,7 @@ class FeilmeldingTest {
     @Test
     fun `Oppdaterer en feilmelding`() {
         feilmeldingRepository.lagre(feilmelding)
-        val oppdatertFeilmelding = Feilmelding(getId(), "Oppdatert", "Oppdatert feil", LocalDateTime.of(2023, 1, 1, 8, 0), 1, false, null, null)
+        val oppdatertFeilmelding = Feilmelding(getId(), "Oppdatert", "Oppdatert feil", 1.januar, 1, false, null, null)
         feilmeldingRepository.oppdaterFeilmelding(oppdatertFeilmelding)
         val actualOppdatert = transaction { FeilmeldingTable.selectAll().single() }
         assertEquals("Oppdatert", actualOppdatert[FeilmeldingTable.tittel])
@@ -160,7 +160,7 @@ class FeilmeldingTest {
     @Test
     fun `Prøver å oppdatere feilmelding uten id`() {
         feilmeldingRepository.lagre(feilmelding)
-        val oppdatertFeilmelding = Feilmelding(null, "Oppdatert", "Oppdatert feil", LocalDateTime.of(2023, 1, 1, 8, 0), 1, false, null, null)
+        val oppdatertFeilmelding = Feilmelding(null, "Oppdatert", "Oppdatert feil", 1.januar, 1, false, null, null)
         assertThrows<IllegalStateException> {
             feilmeldingRepository.oppdaterFeilmelding(oppdatertFeilmelding)
         }

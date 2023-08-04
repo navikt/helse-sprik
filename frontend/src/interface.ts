@@ -11,6 +11,7 @@ export interface IFeilmelding {
     arbeidsstatus: number
     haster: boolean
     kommentar?: string
+    aktorId?: number
 }
 
 export interface FeilmeldingsInnholdInterface extends IFeilmelding {
@@ -28,6 +29,7 @@ export class Feilmelding implements IFeilmelding {
     arbeidsstatus: number = 0
     haster: boolean = false
     kommentar?: string = undefined
+    aktorid?: number = undefined
 
     /**
      * Typescript 2.1 syntax som lar deg sende inn et JSON object og mappe det til class.
@@ -42,6 +44,7 @@ export class Feilmelding implements IFeilmelding {
             arbeidsstatus: number
             haster: boolean
             kommentar: string
+            aktorId: number
         }) {
         if (fields) Object.assign(this, fields);    
     }

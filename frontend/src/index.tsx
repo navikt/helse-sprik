@@ -18,9 +18,7 @@ export default function Home() {
    * Henter alle feilmeldinger fra backend.
    * Bruker endepunktet /api/hentallefeil.
    */  
-  const hentAlleFeil = async () => {
-    console.log("hentAlleFeil");
-    
+  const hentAlleFeil = async () => {    
     await axios.get("/api/hentallefeil")
       .then(data => data.data)
       .then(feil => {

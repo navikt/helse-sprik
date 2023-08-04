@@ -68,7 +68,6 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
             }
             put("/api/oppdaterfeil") {
                 val oppdatertFeilmelding = call.receive<Feilmelding>()
-                println(oppdatertFeilmelding)
                 feilmeldingRepository.oppdaterFeilmelding(oppdatertFeilmelding)
                 call.respond(status = HttpStatusCode.Created, message = "Feilmelding oppdatert")
             }

@@ -63,6 +63,7 @@ const FeilKort = (props: IFeilKort) => {
                         setVisModal={setVisModal}
                         reset={props.reset}
                         kommentar={props.kommentar}
+                        aktorId={props.aktorId}
                     />
                 : 
                     <FeilmeldingsInnhold
@@ -76,8 +77,9 @@ const FeilKort = (props: IFeilKort) => {
                         setRedigeringsmodus={setRedigeringsmodus}
                         reset={props.reset}
                         kommentar={props.kommentar}
+                        aktorId={props.aktorId}
                     >
-                        <p>Her kommer det content</p>
+                        <p>aktorId: {props.aktorId}</p>
                     </FeilmeldingsInnhold>
                 }              
             </FeilModal>

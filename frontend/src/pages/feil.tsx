@@ -15,13 +15,9 @@ export default function Feil() {
     const [status, setStatus] = useState(0)
     const [haster, setHaster] = useState(false)
     const [valgteTags, setValgteTags] = useState([] as string[]);
-    const [aktørId, setAktørId] = useState("");
-
-    console.log(aktørId);
+    const [aktorid, setAktorid] = useState<number|null>(null);
     
-
     const handleSubmit = () => {
-
         const payload = {
             id: null,
             tittel: tittel,
@@ -29,9 +25,9 @@ export default function Feil() {
             dato: new Date().toISOString().replace('Z', ''), // Litt wack fix, burde endres
             arbeidsstatus: 0,
             haster: haster,
-            kommentar: null
+            kommentar: null,
+            aktorid: aktorid ? aktorid : null,
             //kategorier: valgteTags
-            //aktørId: aktørId
         }
         
         axios.post("/api/nyfeil", payload, {
@@ -121,8 +117,8 @@ export default function Feil() {
                         <Skillelinje/>
                         <TextField
                             label="Aktør-ID (valgfritt)"
-                            description="Legg ved Aktør-ID om det er relevant"
-                            onChange={e => setAktørId(e.target.value)}
+                            description="Legg ved aktør-ID om det er relevant"
+                            onChange={e => setAktorid(parseInt(e.target.value))}
                         />
 
                         <Skillelinje/>

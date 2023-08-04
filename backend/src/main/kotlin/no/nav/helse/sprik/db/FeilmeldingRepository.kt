@@ -1,5 +1,6 @@
 package no.nav.helse.sprik.db
 
+import no.nav.helse.sprik.db.FeilmeldingTable.aktorid
 import no.nav.helse.sprik.db.FeilmeldingTable.arbeidsstatus
 import no.nav.helse.sprik.db.FeilmeldingTable.beskrivelse
 import no.nav.helse.sprik.db.FeilmeldingTable.dato
@@ -15,6 +16,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 class FeilmeldingRepository {
     fun lagre(feilmelding: Feilmelding) {
+
         transaction {
             FeilmeldingTable.run {
                 insert {
@@ -23,6 +25,10 @@ class FeilmeldingRepository {
                     it[FeilmeldingTable.dato] = feilmelding.dato
                     it[FeilmeldingTable.arbeidsstatus] = feilmelding.arbeidsstatus
                     it[FeilmeldingTable.haster] = feilmelding.haster
+
+                    if (feilmelding.aktorid != null){
+                        it[FeilmeldingTable.aktorid] = feilmelding.aktorid
+                    }
                 }
             }
         }
@@ -35,7 +41,8 @@ class FeilmeldingRepository {
         dato = rad[dato],
         arbeidsstatus = rad[arbeidsstatus],
         haster = rad[haster],
-        kommentar = rad[kommentar]
+        kommentar = rad[kommentar],
+        aktorid = rad[aktorid]
     )
 
     fun hentAlleFeilmeldinger(): List<Feilmelding> = transaction {

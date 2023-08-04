@@ -1,6 +1,6 @@
 import KortKonteiner from "./components/KortKonteiner";
 import "@navikt/ds-css";
-import { Button, Search } from "@navikt/ds-react";
+import { Button, Heading, Search } from "@navikt/ds-react";
 import Header from "./components/Header";
 import { PlusIcon } from "@navikt/aksel-icons";
 import Filtermeny from "./components/Filtermeny";
@@ -56,6 +56,7 @@ export default function Home() {
       <div className="flex grow">
         <Filtermeny/>
         <div className="grow bg-bg-subtle px-32 py-8 flex flex-col gap-10">
+          <Heading level="1" size="xlarge">Innmeldte feil</Heading>
           <div className="flex gap-12 items-end">
             <Search 
               label="Søkefelt"
@@ -65,7 +66,7 @@ export default function Home() {
             />
             <Button 
               className="w-64 h-min" 
-              icon={<PlusIcon/>}
+              icon={<PlusIcon aria-label="PlusIcon"/>}
               onClick={() => navigate("nyfeil")}  
             >
               Meld inn feil

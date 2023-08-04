@@ -34,7 +34,7 @@ class FeilmeldingTest {
 
     @BeforeEach
     fun lagreFeilmelding() {
-        val feilmelding = Feilmelding(null, "Test", "Testesen", LocalDateTime.of(2023,1,1,8,0), 0, true, null)
+        val feilmelding = Feilmelding(null, "Test", "Testesen", LocalDateTime.of(2023,1,1,8,0), 0, true, null, null)
         feilmeldingRepository.lagre(feilmelding)
     }
 
@@ -109,7 +109,7 @@ class FeilmeldingTest {
     }
     @Test
     fun `Oppdaterer en feilmelding`() {
-        val oppdatertFeilmelding = Feilmelding(getId(), "Oppdatert", "Oppdatert feil", LocalDateTime.of(2023, 1, 1, 8, 0), 1, false, null)
+        val oppdatertFeilmelding = Feilmelding(getId(), "Oppdatert", "Oppdatert feil", LocalDateTime.of(2023, 1, 1, 8, 0), 1, false, null, null)
         feilmeldingRepository.oppdaterFeilmelding(oppdatertFeilmelding)
         val actualOppdatert = transaction { FeilmeldingTable.selectAll().single() }
         assertEquals("Oppdatert", actualOppdatert[FeilmeldingTable.tittel])

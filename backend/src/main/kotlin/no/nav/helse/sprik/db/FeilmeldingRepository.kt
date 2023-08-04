@@ -1,5 +1,6 @@
 package no.nav.helse.sprik.db
 
+import no.nav.helse.sprik.db.FeilmeldingTable.aktorid
 import no.nav.helse.sprik.db.FeilmeldingTable.arbeidsstatus
 import no.nav.helse.sprik.db.FeilmeldingTable.beskrivelse
 import no.nav.helse.sprik.db.FeilmeldingTable.dato
@@ -35,7 +36,8 @@ class FeilmeldingRepository {
         dato = rad[dato],
         arbeidsstatus = rad[arbeidsstatus],
         haster = rad[haster],
-        kommentar = rad[kommentar]
+        kommentar = rad[kommentar],
+        aktorid = rad[aktorid]
     )
 
     fun hentAlleFeilmeldinger(): List<Feilmelding> = transaction {

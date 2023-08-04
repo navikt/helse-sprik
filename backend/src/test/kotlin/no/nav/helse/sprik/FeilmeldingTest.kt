@@ -8,20 +8,30 @@ import no.nav.helse.sprik.modell.Feilmelding
 import org.jetbrains.exposed.sql.deleteAll
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 import java.time.LocalDateTime
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import org.jetbrains.exposed.sql.Database as ExposedDatabase
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class FeilmeldingTest {
     private val database = Database(dbconfig()).configureFlyway()
     private val feilmeldingRepository = FeilmeldingRepository()
+    private companion object {
+        val feilmelding = Feilmelding(
+            null,
+            "Test",
+            "Testesen",
+            LocalDateTime.of(2023,1,1,8,0),
+            0,
+            true,
+            null,
+            null
+        )
+    }
 
     fun getId() = transaction {
         FeilmeldingTable.selectAll().single()[FeilmeldingTable.id]
@@ -32,12 +42,6 @@ class FeilmeldingTest {
         ExposedDatabase.connect(database.dataSource)
     }
 
-    @BeforeEach
-    fun lagreFeilmelding() {
-        val feilmelding = Feilmelding(null, "Test", "Testesen", LocalDateTime.of(2023,1,1,8,0), 0, true, null, null)
-        feilmeldingRepository.lagre(feilmelding)
-    }
-
     @AfterEach
     fun wipe() {
         transaction {
@@ -45,9 +49,9 @@ class FeilmeldingTest {
         }
     }
 
-
     @Test
     fun `Sett opp testdatabasen riktig`(){
+        feilmeldingRepository.lagre(feilmelding)
         transaction {
             assertEquals(1, FeilmeldingTable.selectAll().map {
                 it
@@ -56,59 +60,94 @@ class FeilmeldingTest {
     }
 
     @Test
-    fun `Lagrer feilmelding i databasen`() {
+    fun `Lagrer feilmelding uten aktørid i databasen`() {
+        feilmeldingRepository.lagre(feilmelding)
         transaction {
-            val actual = FeilmeldingTable.selectAll().single()
-            assertEquals("Test", actual[FeilmeldingTable.tittel])
-            assertEquals("Testesen", actual[FeilmeldingTable.beskrivelse])
-            assertEquals(LocalDateTime.of(2023, 1, 1, 8, 0), actual[FeilmeldingTable.dato])
-            assertEquals(1, actual[FeilmeldingTable.id])
+            val forventetFeilmelding = Feilmelding(
+                getId(),
+                "Test",
+                "Testesen",
+                LocalDateTime.of(2023,1,1,8,0),
+                0,
+                true,
+                null,
+                null
+            )
+            val faktiskFeilmelding = feilmeldingRepository.radTilFeilmelding(FeilmeldingTable.selectAll().single())
+            assertEquals(forventetFeilmelding, faktiskFeilmelding)
         }
     }
 
     @Test
+    fun `Lagrer feilmelding med aktørid i databasen`() {
+        feilmeldingRepository.lagre(feilmelding.copy(aktorid = 12345678))
+        transaction {
+            val forventetFeilmelding = Feilmelding(
+                getId(),
+                "Test",
+                "Testesen",
+                LocalDateTime.of(2023,1,1,8,0),
+                0,
+                true,
+                null,
+                12345678
+            )
+            val faktiskFeilmelding = feilmeldingRepository.radTilFeilmelding(FeilmeldingTable.selectAll().single())
+            assertEquals(forventetFeilmelding, faktiskFeilmelding)
+        }
+    }
+
+
+    @Test
     fun `Henter alle feilmeldinger i databasen`() {
+        feilmeldingRepository.lagre(feilmelding)
+        feilmeldingRepository.lagre(feilmelding)
         transaction {
             val resultat: List<Feilmelding> = feilmeldingRepository.hentAlleFeilmeldinger()
-            val actual = FeilmeldingTable.selectAll()
-            assertEquals(actual.map { it }.size, resultat.size)
-            assertEquals("Test", resultat[0].tittel)
-            assertEquals("Testesen", resultat[0].beskrivelse)
-            assertEquals(LocalDateTime.of(2023, 1, 1, 8, 0), resultat[0].dato)
+            val forventet = FeilmeldingTable.selectAll().map { it }
+            assertEquals(forventet.size, resultat.size)
         }
     }
 
     @Test
     fun `Henter feilmeldinger som matcher søk`() {
+        feilmeldingRepository.lagre(feilmelding)
         val sokeresultat: List<Feilmelding> = feilmeldingRepository.hentSokteFeilmeldinger("Test")
         assertEquals(1, sokeresultat.size)
-        assertEquals("Test", sokeresultat[0].tittel)
-        assertEquals("Testesen", sokeresultat[0].beskrivelse)
     }
 
     @Test
-    fun `Henter feilmeldinger som har søkestreng som substreng`() {
+    fun `Henter alle feilmeldinger som har søkestreng som substreng`() {
+        feilmeldingRepository.lagre(feilmelding)
+        feilmeldingRepository.lagre(feilmelding.copy(tittel = "Heste"))
         val sokeresultat: List<Feilmelding> = feilmeldingRepository.hentSokteFeilmeldinger("este")
-        assertEquals(1, sokeresultat.size)
-        assertEquals("Test", sokeresultat[0].tittel)
-        assertEquals("Testesen", sokeresultat[0].beskrivelse)
+        assertEquals(2, sokeresultat.size)
     }
 
     @Test
     fun `Finner ingen feilmeldinger som matcher søk`() {
+        feilmeldingRepository.lagre(feilmelding)
         val sokeresultat: List<Feilmelding> = feilmeldingRepository.hentSokteFeilmeldinger("abrakadabra")
         assertEquals(0, sokeresultat.size)
     }
 
     @Test
     fun `Søk er ikke case sensitivt`() {
+        feilmeldingRepository.lagre(feilmelding)
         val sokeresultat: List<Feilmelding> = feilmeldingRepository.hentSokteFeilmeldinger("test")
         assertEquals(1, sokeresultat.size)
-        assertEquals("Test", sokeresultat[0].tittel)
-        assertEquals("Testesen", sokeresultat[0].beskrivelse)
     }
+
+    @Test
+    fun `Søk er ikke mellomrom-sensitiv`() {
+        feilmeldingRepository.lagre(feilmelding)
+        val sokeresultat: List<Feilmelding> = feilmeldingRepository.hentSokteFeilmeldinger("Test ")
+        assertEquals(1, sokeresultat.size)
+    }
+
     @Test
     fun `Oppdaterer en feilmelding`() {
+        feilmeldingRepository.lagre(feilmelding)
         val oppdatertFeilmelding = Feilmelding(getId(), "Oppdatert", "Oppdatert feil", LocalDateTime.of(2023, 1, 1, 8, 0), 1, false, null, null)
         feilmeldingRepository.oppdaterFeilmelding(oppdatertFeilmelding)
         val actualOppdatert = transaction { FeilmeldingTable.selectAll().single() }
@@ -119,9 +158,35 @@ class FeilmeldingTest {
     }
 
     @Test
+    fun `Prøver å oppdatere feilmelding uten id`() {
+        feilmeldingRepository.lagre(feilmelding)
+        val oppdatertFeilmelding = Feilmelding(null, "Oppdatert", "Oppdatert feil", LocalDateTime.of(2023, 1, 1, 8, 0), 1, false, null, null)
+        assertThrows<IllegalStateException> {
+            feilmeldingRepository.oppdaterFeilmelding(oppdatertFeilmelding)
+        }
+    }
+
+    @Test
+    fun `Kommentar er tom når feilmelding opprettes`() {
+        feilmeldingRepository.lagre(feilmelding)
+        val initiellKommentar = transaction { FeilmeldingTable.selectAll().single()[FeilmeldingTable.kommentar] }
+        assertNull(initiellKommentar)
+    }
+
+    @Test
     fun `Oppdaterer feilmeldingskommentar`() {
+        feilmeldingRepository.lagre(feilmelding)
         feilmeldingRepository.oppdaterKommentar(getId(), "Feilen fikses nå!")
-        val actual = transaction { FeilmeldingTable.selectAll().single() }
-        assertEquals("Feilen fikses nå!", actual[FeilmeldingTable.kommentar])
+        val oppdatertKommentar = transaction { FeilmeldingTable.selectAll().single()[FeilmeldingTable.kommentar] }
+        assertEquals("Feilen fikses nå!", oppdatertKommentar)
+    }
+
+    @Test
+    fun `Ny kommentar skal overskrive gammel`() {
+        feilmeldingRepository.lagre(feilmelding)
+        feilmeldingRepository.oppdaterKommentar(getId(), "Initiell kommentar")
+        feilmeldingRepository.oppdaterKommentar(getId(), "Oppdatert kommentar")
+        val oppdatertKommentar = transaction { FeilmeldingTable.selectAll().single()[FeilmeldingTable.kommentar] }
+        assertEquals("Oppdatert kommentar", oppdatertKommentar)
     }
 }

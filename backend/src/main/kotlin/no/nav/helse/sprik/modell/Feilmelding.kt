@@ -13,7 +13,7 @@ import java.time.LocalDateTime
  * Objekt for feilmeldinger i Sprik
  * */
 @Serializable
-class Feilmelding(
+data class Feilmelding(
     val id: Int?,
     val tittel: String,
     val beskrivelse: String,

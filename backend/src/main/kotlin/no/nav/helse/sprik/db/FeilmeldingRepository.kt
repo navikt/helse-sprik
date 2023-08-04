@@ -25,16 +25,15 @@ class FeilmeldingRepository {
                     it[FeilmeldingTable.dato] = feilmelding.dato
                     it[FeilmeldingTable.arbeidsstatus] = feilmelding.arbeidsstatus
                     it[FeilmeldingTable.haster] = feilmelding.haster
-
-                    if (feilmelding.aktorid != null){
-                        it[FeilmeldingTable.aktorid] = feilmelding.aktorid
+                    feilmelding.aktorid?.also { aktorid ->
+                        it[FeilmeldingTable.aktorid] = aktorid
                     }
                 }
             }
         }
     }
 
-    private fun radTilFeilmelding(rad: ResultRow) = Feilmelding(
+    internal fun radTilFeilmelding(rad: ResultRow) = Feilmelding(
         id = rad[id],
         tittel = rad[tittel],
         beskrivelse = rad[beskrivelse],
@@ -50,7 +49,7 @@ class FeilmeldingRepository {
     }
 
     fun hentSokteFeilmeldinger(sokeord: String): List<Feilmelding> = transaction {
-        val sok = "%${sokeord.lowercase()}%"
+        val sok = "%${sokeord.lowercase().trim()}%"
 
         FeilmeldingTable.select(
             (FeilmeldingTable.tittel.lowerCase() like sok)
@@ -60,14 +59,12 @@ class FeilmeldingRepository {
     }
 
     fun oppdaterFeilmelding(feilmelding: Feilmelding) = transaction {
-        val id = feilmelding.id
-        if (id != null) {
-            FeilmeldingTable.update({ FeilmeldingTable.id eq id }) {
-                it[FeilmeldingTable.tittel] = feilmelding.tittel
-                it[FeilmeldingTable.beskrivelse] = feilmelding.beskrivelse
-                it[FeilmeldingTable.arbeidsstatus] = feilmelding.arbeidsstatus
-                it[FeilmeldingTable.haster] = feilmelding.haster
-            }
+        checkNotNull(feilmelding.id) { "Id kan ikke være null når vi skal oppdatere feilmelding" }
+        FeilmeldingTable.update({ FeilmeldingTable.id eq feilmelding.id }) {
+            it[FeilmeldingTable.tittel] = feilmelding.tittel
+            it[FeilmeldingTable.beskrivelse] = feilmelding.beskrivelse
+            it[FeilmeldingTable.arbeidsstatus] = feilmelding.arbeidsstatus
+            it[FeilmeldingTable.haster] = feilmelding.haster
         }
     }
 

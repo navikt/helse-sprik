@@ -26,7 +26,8 @@ const RedigeringsVerktoy = (props: redigeringsInterface) => {
             dato: props.dato.toISOString().replace('Z', ''),
             arbeidsstatus: arbeidsstatus,
             haster: haster,
-            kommentar: props.kommentar
+            kommentar: props.kommentar,
+            aktorid: props.aktorId
         }
 
         await axios.put(`/api/oppdaterfeil`, payload, {

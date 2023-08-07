@@ -13,7 +13,6 @@ interface IKortKonteiner {
 const KortKonteiner = (props: IKortKonteiner) => {  
   return (
       <div className="grid grid-cols-2 gap-6">
-        
         {props.feilmeldinger.map((feilMelding) => (
             <FeilKort
               key={props.feilmeldinger.indexOf(feilMelding)}

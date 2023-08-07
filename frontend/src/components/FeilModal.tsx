@@ -8,6 +8,12 @@ interface modalInterface {
     children: React.ReactNode
 }
 
+/**
+ * Modal som brukes til å vise feilmeldinger i fullvisningsmodus med feilinnhold og redigeringsverktøy
+ * @param open boolean som beskriver om modalen skal være åpen eller ikke
+ * @param setOpen setter open
+ * @param children innholdet i modalen
+ */
 const FeilModal = (props: modalInterface) => {
     return(                  
         <Modal

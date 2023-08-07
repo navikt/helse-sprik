@@ -20,7 +20,7 @@ const KortKonteiner = (props: IKortKonteiner) => {
               id={feilMelding.id}
               tittel={feilMelding.tittel}
               beskrivelse={feilMelding.beskrivelse}
-              dato={new Date()}
+              dato={new Date(feilMelding.dato)}
               arbeidsstatus={feilMelding.arbeidsstatus}
               haster={feilMelding.haster}
               reset={props.reset}

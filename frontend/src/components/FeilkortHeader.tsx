@@ -3,14 +3,8 @@ import { IFeilmelding } from "../interface";
 import TagBar from "./TagBar";
 
 /**
- * FeilkortHeader er komponent som beskriver ikke-sensitiv informasjon om feilmeldingen og vises for alle på forsiden.
- * FeilkortHeaderen er en del av FeilKort-komponenten og FullvisningsKort-komponenten. 
- * Midlertidig implementerer komponentet @requires IFeilmelding for props, men dette må endres når IFeilmelding utvides i fremtiden for støtte av flere typer feilmeldinger.
- * @param tittel
- * @param beskrivelse
- * @param haster
- * @param dato
- * @returns JSX komponent som skal vise nødvendig informasjon for å forstå en feil.
+ * Headeren til et Feilkort, inneholder lite sensitiv informasjon som er beskrivende for feilen (tittel, beskrivelse, dato, haster, arbeidsstatus).
+ * Komponentet er en del av FeilKort, og er det du kan se når du er på hovedsiden.
  */
 export const FeilkortHeader = (props: IFeilmelding) => {
     return(

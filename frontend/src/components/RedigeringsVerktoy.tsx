@@ -9,11 +9,17 @@ interface redigeringsInterface extends FeilmeldingsInnholdInterface {
     reset: () => void
 }
 
+/**
+ * Redigeringsverktøy er et skjema som lar brukeren redigere en innmeldt feil.
+ * Statusflagg som arbeidsstatus og haster flagg kan endres. 
+ * Tittel og beskrivelse kan også endres
+ */
 const RedigeringsVerktoy = (props: redigeringsInterface) => {
     const [tittel, setTittel] = useState(props.tittel)
     const [beskrivelse, setBeskrivelse] = useState(props.beskrivelse)
     const [arbeidsstatus, setArbeidsstatus] = useState(props.arbeidsstatus)
     const [haster, setHaster] = useState(props.haster)
+
 
     const lagreEndringer = async() => {
         props.setVisModal(false)
@@ -45,11 +51,10 @@ const RedigeringsVerktoy = (props: redigeringsInterface) => {
 
     return (
         <div className="flex flex-col gap-12 items-center px-12">
-
             <div className="flex flex-col gap-6 w-full">
-            <Heading className="" size="large">
-                Rediger feil
-            </Heading>
+                <Heading className="" size="large">
+                    Rediger feil
+                </Heading>
                 <TextField 
                     label="Tittel"
                     value={tittel}

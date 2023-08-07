@@ -1,25 +1,31 @@
-import { ChatElipsisIcon, PencilIcon, XMarkIcon } from "@navikt/aksel-icons"
-import { Button, Heading, TextField } from "@navikt/ds-react"
+import { PencilIcon, XMarkIcon } from "@navikt/aksel-icons"
+import { Button } from "@navikt/ds-react"
 import { FeilmeldingsInnholdInterface } from "../interface"
 import FeilkortHeader from "./FeilkortHeader"
 import { useState } from "react"
 import Skillelinje from "./Skillelinje"
 import axios from "axios"
+import { Kommentar, KommentarTekstfelt } from "./Kommentar"
 
+
+/**
+ * FeilmeldingsInnhold er et komponent som viser det fulle innholdet til en feilmelding.
+ * Komponentet er en del av FeilKort, og er det du kan se når du trykker på et Feilkort.
+ * Tilgangen til å vise FeilmeldingsInnhold er skal begrenses til saksbehandlere, utviklere og fagfolk med tjenestlig behov.
+ */
 const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
+    //kommentar kan være null eller undefined når den kommer fra databasen, derfor må den sjekkes og omgjøres til en tom string om det er tilfellet
     const [kommentar, setKommentar] = useState(props.kommentar != (null || undefined)  ? props.kommentar : "") 
     const [kommentarfelt, setKommentarfelt] = useState("") 
 
+    /**
+     * Endrer Feilmeldingsobjektet i databasen og setter en ny kommentar på den
+     */
     const oppdaterkommentar = async() => {
-        console.log(kommentarfelt)
-        console.log(kommentar);
-        
-
         const payload = {
             id: props.id,
             kommentar: kommentarfelt,
         }
-
         await axios.put("/api/oppdaterkommentar", payload, {
             headers: {
                 'Content-Type': 'application/json'
@@ -29,7 +35,8 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
         }).catch((error) => {
             console.log(error);
         })
-
+        //TODO: fiks så kommentar oppdateres uten å måtte skjule modalen. 
+        props.setVisModal(false)
         props.reset()
     }
 
@@ -84,50 +91,3 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
     )
 }
 export default FeilmeldingsInnhold;
-
-
-interface Ikommentar {
-    setKommentarfelt: (val: string) => void
-    oppdaterKommentar: () => void
-}
-
-interface kommentarTekstfeltInterface extends Ikommentar{
-    kommentarfelt: string,
-}
-interface kommentarInterface {
-    tekst: string
-}
-
-
-const KommentarTekstfelt = (props: kommentarTekstfeltInterface) => {
-    return(
-        <div className="flex items-end gap-12 w-full mt-4 h-fit">
-            <TextField
-                className="grow"
-                label="Skriv inn din kommentar til feilen"
-                value={props.kommentarfelt}
-                onChange={e => props.setKommentarfelt(e.target.value)}
-            >
-            </TextField>
-            <Button
-                variant="secondary"
-                icon={<ChatElipsisIcon/>}
-                onClick={() => props.oppdaterKommentar()}
-            >
-                Legg til kommentar
-            </Button>
-        </div>
-    )
-}
-
-const Kommentar = (props: kommentarInterface) => {
-    return(
-        <>
-            <Skillelinje/>
-            <div className="p-5 bg-bg-subtle rounded-lg w-2/3 my-4">
-                <Heading size="medium">Notat</Heading>
-                <p className="break-words">{props.tekst}</p>
-            </div> 
-        </>
-    )
-}

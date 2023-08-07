@@ -97,7 +97,6 @@ class FeilmeldingTest {
         }
     }
 
-
     @Test
     fun `Henter alle feilmeldinger i databasen`() {
         feilmeldingRepository.lagre(feilmelding)

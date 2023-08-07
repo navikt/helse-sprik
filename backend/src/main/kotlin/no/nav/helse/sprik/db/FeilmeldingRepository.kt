@@ -16,7 +16,6 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 class FeilmeldingRepository {
     fun lagre(feilmelding: Feilmelding) {
-
         transaction {
             FeilmeldingTable.run {
                 insert {
@@ -50,7 +49,6 @@ class FeilmeldingRepository {
 
     fun hentSokteFeilmeldinger(sokeord: String): List<Feilmelding> = transaction {
         val sok = "%${sokeord.lowercase().trim()}%"
-
         FeilmeldingTable.select(
             (FeilmeldingTable.tittel.lowerCase() like sok)
                     or (FeilmeldingTable.beskrivelse.lowerCase() like sok)

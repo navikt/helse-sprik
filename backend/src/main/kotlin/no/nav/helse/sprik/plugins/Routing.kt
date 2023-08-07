@@ -48,14 +48,6 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
             get("/isready"){
                 call.respondText("READY")
             }
-            get("/api/test") {
-                call.respondText("test")
-            }
-            post("/api/nyfeil") {
-                val feilmelding = call.receive<Feilmelding>()
-                feilmeldingRepository.lagre(feilmelding)
-                call.respond(status = HttpStatusCode.Created, message = "Feilmelding motatt og sendt til database")
-            }
             get("/api/hentallefeil"){
                 val testMelding = feilmeldingRepository.hentAlleFeilmeldinger()
                 call.respond(status = HttpStatusCode.Created, message = testMelding)
@@ -65,6 +57,11 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
                     ?: return@get call.respond(HttpStatusCode.BadRequest, "Sokestreng må være definert")
                 val sokeresultat = feilmeldingRepository.hentSokteFeilmeldinger(sokestreng)
                 call.respond(status = HttpStatusCode.Created, message = sokeresultat)
+            }
+            post("/api/nyfeil") {
+                val feilmelding = call.receive<Feilmelding>()
+                feilmeldingRepository.lagre(feilmelding)
+                call.respond(status = HttpStatusCode.Created, message = "Feilmelding motatt og sendt til database")
             }
             put("/api/oppdaterfeil") {
                 val oppdatertFeilmelding = call.receive<Feilmelding>()

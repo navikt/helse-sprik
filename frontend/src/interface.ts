@@ -1,8 +1,3 @@
-/**
- * I denne filen kan vi legge interfaces som skal brukes over flere steder!
- */
-
-
 export interface IFeilmelding {
     id: number,
     tittel: string,
@@ -21,6 +16,10 @@ export interface FeilmeldingsInnholdInterface extends IFeilmelding {
     reset: () => void
 }
 
+/**
+ * En klasse som implementerer IFeilmelding interfacet. 
+ * Brukes for å mappe JSON objekter til en klasse ved henting av data fra backend
+ */
 export class Feilmelding implements IFeilmelding {
     id: number = 0
     tittel: string = "default tittel"
@@ -31,10 +30,6 @@ export class Feilmelding implements IFeilmelding {
     kommentar?: string = undefined
     aktorid?: number = undefined
 
-    /**
-     * Typescript 2.1 syntax som lar deg sende inn et JSON object og mappe det til class.
-     * https://stackoverflow.com/questions/14142071/typescript-and-field-initializers
-     */
     public constructor(
         fields: {
             id: number

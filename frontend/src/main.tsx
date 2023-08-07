@@ -5,6 +5,7 @@ import './index.css'
 import Home from './index'
 import Feil from './pages/feil'
 
+
 const router = createBrowserRouter([
   {
     path: "/",

@@ -9,37 +9,28 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Feilmelding } from "./interface";
 
+/**
+ * Hovedsiden til applikasjonen, viser alle innmeldte feil.
+ * Tilbyr søkefelt og filtreringsmuligheter
+ * Tilbyr også navigering til feilinnmeldingssiden
+ */
 export default function Home() {
   const navigate = useNavigate()
-  
   const [feilmeldinger, setFeilmeldinger] = useState<Feilmelding[]>([]);
 
-  /**
-   * Henter alle feilmeldinger fra backend.
-   * Bruker endepunktet /api/hentallefeil.
-   */  
+  
   const hentAlleFeil = async () => {    
-    await axios.get("/api/hentallefeil")
-      .then(data => data.data)
-      .then(feil => {
-        setFeilmeldinger(
-          feil.map((jsonFeilmelding: any) => new Feilmelding(jsonFeilmelding))
-        );
-      })
+    const { data } = await axios.get("/api/hentallefeil")
+    setFeilmeldinger(data)
   }
-
-  // Sørger for at hentAlleFeil() kun kjører når komponentet laster inn
+  
   useEffect(() => {
     hentAlleFeil();
   }, [])
 
-  /**
-   * Oppdaterer viste feilmeldinger ved endring i søkefelt.
-   * Kontakter endepunktet /api/hentsok/.
-   * @param soketekst 
-   */
+
+  //oppdaterer visningen av feilmeldinger når søkefeltet endres
   const handleSearch = async (soketekst: string) => {
-    // Ved tomt søkefelt hentes alle feilmeldinger
     if (soketekst === "") {
       hentAlleFeil()
       return
@@ -47,6 +38,7 @@ export default function Home() {
     const { data } = await axios.get(`/api/hentsok/${soketekst}`)
     setFeilmeldinger(data)
   }
+
 
   return (
     <main className="flex flex-col h-screen">

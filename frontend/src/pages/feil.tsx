@@ -9,6 +9,9 @@ import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import Skillelinje from "../components/Skillelinje";
 
+/**
+ * Siden for å melde inn feil i speil.
+ */
 export default function Feil() {
     const [tittel, setTittel] = useState("");
     const [beskrivelse, setBeskrivelse] = useState("");
@@ -16,20 +19,27 @@ export default function Feil() {
     const [haster, setHaster] = useState(false)
     const [valgteTags, setValgteTags] = useState([] as string[]);
     const [aktorid, setAktorid] = useState<number|null>(null);
+    const navigate = useNavigate()
+    const tags = [
+        "Utbetaling",
+        "Inntekt",
+        "Speil",
+        "Annet"
+    ];
     
-    const handleSubmit = () => {
+    //Sender feil til databasen
+    const meldInnFeil = () => {
         const payload = {
             id: null,
             tittel: tittel,
             beskrivelse: beskrivelse,
-            dato: new Date().toISOString().replace('Z', ''), // Litt wack fix, burde endres
+            dato: new Date().toISOString().replace('Z', ''),
             arbeidsstatus: 0,
             haster: haster,
             kommentar: null,
             aktorid: aktorid ? aktorid : null,
-            //kategorier: valgteTags
+            //TODO: kategorier: valgteTags
         }
-        
         axios.post("/api/nyfeil", payload, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -41,6 +51,7 @@ export default function Feil() {
             })
     }
 
+    //Håndterer alerts som vises etter at feil er lagt til i databasen eller feiler i å bli lagt til
     const handleAlerts = () => {
         if (status === 201) {
             console.log("Feil lagt til i database");
@@ -55,18 +66,6 @@ export default function Feil() {
             return <Alert variant="error">Noe gikk galt! Prøv igjen om noen minutter.</Alert>
         }
     }
-
-        // TODO: clear data fra felter
-
-
-    const navigate = useNavigate()
-
-    const tags = [
-        "Utbetaling",
-        "Inntekt",
-        "Speil",
-        "Annet"
-    ];
 
     return (
         <main className="flex flex-col h-screen">
@@ -147,7 +146,7 @@ export default function Feil() {
                     <div className="w-1/2 flex flex-col gap-2 justify-center mt-8">
                         {status != 0 ? handleAlerts() : <></>}
                         <Button
-                            onClick={handleSubmit}
+                            onClick={meldInnFeil}
                             variant="primary"
                         >
                             Meld inn feil

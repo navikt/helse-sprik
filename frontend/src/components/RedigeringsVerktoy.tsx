@@ -102,7 +102,7 @@ const RedigeringsVerktoy = (props: redigeringsInterface) => {
                 >
                     Avbryt
                 </Button>
-                <SlettFeilKnapp id={props.id}/>
+                <SlettFeilKnapp setVisModal={props.setVisModal} reset={props.reset} id={props.id}/>
             </div>
         </div>
     )
@@ -112,9 +112,15 @@ export default RedigeringsVerktoy;
 
 
 
-const SlettFeilKnapp = (props: {id : number}) => {
-    const SlettFeil = () => {
-        axios.delete(`/api/slettfeilmelding/${props.id}`)
+const SlettFeilKnapp = (props: {
+    id : number
+    reset: () => void
+    setVisModal: (visModal: boolean) => void
+}) => {
+    const SlettFeil = async () => {
+        await axios.delete(`/api/slettfeilmelding/${props.id}`)
+        props.reset()
+        props.setVisModal(false)
     }
 
     return(

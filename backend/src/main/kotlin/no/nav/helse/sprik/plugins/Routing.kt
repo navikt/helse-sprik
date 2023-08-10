@@ -51,13 +51,13 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
             }
             get("/api/hentallefeil"){
                 val testMelding = feilmeldingRepository.hentAlleFeilmeldinger()
-                call.respond(status = HttpStatusCode.Created, message = testMelding)
+                call.respond(status = HttpStatusCode.OK, message = testMelding)
             }
             get("/api/hentsok/{sokestreng}"){
                 val sokestreng = call.parameters["sokestreng"]
                     ?: return@get call.respond(HttpStatusCode.BadRequest, "Sokestreng må være definert")
                 val sokeresultat = feilmeldingRepository.hentSokteFeilmeldinger(sokestreng)
-                call.respond(status = HttpStatusCode.Created, message = sokeresultat)
+                call.respond(status = HttpStatusCode.OK, message = sokeresultat)
             }
             post("/api/nyfeil") {
                 val feilmelding = call.receive<Feilmelding>()
@@ -67,18 +67,18 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
             put("/api/oppdaterfeil") {
                 val oppdatertFeilmelding = call.receive<Feilmelding>()
                 feilmeldingRepository.oppdaterFeilmelding(oppdatertFeilmelding)
-                call.respond(status = HttpStatusCode.Created, message = "Feilmelding oppdatert")
+                call.respond(status = HttpStatusCode.OK, message = "Feilmelding oppdatert")
             }
             put("/api/oppdaterkommentar") {
                 val innkommendeKommentar = call.receive<InnkommendeKommentar>()
                 feilmeldingRepository.oppdaterKommentar(innkommendeKommentar.id, innkommendeKommentar.kommentar)
-                call.respond(status = HttpStatusCode.Created, message = "Feilmelding oppdatert")
+                call.respond(status = HttpStatusCode.OK, message = "Feilmelding oppdatert")
             }
             delete("api/slettfeilmelding/{id}") {
                 val id = call.parameters["id"]
                 checkNotNull(id) {"Id kan ikke være null"}
                 feilmeldingRepository.slettFeilmelding(id.toInt())
-                call.respond(status = HttpStatusCode.Created, message = "Feilmelding slettet")
+                call.respond(status = HttpStatusCode.OK, message = "Feilmelding slettet")
             }
         }
     }

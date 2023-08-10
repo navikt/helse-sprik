@@ -114,7 +114,7 @@ export default RedigeringsVerktoy;
 
 const SlettFeilKnapp = (props: {id : number}) => {
     const SlettFeil = () => {
-        axios.delete(`/api/slettfeil/${props.id}`)
+        axios.delete(`/api/slettfeilmelding/${props.id}`)
     }
 
     return(

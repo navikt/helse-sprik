@@ -28,6 +28,7 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
             allowMethod(HttpMethod.Get)
             allowMethod(HttpMethod.Post)
             allowMethod(HttpMethod.Put)
+            allowMethod(HttpMethod.Delete)
             allowNonSimpleContentTypes = true
         }
         install(ContentNegotiation) {

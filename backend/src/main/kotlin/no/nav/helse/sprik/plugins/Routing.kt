@@ -73,6 +73,12 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
                 feilmeldingRepository.oppdaterKommentar(innkommendeKommentar.id, innkommendeKommentar.kommentar)
                 call.respond(status = HttpStatusCode.Created, message = "Feilmelding oppdatert")
             }
+            delete("api/slettfeilmelding/{id}") {
+                val id = call.parameters["id"]
+                checkNotNull(id) {"Id kan ikke være null"}
+                feilmeldingRepository.slettFeilmelding(id.toInt())
+                call.respond(status = HttpStatusCode.Created, message = "Feilmelding slettet")
+            }
         }
     }
     

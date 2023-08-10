@@ -71,4 +71,8 @@ class FeilmeldingRepository {
             it[FeilmeldingTable.kommentar] = kommentar
         }
     }
+
+    fun slettFeilmelding(id: Int) = transaction {
+        FeilmeldingTable.deleteWhere { FeilmeldingTable.id eq id }
+    }
 }

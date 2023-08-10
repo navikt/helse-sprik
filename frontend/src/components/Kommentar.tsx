@@ -1,21 +1,20 @@
-import { ChatElipsisIcon } from "@navikt/aksel-icons"
+import { ChatElipsisIcon, PencilIcon } from "@navikt/aksel-icons"
 import { TextField, Button, Heading } from "@navikt/ds-react"
 import Skillelinje from "./Skillelinje"
+import { useState } from "react"
 
-interface kommentarTekstfeltInterface {
+interface kommentarInterface {
     kommentarfelt: string,
     setKommentarfelt: (val: string) => void
     oppdaterKommentar: () => void
-}
-interface kommentarInterface {
     tekst: string
 }
 
 /**
  * Kommentartekstfeltet er et tekstfelt med en knapp som poster en kommentar til en feil.
  */
-export const KommentarTekstfelt = (props: kommentarTekstfeltInterface) => {
-    return(
+export const KommentarTekstfelt = (props: kommentarInterface) => {
+    return (
         <div className="flex items-end gap-12 w-full mt-4 h-fit">
             <TextField
                 className="grow"
@@ -26,7 +25,7 @@ export const KommentarTekstfelt = (props: kommentarTekstfeltInterface) => {
             </TextField>
             <Button
                 variant="secondary"
-                icon={<ChatElipsisIcon/>}
+                icon={<ChatElipsisIcon />}
                 onClick={() => props.oppdaterKommentar()}
             >
                 Legg til kommentar
@@ -41,13 +40,34 @@ export const KommentarTekstfelt = (props: kommentarTekstfeltInterface) => {
  * @param tekst
  */
 export const Kommentar = (props: kommentarInterface) => {
-    return(
+    const [redigerKommentar, setRedigerKommentar] = useState(false)
+
+    return (
         <>
-            <Skillelinje/>
-            <div className="p-5 bg-bg-subtle rounded-lg w-2/3 my-4">
-                <Heading size="medium">Kommentar</Heading>
-                <p className="break-words">{props.tekst}</p>
-            </div> 
+            <Skillelinje />
+            {props.tekst.length === 0 || redigerKommentar ?
+                <KommentarTekstfelt
+                    kommentarfelt={props.kommentarfelt}
+                    setKommentarfelt={props.setKommentarfelt}
+                    oppdaterKommentar={props.oppdaterKommentar}
+                    tekst={props.tekst}
+                />  
+                :           
+                <div className="flex flex-col gap-3 p-5 bg-bg-subtle rounded-lg w-2/3 my-4">
+                    <div className="flex justify-between items-center">
+                        <Heading size="medium">Kommentar</Heading>
+                        <Button
+                            variant="tertiary"
+                            icon={<PencilIcon />}
+                            onClick={() => {
+                                setRedigerKommentar(true);
+                                console.log(redigerKommentar);
+                            }}
+                        ></Button>
+                    </div>
+                    <p className="break-words">{props.tekst}</p>
+                </div>
+            }
         </>
     )
 }

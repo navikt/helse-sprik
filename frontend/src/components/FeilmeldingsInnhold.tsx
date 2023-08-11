@@ -5,7 +5,7 @@ import FeilkortHeader from "./FeilkortHeader"
 import { useState } from "react"
 import Skillelinje from "./Skillelinje"
 import axios from "axios"
-import { Kommentar, KommentarTekstfelt } from "./Kommentar"
+import { Kommentar } from "./Kommentar"
 
 
 /**

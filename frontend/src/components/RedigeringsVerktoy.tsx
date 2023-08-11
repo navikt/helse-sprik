@@ -110,8 +110,6 @@ const RedigeringsVerktoy = (props: redigeringsInterface) => {
 export default RedigeringsVerktoy;
 
 
-
-
 const SlettFeilKnapp = (props: {
     id : number
     reset: () => void

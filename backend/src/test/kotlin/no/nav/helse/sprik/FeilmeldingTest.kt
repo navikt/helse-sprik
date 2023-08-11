@@ -188,4 +188,12 @@ class FeilmeldingTest {
         val oppdatertKommentar = transaction { FeilmeldingTable.selectAll().single()[FeilmeldingTable.kommentar] }
         assertEquals("Oppdatert kommentar", oppdatertKommentar)
     }
+
+    @Test
+    fun `Feilmelding slettes basert på id`() {
+        feilmeldingRepository.lagre(feilmelding)
+        feilmeldingRepository.slettFeilmelding(getId())
+        val resultat = transaction { FeilmeldingTable.selectAll().map { it }.size }
+        assertEquals(0, resultat)
+    }
 }

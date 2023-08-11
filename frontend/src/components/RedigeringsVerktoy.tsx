@@ -1,4 +1,4 @@
-import { FloppydiskIcon, XMarkIcon } from "@navikt/aksel-icons"
+import { FloppydiskIcon, TrashIcon, XMarkIcon } from "@navikt/aksel-icons"
 import { TextField, Textarea, RadioGroup, Radio, Button, Switch, Heading } from "@navikt/ds-react"
 import { useState } from "react"
 import { FeilmeldingsInnholdInterface } from "../interface"
@@ -102,8 +102,34 @@ const RedigeringsVerktoy = (props: redigeringsInterface) => {
                 >
                     Avbryt
                 </Button>
+                <SlettFeilKnapp setVisModal={props.setVisModal} reset={props.reset} id={props.id}/>
             </div>
         </div>
     )
 }
 export default RedigeringsVerktoy;
+
+
+
+
+const SlettFeilKnapp = (props: {
+    id : number
+    reset: () => void
+    setVisModal: (visModal: boolean) => void
+}) => {
+    const SlettFeil = async () => {
+        await axios.delete(`/api/slettfeilmelding/${props.id}`)
+        props.reset()
+        props.setVisModal(false)
+    }
+
+    return(
+        <Button 
+            variant="danger"
+            icon={<TrashIcon/>}
+            onClick={SlettFeil}
+        >
+            Slett feil
+        </Button>
+    )
+}

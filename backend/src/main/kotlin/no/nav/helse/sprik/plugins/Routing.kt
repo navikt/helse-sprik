@@ -28,6 +28,7 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
             allowMethod(HttpMethod.Get)
             allowMethod(HttpMethod.Post)
             allowMethod(HttpMethod.Put)
+            allowMethod(HttpMethod.Delete)
             allowNonSimpleContentTypes = true
         }
         install(ContentNegotiation) {
@@ -72,6 +73,12 @@ fun configureRouting(): ApplicationEngine = embeddedServer(CIO, applicationEngin
                 val innkommendeKommentar = call.receive<InnkommendeKommentar>()
                 feilmeldingRepository.oppdaterKommentar(innkommendeKommentar.id, innkommendeKommentar.kommentar)
                 call.respond(status = HttpStatusCode.Created, message = "Feilmelding oppdatert")
+            }
+            delete("api/slettfeilmelding/{id}") {
+                val id = call.parameters["id"]
+                checkNotNull(id) {"Id kan ikke være null"}
+                feilmeldingRepository.slettFeilmelding(id.toInt())
+                call.respond(status = HttpStatusCode.Created, message = "Feilmelding slettet")
             }
         }
     }

@@ -40,6 +40,11 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
         props.reset()
     }
 
+    const fullUpdate = async() => {
+        setKommentar(kommentarfelt)
+        oppdaterkommentar()
+    }
+
     return(
         <>
             <div className="flex justify-between ">
@@ -73,20 +78,14 @@ const FeilmeldingsInnhold = (props: FeilmeldingsInnholdInterface) => {
             </div>
             <Skillelinje/>
             {props.children}
-            {kommentar.length === 0 ? 
-                <KommentarTekstfelt
-                    kommentarfelt={kommentarfelt} 
-                    setKommentarfelt={setKommentarfelt}
-                    oppdaterKommentar={() => {
-                        setKommentar(kommentarfelt)
-                        oppdaterkommentar()}
-                    }
-                /> 
-                    : 
-                <Kommentar 
-                    tekst={kommentar}
-                />
-            }
+            
+            <Kommentar 
+                tekst={kommentar} 
+                kommentarfelt={kommentarfelt} 
+                setKommentarfelt={setKommentarfelt}
+                oppdaterKommentar={fullUpdate}
+            />
+
       </>
     )
 }
